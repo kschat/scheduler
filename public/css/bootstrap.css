@@ -4524,6 +4524,9 @@ input[type="submit"].btn.btn-mini {
   color: #777777;
   text-decoration: none;
   text-shadow: 0 1px 0 #ffffff;
+  transition: color .8s;
+  -webkit-transition: color .8s;
+  -moz-tansition: color .8s;
 }
 
 .navbar .nav .dropdown-toggle .caret {
