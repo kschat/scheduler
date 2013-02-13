@@ -1,0 +1,29 @@
+.marketing {
+text-align: center;
+color: #5a5a5a;
+}
+
+.hero-unit-landing {
+  padding: 60px;
+  margin-bottom: 30px;
+  font-size: 18px;
+  font-weight: 200;
+  line-height: 30px;
+  color: #fff;
+  background-color: #BF5343;
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
+}
+
+.hero-unit-landing h1 {
+  margin-bottom: 0;
+  font-size: 60px;
+  line-height: 1;
+  letter-spacing: -1px;
+  color: inherit;
+}
+
+.hero-unit-landing li {
+  line-height: 30px;
+}
