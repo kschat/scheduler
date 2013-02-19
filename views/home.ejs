@@ -4,6 +4,7 @@
 		<p>
 			quick, easy, and efficient
 		</p>
+		<a class="btn" role="button" data-toggle="modal" href="#signUp">Sign up</a>
 	</div>
 	<div class="row marketing">
 		<div class="span4">
@@ -34,5 +35,33 @@
 				your scheudle on the SIS without leaving the site.
 			</p>
 		</div>
+	</div>
+</div>
+
+<!-- Sign up modal -->
+<div id="signUp" class="modal hide fade" role="dialog" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h3>Sign up</h3>
+	</div>
+	<div class="modal-body">
+		<% include signup.ejs %>
+	</div>
+	<div class="modal-footer">
+		<p class="center-align">Already have an account? Sign in <a data-toggle="modal" href="/login">here</a>.</p>
+	</div>
+</div>
+
+<!-- Log in modal -->
+<div id="logIn" class="modal hide fade" role="dialog" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h3>Sign up</h3>
+	</div>
+	<div class="modal-body">
+		<% include login.ejs %>
+	</div>
+	<div class="modal-footer">
+		<p class="center-align">Don't have an account? Sign up <a data-toggle="modal" href="/signup">here</a>.</p>
 	</div>
 </div>

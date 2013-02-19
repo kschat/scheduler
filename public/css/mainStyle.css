@@ -1,3 +1,12 @@
+.center-align {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.modal-form {
+  
+}
+
 .marketing {
 text-align: center;
 color: #5a5a5a;

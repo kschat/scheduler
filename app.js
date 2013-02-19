@@ -6,10 +6,12 @@
 var express = require('express')
   , engine = require('ejs-locals')
   , routes = require('./routes')
-  , user = require('./routes/user')
   , http = require('http')
   , path = require('path')
-  , fs = require('fs');
+  , fs = require('fs')
+  , routeDir = 'routes'
+  , files = fs.readdirSync(routeDir);
+
 
 var app = express();
 
@@ -33,28 +35,22 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
+files.forEach(function(file) {
+  var filePath = path.resolve('./', routeDir, file),
+      route = require(filePath);
+
+  route.init(app);
+});
+
 //RESTful routes
 //app.get('/api/about', routes.about);
-
+/*
 app.get('/', function(req, res, next) {
   res.render('index', { page: 'home.ejs'});
 });
 
-app.get('/bootstrap.css', function(req,res,next){
-  res.sendfile('public/css/bootstrap.css');
-});
-
-app.get('/bootstrap-responsive.css', function(req,res,next){
-  res.sendfile('public/css/bootstrap-responsive.css');
-});
-
-app.get('/mainStyle.css', function(req,res,next){
-  res.sendfile('public/css/mainStyle.css');
-});
-
-app.get('/bootstrap-collapse.js', function(req,res,next){
-  res.sendfile('public/js/bootstrap-collapse.js');
-});
+app.get('/:page', routes.page);
+*/
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
