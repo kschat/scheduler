@@ -31,17 +31,8 @@ exports.init = function init(app) {
 	//Route for any other static page
 	app.get(/\/(about|login)/, function(req, res, next) {
 		console.log(req.params);
-<<<<<<< HEAD
-		if(fs.existsSync(app.get('views') + '/' + req.params[0] + '.ejs')) {
-			res.render(app.get('views') + '/' + req.params[0], options);
-		}
-		else {
-			res.render('error', { error: 'Page not found'});
-		}
-=======
 	  if(fs.existsSync(app.get('views') + '/' + req.params[0] + '.ejs')) {
 	    res.render(app.get('views') + '/' + req.params[0]);
 	  }
->>>>>>> e40cfdf0e4db5cbd2cf454abba6780ce1c63d9a3
 	});
 }
