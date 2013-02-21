@@ -1,13 +1,21 @@
-form
-	fieldset
-		label Email
-		input.span5(type='text', placeholder='Email')
+extends layouts/default-layout
 
-		label Password
-		input.span5(type='password', placeholder='Password')
+block content
+	.row
+		.container
+			.span2
+			.span6.hero-unit-landing
+				form(action="/user/signup", method="POST")
+					fieldset
+						label Email
+						input.span5(type='text', placeholder='Email')
 
-		label Repeat password
-		input.span5(type='password', placeholder='Repeat password')
-		br
+						label Password
+						input.span5(type='password', placeholder='Password')
 
-		button.btn.btn-danger(type='submit') Sign up
+						label Repeat password
+						input.span5(type='password', placeholder='Repeat password')
+						br
+
+						button.btn(type='submit') Sign up
+			.span2

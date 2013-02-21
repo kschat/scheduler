@@ -1,15 +1,18 @@
 extends layouts/default-layout
 
 block content
-	.container
-		.page-panel
-			form
-				fieldset
-					label Email
-					input(type='text', placeholder='Email', class='span5')
+	.row
+		.container
+			.span2
+			.span6.hero-unit-landing
+				form
+					fieldset
+						label Email
+						input(type='text', placeholder='Email', class='span5')
 
-					label Password
-					input(type='text', placeholder='Password', class='span5')
-					br 
+						label Password
+						input(type='text', placeholder='Password', class='span5')
+						br 
 
-					button.btn.btn-danger(type='submit') Log in
+						button.btn.btn-danger(type='submit') Log in
+			.span2
