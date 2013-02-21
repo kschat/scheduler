@@ -29,11 +29,10 @@ exports.init = function init(app) {
 		res.render('home', options);
 	});
 
-	//Route for any other static page
-	app.get('/:page', function(req, res, next) {
-		console.log(req.params.page);
-		if(fs.existsSync(app.get('views') + '/' + req.params.page + '.jade')) {
-			res.render(app.get('views') + '/' + req.params.page, options);
+	//Route for the rest of the static landing pages
+	app.get(/\/(login|signup|about)/, function(req, res, next) {
+		if(fs.existsSync(app.get('views') + '/' + req.params + '.jade')) {
+			res.render(app.get('views') + '/' + req.params, options);
 		}
 	});
 }
