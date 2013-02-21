@@ -1,0 +1,49 @@
+extends layouts/default-layout
+
+block content
+	.container
+		.hero-unit-landing
+			h1 Scheduling
+			p quick, easy, efficient
+			a(class='btn', role='button', data-toggle='modal', href='#signUp') Sign up
+
+		.row.marketing
+			.span4
+				h2 Create
+				p.
+					Allow Scheduler to find the perfect schedule for you.
+					Simply input the classes you wish to take and the time
+					you are available to go to class and Scheduler will do
+					the rest.
+			.span4
+				h2 Save and archive
+				p.
+					Create as many schedules as you'd like. You can save
+					all your schedules to your account, allowing for review
+					later. Schedules can be made private or public, it's up
+					to you.
+			.span4
+				h2 Push to the SIS
+				p.
+					Once you're sure you have the perfect schedule for your
+					needs it's time to save it. Scheduler allows you to update
+					your scheudle on the SIS without leaving the site.
+
+	div#signUp.modal.hide.fade(role='dialog', aria-hidden='true')
+		div.modal-header
+			button(type='button', class='close', data-dismiss='modal', aria-hidden='true') &times;
+			h3 Sign up
+		div.modal-body
+			d
+		div.modal-footer
+			p.center-align: Already have an account? Sign in 
+				a(data-toggle='modal', href='/login') here
+
+	div#logIn.modal.hide.fade(role='dialog', aria-hidden='true')
+		div.modal-header
+			button(type='button', class='close', data-dismiss='modal', aria-hidden='true') &times;
+			h3 Login up
+		div.modal-body include login
+		div.modal-footer
+			p.center-align: | Don't have an account? Sign up 
+				a(data-toggle='modal', href='/signup') here

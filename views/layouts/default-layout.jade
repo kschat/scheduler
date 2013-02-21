@@ -1,0 +1,20 @@
+mixin styles(links)
+    each link, i in links
+        link(rel='stylesheet', href='#{link}')
+
+mixin scripts(links)
+    each link, i in links
+        script(src='#{link}')
+
+!!! 5
+html
+    head
+        title= title
+        +styles(links.styles)
+        +scripts(links.scripts)
+    body
+        block header
+            include ../header.jade
+        
+        block content 
+            

@@ -1,0 +1,14 @@
+.container
+	.navbar
+		.navbar-inner
+			a(href='/home', class='brand') Scheduler
+
+			.btn.btn-navbar(data-toggle='collapse', data-target='.nav-collapse')
+				span.icon-bar
+				span.icon-bar
+				span.icon-bar
+
+			.nav-collapse.collapse
+				ul.nav.pull-right
+					li: a(href='/about') About
+					li: a(data-toggle='modal', href='#logIn') Log in
