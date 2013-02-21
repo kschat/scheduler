@@ -10,7 +10,8 @@
  , path = require('path')
  , fs = require('fs')
  , routeDir = 'routes'
- , files = fs.readdirSync(routeDir);
+ , files = fs.readdirSync(routeDir)
+ , config = require('./config').config;
 
 var httpsOptions = {
 	key: fs.readFileSync('key.pem'),
