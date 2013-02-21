@@ -13,8 +13,8 @@
  , files = fs.readdirSync(routeDir);
 
 var httpsOptions = {
-  key: fs.readFileSync('key.pem'),
-  cert: fs.readFileSync('cert.pem')
+	key: fs.readFileSync('key.pem'),
+	cert: fs.readFileSync('cert.pem')
 };
 
  var app = express();
@@ -45,7 +45,23 @@ var httpsOptions = {
  });
 
  app.use(function(req, res) {
- 	res.render('error', { error: 'Page not found'});
+ 	res.render('error', {
+ 		title: 'Scheduler',
+ 		error: 'Page not found',
+		links: {
+			styles: [
+				'/css/bootstrap.css',
+				'/css/bootstrap-responsive.css',
+				'/css/mainStyle.css',
+			],
+			scripts: [
+				'/js/jquery-1.9.1.min.js',
+				'/js/bootstrap-transition.js',
+				'/js/bootstrap-collapse.js',
+				'/js/bootstrap-modal.js',
+			]
+		},
+ 	});
  });
 
 https.createServer(httpsOptions, app).listen(app.get('port'), function(){

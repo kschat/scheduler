@@ -8,6 +8,7 @@ exports.init = function init(app) {
 	//Default options to pass to the layout template
 	var options = {
 			title: 'Scheduler',
+			isPage: true,
 			links: {
 				styles: [
 					'css/bootstrap.css',
@@ -29,10 +30,16 @@ exports.init = function init(app) {
 	});
 
 	//Route for any other static page
-	app.get(/\/(about|login)/, function(req, res, next) {
-		console.log(req.params);
-	  if(fs.existsSync(app.get('views') + '/' + req.params[0] + '.ejs')) {
-	    res.render(app.get('views') + '/' + req.params[0]);
-	  }
+	app.get('/:page', function(req, res, next) {
+		console.log(req.params.page);
+		if(fs.existsSync(app.get('views') + '/' + req.params.page + '.jade')) {
+			res.render(app.get('views') + '/' + req.params.page, options);
+		}
+		else {
+			options.title = 'Scheduler - error',
+			options.error = 'Page not found';
+
+			res.render(app.get('views') + '/error.jade', options);
+		}
 	});
 }

@@ -34,7 +34,19 @@ block content
 			button(type='button', class='close', data-dismiss='modal', aria-hidden='true') &times;
 			h3 Sign up
 		div.modal-body
-			d
+			form
+				fieldset
+					label Email
+					input.span5(type='text', placeholder='Email')
+
+					label Password
+					input.span5(type='password', placeholder='Password')
+
+					label Repeat password
+					input.span5(type='password', placeholder='Repeat password')
+					br
+
+					button.btn.btn-danger(type='submit') Sign up
 		div.modal-footer
 			p.center-align: Already have an account? Sign in 
 				a(data-toggle='modal', href='/login') here
@@ -43,7 +55,17 @@ block content
 		div.modal-header
 			button(type='button', class='close', data-dismiss='modal', aria-hidden='true') &times;
 			h3 Login up
-		div.modal-body include login
+		div.modal-body 
+			form
+				fieldset
+					label Email
+					input(type='text', placeholder='Email', class='span5')
+
+					label Password
+					input(type='text', placeholder='Password', class='span5')
+					br 
+
+					button.btn.btn-danger(type='submit') Log in
 		div.modal-footer
 			p.center-align: | Don't have an account? Sign up 
 				a(data-toggle='modal', href='/signup') here

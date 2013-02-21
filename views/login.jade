@@ -1,9 +1,15 @@
-form
-	fieldset
-		label Email
-		input(type='text', placeholder='Email', class='span5')
+extends layouts/default-layout
 
-		label Password
-		input(type='text', placeholder='Password', class='span5')
+block content
+	.container
+		.page-panel
+			form
+				fieldset
+					label Email
+					input(type='text', placeholder='Email', class='span5')
 
-		button(type='submit' class='btn btn-danger') Log in
+					label Password
+					input(type='text', placeholder='Password', class='span5')
+					br 
+
+					button.btn.btn-danger(type='submit') Log in
