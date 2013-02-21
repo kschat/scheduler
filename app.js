@@ -44,7 +44,11 @@ var httpsOptions = {
 	route.init(app);
  });
 
- app.use(function(req, res) {
+/*
+* If no other routes match load a page not found
+* error page
+*/
+app.use(function(req, res) {
  	res.render('error', {
  		title: 'Scheduler',
  		error: 'Page not found',

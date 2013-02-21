@@ -35,11 +35,5 @@ exports.init = function init(app) {
 		if(fs.existsSync(app.get('views') + '/' + req.params.page + '.jade')) {
 			res.render(app.get('views') + '/' + req.params.page, options);
 		}
-		else {
-			options.title = 'Scheduler - error',
-			options.error = 'Page not found';
-
-			res.render(app.get('views') + '/error.jade', options);
-		}
 	});
 }
