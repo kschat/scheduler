@@ -16,8 +16,5 @@ exports.init = function init(app) {
 	  if(fs.existsSync(app.get('views') + '/' + req.params[0] + '.ejs')) {
 	    res.render(app.get('views') + '/' + req.params[0]);
 	  }
-	  else {
-	    res.render('error', { error: 'Page not found'});
-	  }
 	});
 }
