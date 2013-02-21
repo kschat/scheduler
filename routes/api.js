@@ -1,8 +1,21 @@
+var mysql = require('mysql');
 
-/*
- * GET about page.
- */
+exports.init = function init(app) {
+	app.get(/\/:id\/([0-9])/, function(req, res) {
+		var connection = mysql.createConnection({
+			database: 	'scheduler',
+			host: 		'localhost',
+			user: 		'scheduler',
+			password: 	'121689kyle', 
+		});
 
-exports.about = function(req, res){
-  res.render('about', { title: 'Scheduler | About' });
-};
+		connection.connect();
+		connection.query('SELECT * FROM testTable', function(err, rows, fields) {
+			if(err) throw err;
+
+			console.log(rows);
+		});
+
+		res.send({"test": req.params});
+	});
+}
