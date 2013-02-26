@@ -13,7 +13,7 @@
  , files = fs.readdirSync(routeDir)
  , config = require('./config').config;
 
-var httpsOptions = {
+var httpsOptions = { 
 	key: fs.readFileSync('key.pem'),
 	cert: fs.readFileSync('cert.pem')
 };
