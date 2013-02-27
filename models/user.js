@@ -12,14 +12,19 @@ db.once('open', function callBack() {
 	});
 
 	//var User = mongoose('User', userSchema);
-	//var testUser = new User('Test');
-	//console.log(testUser.name);
+	//var testUser = new User('Test')
+;	//console.log(testUser.name);
 });*/
 
-//mongoose.connect('mongodb://localhost/scheduler');
+mongoose.connect('mongodb://localhost/scheduler');
 
 var userSchema = mongoose.Schema({
-	name: String
+	name: String,
+	email: {type: String, required: true, index: {unique: true}}
 });
 
-exports.User = mongoose.model('User', userSchema);
+userSchema.virtual('userID').get(function() {
+	return this._id;
+})
+
+module.exports = mongoose.model('User', userSchema);

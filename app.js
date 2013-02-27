@@ -32,6 +32,7 @@ var httpsOptions = {
 	app.use(express.session());
 	app.use(app.router);
 	app.use(express.static(path.join(__dirname, 'public')));
+	app.disable('x-powered-by');
  });
 
  app.configure('development', function(){

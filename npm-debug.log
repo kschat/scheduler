@@ -1,0 +1,32 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/home/kyle/local/bin/npm', 'search', 'test-server' ]
+2 info using npm@1.1.71
+3 info using node@v0.8.19
+4 verbose url raw /-/all/since?stale=update_after&startkey=1360715256179
+5 verbose url resolving [ 'https://registry.npmjs.org/',
+5 verbose url resolving   './-/all/since?stale=update_after&startkey=1360715256179' ]
+6 verbose url resolved https://registry.npmjs.org/-/all/since?stale=update_after&startkey=1360715256179
+7 info trying registry request attempt 1 at 21:09:22
+8 http GET https://registry.npmjs.org/-/all/since?stale=update_after&startkey=1360715256179
+9 info retry will retry, error on last attempt: Error: getaddrinfo ENOTFOUND
+10 info trying registry request attempt 2 at 21:09:42
+11 http GET https://registry.npmjs.org/-/all/since?stale=update_after&startkey=1360715256179
+12 info retry will retry, error on last attempt: Error: getaddrinfo ENOTFOUND
+13 info trying registry request attempt 3 at 21:10:42
+14 http GET https://registry.npmjs.org/-/all/since?stale=update_after&startkey=1360715256179
+15 error Error: getaddrinfo ENOTFOUND
+15 error     at errnoException (dns.js:37:11)
+15 error     at Object.onanswer [as oncomplete] (dns.js:124:16)
+16 error If you need help, you may report this log at:
+16 error     <http://github.com/isaacs/npm/issues>
+16 error or email it to:
+16 error     <npm-@googlegroups.com>
+17 error System Linux 3.5.0-23-generic
+18 error command "node" "/home/kyle/local/bin/npm" "search" "test-server"
+19 error cwd /var/www/scheduler
+20 error node -v v0.8.19
+21 error npm -v 1.1.71
+22 error syscall getaddrinfo
+23 error code ENOTFOUND
+24 error errno ENOTFOUND
+25 verbose exit [ 1, true ]
