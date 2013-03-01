@@ -18,9 +18,46 @@ db.once('open', function callBack() {
 
 //mongoose.connect('mongodb://localhost/scheduler');
 
+function validateName(val) {
+	return val.length && val.length <= 35;
+}
+
+function validateEmail(val) {
+	console.log(val);
+	return false;
+}
+
+function validatePassword(val) {
+	console.log(val);
+	return false;
+}
+
 var userSchema = mongoose.Schema({
-	name: String,
-	email: {type: String, required: true, index: {unique: true}}
+	firstName: { 
+		type: String, 
+		required: true,
+		validate: [
+			validateName, 'An error occured',
+		],
+	},
+	lastName: {
+		type: String, 
+		required: true 
+	},
+	email: {
+		type: String, 
+		required: true, 
+		index: {
+			unique: true
+		}
+	},
+	password: {
+		type: String, 
+		required: true 
+	},
+},
+{
+	collection: 'user'
 });
 
 userSchema.virtual('userID').get(function() {
