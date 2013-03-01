@@ -16,7 +16,7 @@ db.once('open', function callBack() {
 ;	//console.log(testUser.name);
 });*/
 
-mongoose.connect('mongodb://localhost/scheduler');
+//mongoose.connect('mongodb://localhost/scheduler');
 
 var userSchema = mongoose.Schema({
 	name: String,

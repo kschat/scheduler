@@ -1,4 +1,4 @@
 test:
-	@/home/kyle/local/bin/mocha -u tdd
+	@/home/kyle/local/bin/mocha
 
 .PHONY: test

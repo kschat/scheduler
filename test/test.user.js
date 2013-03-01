@@ -5,39 +5,39 @@ var assert = require("assert"),
 describe('User', function() {
 	mongoose.connect('mongodb://localhost/scheduler');
 	var db = mongoose.connection,
-		users = [];
+		user;
 
 	//Before each test rebuild the data in the database to query against.
 	beforeEach(function(done) {
-		users = [];
-		users.push(new User({ name: 'test', email: 'test@test.com' }));
-		users.push(new User({ name: 'kyle', email: 'kyle@test.com' }));
-		users.push(new User({ name: 'matt', email: 'matt@test.com'}));
-
-		done();
-	});
-
-	//After each test empty the users collection to get rid of "used" test data
-	afterEach(function(done) {
 		db.collections['users'].drop(function(err) {
+			if(err) throw err;
+		});
+
+		user = new User({ name: 'test', email: 'test@test.com' });
+
+		user.save(function(err, user) {
+			assert.ifError(err);
 			done();
 		});
 	});
 
+	after(function(done) {
+		db.close();
+		done();
+	});
+
 	describe('name', function() {
 		it('should return "test"', function() {
-			assert.equal(users[0].name, 'test');
+			assert.equal(user.name, 'test');
 		});
 	});
 
 	//Tests saving user
 	describe('#save()', function() {
 		it('should not throw an error', function(done) {
-			for(var i=0; i<users.length; i++) {
-				users[i].save(function(err, user) {
-					assert.ifError(err);
-				});
-			}
+			user.save(function(err, user) {
+				assert.ifError(err);
+			});
 
 			done();
 		});
@@ -58,14 +58,6 @@ describe('User', function() {
 				//assert.strictEqual(queriedUsers.length, 1, 'The length was not 1');
 				done();
 			})
-		});
-
-		it('should find the users based on their unique IDs', function(done) {
-			User.find({userID: uid}, function(err, queriedUsers) {
-				
-			});
-
-			done();
 		});
 	});
 });
