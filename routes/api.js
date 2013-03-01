@@ -31,13 +31,18 @@ exports.init = function init(app) {
 	*/
 	app.get(/^\/api\/([a-zA-Z]+)(\/([0-9a-zA-Z]+))?\/?$/, function(req, res) {
 		var Model = {},
-			modelSettings = {};
+			modelSettings = {},
+			parameters = {},
+			payload = {};
 
+		//Get the model and it's settings based on the first API parameter
+		//Handle any errors that may occur
 		try {
 			Model = require('../models/' + req.params[0]);
 			modelSettings = JSON.parse(fs.readFileSync(path.join(__dirname, '../models/config/'+ req.params[0] + '.json')));
 		}
 		catch(ex) {
+			console.log(ex);
 			//The client requested a model that doesn't exist.
 			if(ex.code === 'MODULE_NOT_FOUND') {
 				res.send(404, req.params[0] + ' does not exist.');
@@ -45,7 +50,29 @@ exports.init = function init(app) {
 			}
 			//A config file for the model doesn't exist.
 			if(ex.code === 'ENOENT') {
-				modelSettings = {};
+				modelSettings = {
+					methods: [],
+					params: {
+						optional: []
+					},
+				};
+			}
+		}
+
+		var sParams = modelSettings.params;
+		for(var param in sParams) {
+			if(sParams[param].required && typeof req.query[param] === 'undefined') {
+				res.send(404, 'Missing required parameter: ' + param);
+				return;
+			}
+			if(req.query.hasOwnProperty(param) && typeof req.query[param] !== 'undefined') {
+				try {
+					console.log(Model[param](Model, req.query[param]));
+				}
+				catch(ex) {
+					res.send(500, ex);
+					return;
+				}
 			}
 		}
 
@@ -57,7 +84,7 @@ exports.init = function init(app) {
 				return;
 			}
 
-			res.send(users);
+			res.send(req.query);
 		});
 
 	});

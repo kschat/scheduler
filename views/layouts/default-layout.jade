@@ -7,9 +7,10 @@ mixin scripts(links)
         script(src='#{link}')
 
 !!! 5
-html
+html(lang="en")
     head
         title= title
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
         +styles(links.styles)
         +scripts(links.scripts)
     body

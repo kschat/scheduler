@@ -12,8 +12,11 @@ function validatePassword(val) {
 
 function validatePasswordStrong(val) {
 	var hasSpecialCharacter = /[^a-z ]/.test(val);
-	
-	return validatePassword(val) && ((val.length > 12 && hasSpecialCharacter) || (val.length > 20));
+
+	return validatePassword(val) && (
+			(val.length > 12 && hasSpecialCharacter) || 
+			(val.length > 20)
+		);
 }
 
 function validatePasswordMedium(val) {

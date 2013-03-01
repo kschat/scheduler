@@ -1,6 +1,9 @@
 {
 	"methods": [ "get" ],
-	"params": [
-		{"limit": "optional"}
-	]
+	"params": {
+		"limit": {
+			"type": "number",
+			"required": true
+		}
+	}
 }

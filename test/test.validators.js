@@ -1,7 +1,6 @@
 'use strict'
 
 var validator = require('../models/validators'),
-	assert = require('assert'),
 	should = require('should');
 
 var userValidator = validator.user,
@@ -14,20 +13,6 @@ var userValidator = validator.user,
 		medium: 	samplePassword.substring(0,12),
 		strong: 	samplePassword,
 	};
-
-//Helper function to get offset arguments
-function getOffsetArguments(arr, offset) {
-	var limit = typeof arguments[2] === 'number' ? arguments[2] : arguments.length,
-		offsetArray = [];
-
-	for(var i=offset; i<limit; i++) {
-		if(typeof arr[i] !== 'undefined') {
-			offsetArray.push(arr[i]);
-		}
-	}
-
-	return offsetArray;
-}
 
 function testValidateName() {
 	it('should return false when the name is less than 2 or greater than 35', function() {
@@ -180,7 +165,8 @@ function testValidatePasswordStrong(validPassword, testPassword) {
 		});
 
 		it('should return true when the password is greater than 20 characters', function() {
-			
+			pwStrengthValidator.validatePasswordStrong(testPassword)
+				.should.equal(true, 'Failed on 1st test: ' + testPassword);
 		});
 	}
 }

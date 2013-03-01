@@ -4,7 +4,7 @@ var assert = require("assert"),
 	bcrypt = require('bcrypt');
 
 describe('User', function() {
-	mongoose.connect('mongodb://localhost/scheduler');
+	//mongoose.connect('mongodb://localhost/scheduler');
 	var db = mongoose.connection,
 		user;
 
