@@ -37,14 +37,6 @@ function validatePasswordWeak(val) {
 	return validatePassword(val) && val.length < 8;
 }
 
-function limit(max) {
-	this.find({}, function(err, docs) {
-		//console.log(docs);
-		results = _.intersection(results, docs);
-		console.log(results);
-	});
-}
-
 var userSchema = mongoose.Schema({
 	firstName: { 
 		type: String, 
@@ -93,7 +85,6 @@ userSchema.virtual('fullName').get(function() {
 	return this.firstName + ' ' + this.lastName;
 });
 
-var results = [];
+var User = mongoose.model('User', userSchema);
 
-module.exports = mongoose.model('User', userSchema);
-module.exports.limit = limit;
+module.exports = User;

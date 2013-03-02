@@ -3,6 +3,10 @@
 	"params": {
 		"limit": {
 			"type": "number",
+			"required": false
+		},
+		"email": {
+			"type": "string",
 			"required": true
 		}
 	}
