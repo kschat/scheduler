@@ -1,8 +1,6 @@
 var mongoose = require('mongoose'),
 	bcrypt = require('bcrypt');
 
-mongoose.connect('mongodb://localhost/scheduler');
-
 function validateName(val) {
 	return val.length >= 2 && val.length <= 35;
 }

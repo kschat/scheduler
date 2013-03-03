@@ -1,6 +1,10 @@
 var fs = require('fs'),
 	path = require('path'),
+	mongoose = require('mongoose'),
 	_ = require('underscore');
+
+mongoose.connect('mongodb://localhost/scheduler');
+var db = mongoose.connection;
 
 function checkAllowed(request, allowed) {
 	for(var i=0; i<allowed.length; i++) {
@@ -8,6 +12,27 @@ function checkAllowed(request, allowed) {
 	}
 
 	return false;
+}
+
+function arrayToObject(arr) {
+	var obj = {};
+	for(var i=0; i<arr.length; i++) {
+		for(var key in arr[i]) {
+			if(!arr[i].hasOwnProperty(key)) { continue; }
+			obj[key] = arr[i][key];
+		}
+	}
+
+	return obj;
+}
+
+function updateModel(model, newModel) {
+	for(var key in newModel) {
+		if(!newModel.hasOwnProperty(key)) { continue; }
+		model[key] = newModel[key];
+	}
+
+	return model;
 }
 
 function runOptions(model, sParams, query, callBack) {
@@ -120,8 +145,8 @@ function RESTGet(req, res) {
 		return;
 	}
 
-	if(typeof req.params[2] != 'undefined') {
-		Model.find({ _id: req.params[2] }, function(err, models) {
+	if(typeof req.params[1] != 'undefined') {
+		Model.find({ _id: req.params[1] }, function(err, models) {
 			if(err) { 
 				res.send(503, { error: 'Error contacting database:' });
 				return;
@@ -149,7 +174,7 @@ function RESTGet(req, res) {
 function RESTPut(req, res) {
 	var Model = loadModel(req.params[0]);
 
-	if(Model.error === true) {
+	if(Model.error) {
 		res.send(Model.code, Model.message);
 		return;
 	}
@@ -164,41 +189,34 @@ function RESTPut(req, res) {
 	}
 
 	runOptions(Model, modelSettings.params.PUT, req.body, function(err, options) {
-		var optObj = {};
-
-		for(var i=0; i<options.length; i++) {
-			for(var key in options[i]) {
-				if(!options[i].hasOwnProperty(key)) { continue; }
-				optObj[key] = options[i][key];
-			}
-		}
-
-		var newModel = new Model(optObj);
-
 		if(err) {
 			res.send(err.code, err.message);
 			return;
 		}
-		else {
-			if(typeof req.params[2] !== 'undefined') {
-				Model.find({ _id: req.params[2] }, function(err, model) {
-					if(err) { 
-						res.send(503, { error: 'Error contacting database:' });
-						return;
-					}
-					if(!_.isEmpty(model)) { 
-						//Needs to be changed to save to allow for pre hooks to fire.
-						Model.update({ _id: req.params[2] }, { $set: optObj }, function(err, numberAffected, rawResponse) {
-							if(err) { res.send(err); return; }
 
-							res.send(200, rawResponse);
-							return;
-						});
-					}
+		var optObj = arrayToObject(options),
+			newModel = new Model(optObj);
+
+		Model.findOne({ _id: req.params[1] }, function(err, model) {
+			if(err) { 
+				res.send(503, { error: 'Error contacting database: ' + err });
+				return;
+			}
+
+			if(!_.isEmpty(model)) {
+				model = updateModel(model, optObj);
+
+				model.save(function(err, model) {
+					if(err) { res.send(500, err); return; }
+
+					res.send(200, model);
+					return;
 				});
 			}
 			else {
 				newModel = new Model(optObj);
+				newModel._id = req.params[1];
+
 				newModel.save(function(err, model) {
 					if(err) {
 						res.send(500, 'Error creating entity: ' + err);
@@ -209,14 +227,14 @@ function RESTPut(req, res) {
 					}
 				});
 			}
-		}
+		});
 	});
 }
 
 function RESTPost(req, res) {
 	var Model = loadModel(req.params[0]);
 
-	if(Model.error === true) {
+	if(Model.error) {
 		res.send(Model.code, Model.message);
 		return;
 	}
@@ -229,12 +247,62 @@ function RESTPost(req, res) {
 		res.send(405, 'Allow: ' + modelSettings.methods);
 		return;
 	}
+
+	if(typeof req.params[1] === 'undefined') {
+		runOptions(Model, modelSettings.params.POST.create, req.body, function(err, options) {
+			if(err) {
+				res.send(err.code, err.message);
+				return;
+			}
+			var optObj = arrayToObject(options),
+				newModel = new Model(optObj);
+
+			newModel.save(function(err, model) {
+				if(err) {
+					res.send(500, 'Error creating entity: ' + err);
+					return;
+				}
+				
+				res.send(201, model);
+			});
+		});
+	}
+	else {
+		Model.findOne({ _id: req.params[1] }, function(err, model) {
+			if(err) { 
+				res.send(503, { error: 'Database error: ' + err });
+				return;
+			}
+
+			if(_.isEmpty(model)) {
+				res.send(404, 'The specificed resource was not found.');
+				return;
+			}
+			runOptions(Model, modelSettings.params.POST.update, req.body, function(err, options) {
+				if(err) {
+					res.send(err.code, err.message);
+					return;
+				}
+				var optObj = arrayToObject(options);
+				model = updateModel(model, optObj);
+
+				model.save(function(err, model) {
+					if(err) {
+						res.send(500, 'Error creating entity: ' + err);
+						return;
+					}
+					
+					res.send(200, model);
+				});
+			});		
+		});
+	}
 }
 
 function RESTDelete(req, res) {
 	var Model = loadModel(req.params[0]);
 
-	if(Model.error === true) {
+	if(Model.error) {
 		res.send(Model.code, Model.message);
 		return;
 	}
@@ -247,12 +315,34 @@ function RESTDelete(req, res) {
 		res.send(405, 'Allow: ' + modelSettings.methods);
 		return;
 	}
+
+	Model.findOne({ _id: req.params[1] }, function(err, model) {
+		if(err) {
+			res.send(503, { error: 'Error contacting database:' });
+			return;
+		}
+
+		if(_.isEmpty(model)) {
+			res.send(404, req.params[0] + ' ' + req.params[1] + ' not found');
+		}
+		else {
+			model.remove(function(err, model) {
+				if(err) {
+					res.send(500, { error: err });
+					return;
+				}
+
+				res.send(200, model);
+				return;
+			});
+		}
+	});
 }
 
 function RESTOptions(req, res) {
 	var options = loadModel(req.params[0] || 'server');
 
-	if(options.error === true) {
+	if(options.error) {
 		res.send(options.code, options.message);
 		return;
 	}
@@ -269,8 +359,8 @@ function RESTOptions(req, res) {
 	return;
 }
 
-function RESTPatch(req, res) {
-
+function RESTCatchAll(req, res) {
+	res.send(404);
 }
 
 exports.init = function init(app) {
@@ -280,15 +370,14 @@ exports.init = function init(app) {
 	* Matches: 
 	* /api/<controller>/<id> where the controller is required but the id is optional
 	*/
-	app.post(/^\/api\/([a-zA-Z]+)(\/([0-9a-zA-Z]+))?\/?$/, RESTPost);
+	app.post(/^\/api\/([a-zA-Z]+)(?:\/([0-9a-zA-Z]+))?\/?$/, RESTPost);
 
 	/*
 	* Generic PUT REST implementation.
 	* Matches:
 	* /api/<controller>/<id> where both controller and id are required
 	*/
-	//Need to test regex
-	app.put(/^\/api\/([a-zA-Z]+)(\/([0-9a-zA-Z]+))\/?$/, RESTPut);
+	app.put(/^\/api\/([a-zA-Z]+)(?:\/([0-9a-zA-Z]+))\/?$/, RESTPut);
 
 	/*
 	* Generic GET REST implementation. 
@@ -298,7 +387,7 @@ exports.init = function init(app) {
 	* If no id was given, a full list of the controller is returned.
 	* Otherwise returns that specific model instance
 	*/
-	app.get(/^\/api\/([a-zA-Z]+)(\/([0-9a-zA-Z]+))?\/?$/, RESTGet);
+	app.get(/^\/api\/([a-zA-Z]+)(?:\/([0-9a-zA-Z]+))?\/?$/, RESTGet);
 
 	/*
 	* Generic DELETE REST implementation.
@@ -306,15 +395,9 @@ exports.init = function init(app) {
 	* /api/<controller>/<id> where both controller and id are required
 	* 
 	*/
-	//Need to test regex
-	app.delete(/^\/api\/([a-zA-Z]+)\/([0-9a-zA-Z]+)\/?/, RESTDelete);
-
-	//Need to test regex
-	app.patch(/^\/api\/([a-zA-Z]+)\/([0-9a-zA-Z]+)\/?/, RESTPatch);
+	app.delete(/^\/api\/([a-zA-Z]+)(?:\/([0-9a-zA-Z]+))\/?$/, RESTDelete);
 
 	app.options(/^\/api\/([a-zA-Z]+)?\/?/, RESTOptions);
 
-	app.all(/^\/api(\/+)?$/, function(req, res) {
-		res.send(404);
-	});
+	app.all(/^\/api\/?(.+)?$/, RESTCatchAll);
 }

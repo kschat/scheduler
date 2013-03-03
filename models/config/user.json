@@ -1,5 +1,5 @@
 {
-	"methods": [ "GET", "PUT", "OPTIONS" ],
+	"methods": [ "GET", "PUT", "OPTIONS", "DELETE", "POST" ],
 	"params": {
 		"GET": {
 			"limit": {
@@ -27,6 +27,44 @@
 			"password": {
 				"type": "string",
 				"required": true
+			}
+		},
+		"POST": {
+			"create": {
+				"firstName": {
+					"type": "string",
+					"required": true
+				},
+				"lastName": {
+					"type": "string",
+					"required": true
+				},
+				"email": {
+					"type": "string",
+					"required": true
+				},
+				"password": {
+					"type": "string",
+					"required": true
+				}
+			},
+			"update": {
+				"firstName": {
+					"type": "string",
+					"required": false
+				},
+				"lastName": {
+					"type": "string",
+					"required": false
+				},
+				"email": {
+					"type": "string",
+					"required": false
+				},
+				"password": {
+					"type": "string",
+					"required": false
+				}
 			}
 		}
 	}
