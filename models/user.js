@@ -1,7 +1,7 @@
 var mongoose = require('mongoose'),
-	_ = require('underscore');
+	bcrypt = require('bcrypt');
 
-mongoose.connect('mongodb://localhost/scheduler');
+//mongoose.connect('mongodb://localhost/scheduler');
 
 function validateName(val) {
 	return val.length >= 2 && val.length <= 35;
@@ -67,15 +67,38 @@ var userSchema = mongoose.Schema({
 		required: true,
 		validate: [
 			{ validator: validatePassword, msg: 'Password too short' },
-			{ validator: validatePasswordWeak, msg: 'Password is not weak' },
-			{ validator: validatePasswordMedium, msg: 'Password is not medium' },
-			{ validator: validatePasswordStrong, msg: 'Password is not strong' },
+			//{ validator: validatePasswordWeak, msg: 'Password is not weak' },
+			//{ validator: validatePasswordMedium, msg: 'Password is not medium' },
+			//{ validator: validatePasswordStrong, msg: 'Password is not strong' },
 		],
 	},
 },
 {
 	collection: 'user'
 });
+
+userSchema.pre('save', function(next) {
+	var user = this;
+
+	if(!user.isModified('password')) { return next(); }
+
+	bcrypt.genSalt(10, function(err, salt) {
+		bcrypt.hash(user.password, salt, function(err, hash) {
+			if(err) { return next(err); }
+
+			user.password = hash;
+			next();
+		});
+	});
+});
+
+userSchema.methods.comparePassword = function(candidatePassword, callBack) {
+	bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+        if (err) { return callBack(err) };
+        
+        callBack(null, isMatch);
+    });
+};
 
 userSchema.virtual('userID').get(function() {
 	return this._id;

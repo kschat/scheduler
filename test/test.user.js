@@ -1,10 +1,9 @@
-var assert = require("assert"),
+var should = require('should'),
 	User = require('../models/user'),
-	mongoose = require('mongoose'),
-	bcrypt = require('bcrypt');
+	mongoose = require('mongoose');
 
 describe('User', function() {
-	//mongoose.connect('mongodb://localhost/scheduler');
+	mongoose.connect('mongodb://localhost/scheduler');
 	var db = mongoose.connection,
 		user;
 
@@ -14,20 +13,16 @@ describe('User', function() {
 			if(err) throw err;
 		});
 
-		bcrypt.genSalt(10, function(err, salt) {
-			bcrypt.hash('testPassword', salt, function(err, hash) {
-				user = new User({ 
-					firstName: 'test first name',
-					lastName: 'test last name',
-					email: 'test@test.com',
-					password: hash,
-				});
+		user = new User({ 
+			firstName: 'test first name',
+			lastName: 'test last name',
+			email: 'test@test.com',
+			password: 'testpassword',
+		});
 
-				user.save(function(err, user) {
-					assert.ifError(err);
-					done();
-				});
-			});
+		user.save(function(err, user) {
+			should.not.exist(err);
+			done();
 		});
 	});
 
@@ -38,7 +33,7 @@ describe('User', function() {
 
 	describe('firstName', function() {
 		it('should return "test first name"', function() {
-			assert.equal(user.firstName, 'test first name');
+			user.firstName.should.equal('test first name');
 		});
 	});
 
@@ -46,17 +41,38 @@ describe('User', function() {
 	describe('#find()', function() {
 		it('should not throw an error', function(done) {
 			User.find(function(err, users) {
-				assert.ifError(err);
+				should.not.exist(err);
 				done();
 			});
 		});
 
 		it('should find a user with the first name "test first name" and email "test@test.com"', function(done) {
 			User.find({firstName: 'test first name', email: 'test@test.com'}, function(err, queriedUsers) {
-				assert.ifError(err);
-				//assert.strictEqual(queriedUsers.length, 1, 'The length was not 1');
+				should.not.exist(err);
+				queriedUsers.should.not.be.empty;
+				queriedUsers.should.have.length(1);
 				done();
 			})
+		});
+	});
+
+	describe('#comparePassword(canidatePassword, callBack)', function() {
+		it('should evaluate to a match', function(done) { 
+			user.comparePassword('testpassword', function(err, isMatch) {
+				if(err) { throw err; }
+
+				isMatch.should.equal(true);
+				done();
+			});
+		});
+
+		it('should not evaluate to a match', function(done) {
+			user.comparePassword('wrongpassword', function(err, isMatch) {
+				if(err) { throw err; }
+
+				isMatch.should.equal(false);
+				done();
+			});
 		});
 	});
 });
