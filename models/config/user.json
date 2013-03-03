@@ -1,13 +1,33 @@
 {
-	"methods": [ "GET" ],
+	"methods": [ "GET", "PUT", "OPTIONS" ],
 	"params": {
-		"limit": {
-			"type": "number",
-			"required": false
+		"GET": {
+			"limit": {
+				"type": "number",
+				"required": false
+			},
+			"email": {
+				"type": "string",
+				"required": false
+			}
 		},
-		"email": {
-			"type": "string",
-			"required": true
+		"PUT": {
+			"firstName": {
+				"type": "string",
+				"required": true
+			},
+			"lastName": {
+				"type": "string",
+				"required": true
+			},
+			"email": {
+				"type": "string",
+				"required": true
+			},
+			"password": {
+				"type": "string",
+				"required": true
+			}
 		}
 	}
 }

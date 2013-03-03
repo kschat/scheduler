@@ -5,7 +5,7 @@ var should = require('should'),
 describe('User', function() {
 	mongoose.connect('mongodb://localhost/scheduler');
 	var db = mongoose.connection,
-		user;
+		user, user1, user2;
 
 	//Before each test rebuild the data in the database to query against.
 	beforeEach(function(done) {
