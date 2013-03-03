@@ -1,5 +1,5 @@
 {
-	"methods": [ "get" ],
+	"methods": [ "GET" ],
 	"params": {
 		"limit": {
 			"type": "number",
