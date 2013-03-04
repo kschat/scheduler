@@ -1,7 +1,8 @@
 var fs = require('fs'),
 	path = require('path'),
 	mongoose = require('mongoose'),
-	_ = require('underscore');
+	_ = require('underscore'),
+	crypto = require('crypto');
 
 mongoose.connect('mongodb://localhost/scheduler');
 var db = mongoose.connection;
@@ -126,6 +127,42 @@ function getOptions(model) {
 	}
 
 	return { error: false, settings: settings };
+}
+
+function authenticateRequest(APIKey, clientHash, req, callBack) {
+	var APIUser = require('../models/APIUser'),
+	callBack = callBack || function(err, pKey) {
+		if(err) throw err;
+
+		var serverHash = crypto.createHmac('sha1', pKey.privateKey).update(req).digest('hex');
+		
+	};
+
+	APIUser.findOne({ publicKey: APIKey }, 'privateKey', callBack);
+}
+
+function RESTAuth(req, res, next) {
+	var credetials = req.get('Authorization').split(' ')[1];
+	credetials = new Buffer(credetials, 'base64').toString();
+
+	var APIKey = credetials.split(':')[0],
+		cHash = credetials.split(':')[1],
+		requestData = JSON.stringify(req.body) + JSON.stringify(req.query);
+
+	authenticateRequest(APIKey, cHash, requestData, function(err, pKey) {
+		if(err) throw err;
+
+		if(!_.isEmpty(pKey)) {
+			var serverHash = crypto.createHmac('sha1', pKey.privateKey).update(requestData).digest('hex');
+			if(cHash === serverHash) {
+				next();
+				return;
+			}
+		}
+		
+		res.send(403);
+		return;
+	});
 }
 
 function RESTGet(req, res) {
@@ -370,14 +407,14 @@ exports.init = function init(app) {
 	* Matches: 
 	* /api/<controller>/<id> where the controller is required but the id is optional
 	*/
-	app.post(/^\/api\/([a-zA-Z]+)(?:\/([0-9a-zA-Z]+))?\/?$/, RESTPost);
+	app.post(/^\/api\/([a-zA-Z]+)(?:\/([0-9a-zA-Z]+))?\/?$/, RESTAuth, RESTPost);
 
 	/*
 	* Generic PUT REST implementation.
 	* Matches:
 	* /api/<controller>/<id> where both controller and id are required
 	*/
-	app.put(/^\/api\/([a-zA-Z]+)(?:\/([0-9a-zA-Z]+))\/?$/, RESTPut);
+	app.put(/^\/api\/([a-zA-Z]+)(?:\/([0-9a-zA-Z]+))\/?$/, RESTAuth, RESTPut);
 
 	/*
 	* Generic GET REST implementation. 
@@ -387,7 +424,7 @@ exports.init = function init(app) {
 	* If no id was given, a full list of the controller is returned.
 	* Otherwise returns that specific model instance
 	*/
-	app.get(/^\/api\/([a-zA-Z]+)(?:\/([0-9a-zA-Z]+))?\/?$/, RESTGet);
+	app.get(/^\/api\/([a-zA-Z]+)(?:\/([0-9a-zA-Z]+))?\/?$/, RESTAuth, RESTGet);
 
 	/*
 	* Generic DELETE REST implementation.
@@ -395,9 +432,9 @@ exports.init = function init(app) {
 	* /api/<controller>/<id> where both controller and id are required
 	* 
 	*/
-	app.delete(/^\/api\/([a-zA-Z]+)(?:\/([0-9a-zA-Z]+))\/?$/, RESTDelete);
+	app.delete(/^\/api\/([a-zA-Z]+)(?:\/([0-9a-zA-Z]+))\/?$/, RESTAuth, RESTDelete);
 
-	app.options(/^\/api\/([a-zA-Z]+)?\/?/, RESTOptions);
+	app.options(/^\/api\/([a-zA-Z]+)?\/?/, RESTAuth, RESTOptions);
 
-	app.all(/^\/api\/?(.+)?$/, RESTCatchAll);
+	app.all(/^\/api\/?(.+)?$/, RESTAuth, RESTCatchAll);
 }
