@@ -5,13 +5,19 @@ block content
 		.container
 			.span2
 			.span6.hero-unit-landing
-				form(action="/user/signup", method="POST")
+				form(action="/api/user", method="POST")
 					fieldset
+						label First name
+						input.span5(type='text', name='firstName', placeholder='Email')
+
+						label Last name
+						input.span5(type='text', name='lastName', placeholder='Email')
+
 						label Email
-						input.span5(type='text', placeholder='Email')
+						input.span5(type='text', name='email', placeholder='Email')
 
 						label Password
-						input.span5(type='password', placeholder='Password')
+						input.span5(type='password', name='password', placeholder='Password')
 
 						label Repeat password
 						input.span5(type='password', placeholder='Repeat password')

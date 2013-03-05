@@ -61,10 +61,10 @@ app.use(function(req, res) {
 				'/css/mainStyle.css',
 			],
 			scripts: [
-				'/js/jquery-1.9.1.min.js',
-				'/js/bootstrap-transition.js',
-				'/js/bootstrap-collapse.js',
-				'/js/bootstrap-modal.js',
+				'/js/libs/jquery/jquery-1.9.1.min.js',
+				'/js/libs/bootstrap/bootstrap-transition.js',
+				'/js/libs/bootstrap/bootstrap-collapse.js',
+				'/js/libs/bootstrap/bootstrap-modal.js',
 			]
 		},
  	});
