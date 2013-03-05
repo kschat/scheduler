@@ -75,8 +75,8 @@ var userSchema = mongoose.Schema({
 		required: true,
 		validate: [
 			{ validator: validatePassword, msg: 'Password too short' },
-			{ validator: validatePasswordWeak, msg: 'Password is not weak' },
-			{ validator: validatePasswordMedium, msg: 'Password is not medium' },
+			//{ validator: validatePasswordWeak, msg: 'Password is not weak' },
+			//{ validator: validatePasswordMedium, msg: 'Password is not medium' },
 			{ validator: validatePasswordStrong, msg: 'Password is not strong' },
 		],
 	},

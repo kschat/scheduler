@@ -84,7 +84,7 @@ exports.init = function init(app) {
 				return;
 			}
 
-			res.send(req.query);
+			res.send(users);
 		});
 
 	});

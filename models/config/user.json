@@ -3,7 +3,7 @@
 	"params": {
 		"limit": {
 			"type": "number",
-			"required": true
+			"required": false,
 		}
 	}
 }
