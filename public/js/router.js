@@ -5,12 +5,13 @@ define([
 	'views/user/signUp',
 	'views/user/signIn',
 	'models/user'
-], function($, _, Backbone, SignupView, SignInView, User) {
+], function($, _, Backbone, SignupView, SigninView, User) {
 	var AppRouter = Backbone.Router.extend({
 		routes: {
 			'login': 	'loginView',
 			'signup': 	'signup',
-			'': 	'default'
+			'home': 	'default',
+			'': 		'default'
 		}
 	});
 
@@ -18,21 +19,19 @@ define([
 		var appRouter = new AppRouter;
 
 		appRouter.on('route:default', function() {
-			console.log('default');
 			var user = new User(),
-				signupView = new SignupView({ model: user}),
-				signinView = new SignInView({ model: user});
+				signupView = new SignupView({ model: user }),
+				signinView = new SigninView({ model: user });
 		});
 
 		appRouter.on('route:loginView', function() {
-			console.log('login');
 			var user = new User(),
-				signinView = new SignInView({ model: user});
+				signinView = new SigninView({ el: '#signin-page-form', model: user });
 		});
 
 		appRouter.on('route:signup', function() {
 			var user = new User(),
-				signupView = new SignupView({ model: user});
+				signupView = new SignupView({ el: '#signup-page-form', model: user });
 		});
 
 		Backbone.history.start({pushState: true});

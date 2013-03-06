@@ -22,7 +22,8 @@ exports.init = function init(app) {
 
 	//Index page route
 	app.get('/(home)?', function(req, res){
-		options.loggedIn = req.session.loggedIn; 
+		options.loggedIn = req.session.loggedIn || false;
+		console.log(options.loggedIn);
 		res.render('home', options);
 	});
 
@@ -36,11 +37,12 @@ exports.init = function init(app) {
 						res.render('../views/about.jade', options);
 						return;
 					}
-					
+					req.session.loggedIn = false;
 					res.send({error: true, message: 'Invalid email or password'});
 				});
 			}
 			else {
+				req.session.loggedIn = false;
 				res.send({error: true, message: 'Invalid email or password'});
 			}
 		});
@@ -48,11 +50,11 @@ exports.init = function init(app) {
 
 	app.get('/logout', function(req, res) {
 		req.session.loggedIn = false;
-		res.redirect('back');
+		res.redirect('/');
 	});
 
 	app.get('/about', function(req, res) {
-		options.loggedIn = req.session.loggedIn;
+		options.loggedIn = req.session.loggedIn || false;
 		res.render(app.get('views') + '/about', options);
 	});
 
@@ -61,11 +63,10 @@ exports.init = function init(app) {
 			res.redirect('back');
 		}
 		else {
-			options.loggedIn = req.session.loggedIn;
+			options.loggedIn = req.session.loggedIn || false;
 			if(fs.existsSync(app.get('views') + '/' + req.params + '.jade')) {
 				res.render(app.get('views') + '/' + req.params, options);
 			}
 		}
 	});
-
 }

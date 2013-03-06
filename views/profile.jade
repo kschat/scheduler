@@ -1,0 +1,21 @@
+extends layouts/default-layout
+
+block content
+	.container
+		.row
+			.span3
+				ul.nav.nav-list
+					li.nav-header Profile
+					li.active 
+						a.active(href="#") User information
+					li
+						a(href="#") Schedules
+
+			.span9
+				h3 User information
+				.row
+					.span3
+						img(src="/img/defaultProfile.jpg")
+					.span3
+						h4 Name
+						p Kyle Schattler

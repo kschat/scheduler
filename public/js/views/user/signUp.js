@@ -7,7 +7,6 @@ define([
 ], function($, _, Backbone, Router, User) {
 	var SignupView = Backbone.View.extend({
 		initialize: function(options) {
-			this.router = Backbone.Router;
 			this.model = options.model;
 			this.$errorMessage = this.$el.find('#signup-error');
 
@@ -33,7 +32,7 @@ define([
 			return false;
 		},
 		signupSuccess: function(model, response, options) {
-			this.router.navigate('/about');
+			window.location.href = '/about';
 		},
 		signup: function() {
 			this.render();
