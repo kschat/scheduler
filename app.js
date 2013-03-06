@@ -54,18 +54,13 @@ app.use(function(req, res) {
  	res.render('error', {
  		title: 'Scheduler',
  		error: 'Page not found',
+ 		loggedIn: false,
 		links: {
 			styles: [
 				'/css/bootstrap.css',
 				'/css/bootstrap-responsive.css',
 				'/css/mainStyle.css',
 			],
-			scripts: [
-				'/js/libs/jquery/jquery-1.9.1.min.js',
-				'/js/libs/bootstrap/bootstrap-transition.js',
-				'/js/libs/bootstrap/bootstrap-collapse.js',
-				'/js/libs/bootstrap/bootstrap-modal.js',
-			]
 		},
  	});
  });

@@ -2,10 +2,12 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
+	'router',
 	'models/user'
-], function($, _, Backbone, User) {
+], function($, _, Backbone, Router, User) {
 	var SigninView = Backbone.View.extend({
 		initialize: function(options) {
+			this.router = Backbone.Router.extend();
 			this.model = options.model;
 			this.$errorMessage = this.$el.find('#signin-error');
 
@@ -31,8 +33,6 @@ define([
 				this.renderError(data.message);
 				return;
 			}
-
-			window.location = '/about';
 
 		},
 		signin: function() {

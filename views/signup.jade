@@ -5,7 +5,11 @@ block content
 		.container
 			.span2
 			.span6.hero-unit-landing
-				form(action="/api/user", method="POST")
+				h2 Sign up
+				form#signup-form(action="/api/user", method="POST")
+					#signup-error.alert.alert-error(style="display:none;")
+						p
+
 					fieldset
 						label First name
 						input.span5(type='text', name='firstName', placeholder='Email')
@@ -23,5 +27,5 @@ block content
 						input.span5(type='password', placeholder='Repeat password')
 						br
 
-						button.btn(type='submit') Sign up
+						button#signup-btn.btn(type='submit') Sign up
 			.span2

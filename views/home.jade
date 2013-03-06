@@ -5,7 +5,8 @@ block content
 		.hero-unit-landing
 			h1 Scheduling
 			p quick, easy, efficient
-			a(class='btn', role='button', data-toggle='modal', href='#signUp') Sign up
+			- if(loggedIn == false)
+				a(class='btn', role='button', data-toggle='modal', href='#signUp') Sign up
 
 		.row.marketing
 			.span4

@@ -5,14 +5,18 @@ block content
 		.container
 			.span2
 			.span6.hero-unit-landing
-				form
+				h2 Log in
+				form#signin-form(action="/login", method="POST")
+					#signin-error.alert.alert-error(style="display:none;")
+						p
+
 					fieldset
 						label Email
-						input(type='text', placeholder='Email', class='span5')
+						input(type='text', name="email", placeholder='Email', class='span5')
 
 						label Password
-						input(type='password', placeholder='Password', class='span5')
+						input(type='password', name="password", placeholder='Password', class='span5')
 						br 
 
-						button.btn.btn-danger(type='submit') Log in
+						button#signin-btn.btn(type='submit') Log in
 			.span2

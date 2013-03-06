@@ -10,6 +10,7 @@ exports.init = function init(app) {
 	var options = {
 			title: 'Scheduler',
 			isPage: true,
+			loggedIn: false,
 			links: {
 				styles: [
 					'css/bootstrap.css',
@@ -21,6 +22,7 @@ exports.init = function init(app) {
 
 	//Index page route
 	app.get('/(home)?', function(req, res){
+		options.loggedIn = req.session.loggedIn; 
 		res.render('home', options);
 	});
 
@@ -30,23 +32,40 @@ exports.init = function init(app) {
 				user.comparePassword(req.body.password, function(err, isMatch) {
 					if(err) { res.send(405); }
 					if(isMatch) {
+						req.session.loggedIn = true;
 						res.render('../views/about.jade', options);
 						return;
 					}
 					
-					res.send({error: true, message: 'Error: invalid email or password'});
+					res.send({error: true, message: 'Invalid email or password'});
 				});
 			}
 			else {
-				res.send({error: true, message: 'Error: invalid email or password'});
+				res.send({error: true, message: 'Invalid email or password'});
 			}
 		});
 	});
 
-	//Route for the rest of the static landing pages
-	app.get(/\/(login|signup|about)/, function(req, res, next) {
-		if(fs.existsSync(app.get('views') + '/' + req.params + '.jade')) {
-			res.render(app.get('views') + '/' + req.params, options);
+	app.get('/logout', function(req, res) {
+		req.session.loggedIn = false;
+		res.redirect('back');
+	});
+
+	app.get('/about', function(req, res) {
+		options.loggedIn = req.session.loggedIn;
+		res.render(app.get('views') + '/about', options);
+	});
+
+	app.get(/\/(login|signup)/, function(req, res, next) {
+		if(req.session.loggedIn) {
+			res.redirect('back');
+		}
+		else {
+			options.loggedIn = req.session.loggedIn;
+			if(fs.existsSync(app.get('views') + '/' + req.params + '.jade')) {
+				res.render(app.get('views') + '/' + req.params, options);
+			}
 		}
 	});
+
 }

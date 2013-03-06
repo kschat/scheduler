@@ -2,10 +2,12 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
+	'router',
 	'models/user'
-], function($, _, Backbone, User) {
+], function($, _, Backbone, Router, User) {
 	var SignupView = Backbone.View.extend({
 		initialize: function(options) {
+			this.router = Backbone.Router;
 			this.model = options.model;
 			this.$errorMessage = this.$el.find('#signup-error');
 
@@ -31,7 +33,7 @@ define([
 			return false;
 		},
 		signupSuccess: function(model, response, options) {
-			window.location = '/about';
+			this.router.navigate('/about');
 		},
 		signup: function() {
 			this.render();
