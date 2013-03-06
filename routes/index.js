@@ -1,4 +1,5 @@
-var fs = require('fs');
+var fs = require('fs'),
+	User = require('../models/user');
 
 /*
  * Static page route module
@@ -15,18 +16,31 @@ exports.init = function init(app) {
 					'css/bootstrap-responsive.css',
 					'css/mainStyle.css',
 				],
-				scripts: [
-					'js/libs/jquery/jquery-1.9.1.min.js',
-					'js/libs/bootstrap/bootstrap-transition.js',
-					'js/libs/bootstrap/bootstrap-collapse.js',
-					'js/libs/bootstrap/bootstrap-modal.js',
-				]
 			},
 		};
 
 	//Index page route
 	app.get('/(home)?', function(req, res){
 		res.render('home', options);
+	});
+
+	app.post('/login', function(req, res) {
+		User.findOne({ email: req.body.email }, function(err, user) {
+			if(user) {
+				user.comparePassword(req.body.password, function(err, isMatch) {
+					if(err) { res.send(405); }
+					if(isMatch) {
+						res.render('../views/about.jade', options);
+						return;
+					}
+					
+					res.send({error: true, message: 'Error: invalid email or password'});
+				});
+			}
+			else {
+				res.send({error: true, message: 'Error: invalid email or password'});
+			}
+		});
 	});
 
 	//Route for the rest of the static landing pages

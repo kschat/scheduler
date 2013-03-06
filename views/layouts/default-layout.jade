@@ -12,7 +12,7 @@ html(lang="en")
         title= title
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         +styles(links.styles)
-        +scripts(links.scripts)
+        script(data-main="js/main", src="js/libs/require/require-2.1.5.min.js")
     body
         block header
             include ../header.jade
