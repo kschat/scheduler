@@ -22,4 +22,12 @@ exports.init = function init(app) {
 		options.loggedIn = req.session.loggedIn;
 		res.render(app.get('views') + '/course/courses', options);
 	});
+
+	app.get(/^\/courses\/search?$/, function(req, res) {
+		//if(!req.session.loggedIn) {
+		//	res.redirect('back');
+		//}
+		options.loggedIn = req.session.loggedIn;
+		res.render(app.get('views') + '/course/advanced-search', options);
+	});
 };

@@ -5,14 +5,17 @@ define([
 	'views/user/signUp',
 	'views/user/signIn',
 	'views/course/search',
-	'models/user'
-], function($, _, Backbone, SignupView, SigninView, SearchView, User) {
+	'views/course/courseList',
+	'models/user',
+	'collections/courseCollection'
+], function($, _, Backbone, SignupView, SigninView, SearchView, CourseListView, User, CourseCollection) {
 	var AppRouter = Backbone.Router.extend({
 		routes: {
 			'login': 			'loginView',
 			'signup': 			'signup',
 			'home': 			'default',
 			'user/:profile': 	'profile',
+			'courses': 			'courses',
 			'': 				'default'
 		}
 	});
@@ -37,8 +40,12 @@ define([
 		});
 
 		appRouter.on('route:profile', function() {
-			console.log('user profile');
 			var searchView = new SearchView();
+		});
+
+		appRouter.on('route:courses', function() {
+			console.log('courses');
+			var courseListView = new CourseListView({ collection: new CourseCollection() });
 		});
 
 		Backbone.history.start({pushState: true});
