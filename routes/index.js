@@ -34,7 +34,7 @@ exports.init = function init(app) {
 					if(err) { res.send(405); }
 					if(isMatch) {
 						req.session.loggedIn = true;
-						res.render('../views/about.jade', options);
+						res.render('../views/user/profile.jade', options);
 						return;
 					}
 					req.session.loggedIn = false;

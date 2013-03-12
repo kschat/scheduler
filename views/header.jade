@@ -12,7 +12,13 @@
 				ul.nav.pull-right
 					li: a(href='/about') About
 					- if(loggedIn == true)
-						li: a(data-toggle='modal', href='/logout') Log out
+						li.dropdown
+							a.dropdown-toggle(data-toggle="dropdown", href="#") Account 
+								b.caret
+							ul.dropdown-menu(role="menu", aria-labelledby="dropdownMenu")
+								li
+									a(tabindex="-1", href="/user/profile") Profile
+									a(tabindex="-1", href="/logout") Logout
 					- else
 						li: a(data-toggle='modal', href='#logIn') Log in
 - if(loggedIn == false)

@@ -1,4 +1,4 @@
-extends layouts/default-layout
+extends ../layouts/signedin-layout
 
 block content
 	.container
@@ -9,7 +9,7 @@ block content
 					li.active 
 						a.active(href="#") User information
 					li
-						a(href="#") Schedules
+						a(href="/user/schedules") Schedules
 
 			.span9
 				h3 User information
@@ -19,3 +19,9 @@ block content
 					.span3
 						h4 Name
 						p Kyle Schattler
+
+						h4 Email
+						p kyleschattler@gmail.com
+
+						h4 SIS account
+						p kps6

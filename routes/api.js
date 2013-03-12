@@ -69,7 +69,8 @@ function filterOptions(options, model) {
 
 			if(property === 'limit') { query[property](option[property]); }
 			else {
-				query.where(property).equals(option[property]);
+				var re = new RegExp(option[property], 'i');
+				query.where(property).regex(re);
 			}
 		}
 	}

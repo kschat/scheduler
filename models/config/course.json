@@ -1,0 +1,95 @@
+{
+	"methods": [ "GET", "PUT", "OPTIONS", "DELETE", "POST" ],
+	"params": {
+		"GET": {
+			"limit": {
+				"type": "number",
+				"required": false
+			},
+			"courseNumber": {
+				"type": "string",
+				"required": false
+			}
+		},
+		"PUT": {
+			"courseNumber": {
+				"type": "string",
+				"required": true
+			},
+			"instructor": {
+				"type": "string",
+				"required": true
+			},
+			"days": {
+				"type": "[]",
+				"required": true
+			},
+			"times": {
+				"type": "[]",
+				"required": true
+			},
+			"location": {
+				"type": "string",
+				"required": true
+			},
+			"credits": {
+				"type": "string",
+				"required": true
+			}
+		},
+		"POST": {
+			"create": {
+				"courseNumber": {
+					"type": "string",
+					"required": true
+				},
+				"instructor": {
+					"type": "string",
+					"required": true
+				},
+				"days": {
+					"type": "[]",
+					"required": true
+				},
+				"times": {
+					"type": "[]",
+					"required": true
+				},
+				"location": {
+					"type": "string",
+					"required": true
+				},
+				"credits": {
+					"type": "string",
+					"required": true
+				}
+			},
+			"update": {
+				"courseNumber": {
+					"type": "string",
+					"required": false
+				},
+				"instructor": {
+					"type": "string",
+					"required": false
+				},
+				"days": {
+					"type": "[]",
+					"required": false
+				},
+				"times": {
+					"type": "[]",
+					"required": false
+				},
+				"location": {
+					"type": "string",
+					"required": false
+				},
+				"credits": {
+					"type": "string",
+					"required": false
+				}
+			}
+		}
+	}
+}

@@ -4,14 +4,16 @@ define([
 	'backbone',
 	'views/user/signUp',
 	'views/user/signIn',
+	'views/course/search',
 	'models/user'
-], function($, _, Backbone, SignupView, SigninView, User) {
+], function($, _, Backbone, SignupView, SigninView, SearchView, User) {
 	var AppRouter = Backbone.Router.extend({
 		routes: {
-			'login': 	'loginView',
-			'signup': 	'signup',
-			'home': 	'default',
-			'': 		'default'
+			'login': 			'loginView',
+			'signup': 			'signup',
+			'home': 			'default',
+			'user/:profile': 	'profile',
+			'': 				'default'
 		}
 	});
 
@@ -32,6 +34,11 @@ define([
 		appRouter.on('route:signup', function() {
 			var user = new User(),
 				signupView = new SignupView({ el: '#signup-page-form', model: user });
+		});
+
+		appRouter.on('route:profile', function() {
+			console.log('user profile');
+			var searchView = new SearchView();
 		});
 
 		Backbone.history.start({pushState: true});

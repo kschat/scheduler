@@ -16,10 +16,18 @@ exports.init = function init(app) {
 		};
 
 	app.get(/^\/user\/profile\/?$/, function(req, res) {
-		if(!req.session.loggedIn) {
-			res.redirect('back');
-		}
+		//if(!req.session.loggedIn) {
+		//	res.redirect('back');
+		//}
 		options.loggedIn = req.session.loggedIn;
-		res.render(app.get('views') + '/profile', options);
+		res.render(app.get('views') + '/user/profile', options);
+	});
+
+	app.get(/^\/user\/schedules\/?$/, function(req, res) {
+		//if(!req.session.loggedIn) {
+		//	res.redirect('back');
+		//}
+		options.loggedIn = req.session.loggedIn;
+		res.render(app.get('views') + '/user/schedules', options);
 	});
 };

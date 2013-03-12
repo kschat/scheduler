@@ -106,3 +106,4 @@ userSchema.virtual('fullName').get(function() {
 var User = mongoose.model('User', userSchema);
 
 module.exports = User;
+module.exports.schema = userSchema;

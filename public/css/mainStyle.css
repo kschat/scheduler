@@ -36,3 +36,11 @@ color: #5a5a5a;
 .hero-unit-landing li {
   line-height: 30px;
 }
+
+.scheduling-container {
+  margin-top: 60px;
+}
+
+.scheduling-header > .navbar-inner {
+  background: rgba(255, 255, 255, 0.9); /* nice browsers */
+}

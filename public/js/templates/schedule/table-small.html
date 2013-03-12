@@ -1,0 +1,21 @@
+<div class="span4">
+	<table class="table table-bordered table-striped table-hover">
+		<caption>
+			<h4>
+				<a href="">Schedule</a>
+			</h4>
+		<thead>
+			<tr>
+				<th>Class</th>
+				<th>Instructor</th>
+				<th>Credits</th>
+		</thead>
+
+		<tbody>
+			<% schedule.courses.forEach(function(course) { %>
+				<td><%= course.courseNumber %></td>
+				<td><%= course.instructor %></td>
+				<td><%= course.credits %></td>
+			<% }) %>
+	</table>
+</div>

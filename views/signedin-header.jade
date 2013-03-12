@@ -1,0 +1,25 @@
+
+.navbar.navbar-fixed-top.scheduling-header
+	.navbar-inner
+		.container
+			a(href='/home', class='brand') Scheduler
+			.btn.btn-navbar(data-toggle='collapse', data-target='.nav-collapse')
+				span.icon-bar
+				span.icon-bar
+				span.icon-bar
+
+			.nav-collapse.collapse
+				ul.nav.pull-right
+					li: a(href="/schedule") Schedule
+					li: a(href='/about') About
+					li.dropdown
+						a.dropdown-toggle(data-toggle="dropdown", href="#") Account 
+							b.caret
+						ul.dropdown-menu(role="menu", aria-labelledby="dropdownMenu")
+							li
+								a(tabindex="-1", href="/user/profile") Profile
+								a(tabindex="-1", href="/logout") Logout
+			form#course-search.navbar-search.pull-right
+				input#search-textfield(type="text", placeholder="Search for classes...")
+				ul#search-results.dropdown-menu.typeahead(style="display:none;position:absolute;width:220px;top:28px;padding-left: 5px;")
+					li.header Start typing...

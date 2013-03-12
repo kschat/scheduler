@@ -1,0 +1,43 @@
+{
+	"methods": [ "GET", "PUT", "OPTIONS", "DELETE", "POST" ],
+	"params": {
+		"GET": {
+			"limit": {
+				"type": "number",
+				"required": false
+			}
+		},
+		"PUT": {
+			"title": {
+				"type": "string",
+				"required": true
+			},
+			"courses": {
+				"type": "[]",
+				"required": true
+			}
+		},
+		"POST": {
+			"create": {
+				"title": {
+					"type": "string",
+					"required": true
+				},
+				"courses": {
+					"type": "[]",
+					"required": true
+				}
+			},
+			"update": {
+				"title": {
+					"type": "string",
+					"required": false
+				},
+				"courses": {
+					"type": "[]",
+					"required": false
+				}
+			}
+		}
+	}
+}

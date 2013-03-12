@@ -15,8 +15,9 @@ html(lang="en")
         script(data-main="/js/main", src="/js/libs/require/require-2.1.5.min.js")
     body
         block header
-            include ../header.jade
+            include ../signedin-header.jade
         
-        block content
+        .scheduling-container
+            block content
 
         block footer
