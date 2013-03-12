@@ -44,3 +44,13 @@ color: #5a5a5a;
 .scheduling-header > .navbar-inner {
   background: rgba(255, 255, 255, 0.9); /* nice browsers */
 }
+
+.pagehead {
+  background-color: whitesmoke;
+  padding: 10px 0;
+  height: 40px;
+}
+
+.pagehead h2 {
+  margin: 0;
+}

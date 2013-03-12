@@ -2,7 +2,10 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-], function($, _, Backbone) {
+	'views/course/searchNode',
+	'models/course',
+	'collections/courseCollection',
+], function($, _, Backbone, SearchNode, Course, CourseCollection) {
 	var SearchView = Backbone.View.extend({
 		initialize: function(options) {
 			this.$resultDropdown = this.$el.find('#search-results');
@@ -31,18 +34,15 @@ define([
 		appendResults: function(data) {
 			this.$resultDropdown.find('.header').nextAll('li').remove();
 			for(var i=0; i<data.length; i++) {
-				var node = $('<li></li>'),
-					link = $('<a href="/course"></a>');
-
-				link.text(data[i].courseNumber + ' ' + data[i].credits);
-				node.append(link);
-
-				this.$resultDropdown.append(node);
+				var node = new SearchNode({ model: new Course(data[i]) });
 			}
 		},
 		focusSearch: function() {
 			this.$el.addClass('hover');
-			this.$resultDropdown.show();
+			var that = this;
+			this.$el.find('#search-textfield').animate({'width': 350}, 300, 'swing', function() {
+				that.$resultDropdown.show();
+			});
 		},
 		focusDropdown: function() {
 			this.$resultDropdown.addClass('hover');
@@ -59,6 +59,7 @@ define([
 		blurSearch: function() {
 			if(!this.$el.hasClass('hover') && !this.$resultDropdown.hasClass('hover')) {
 				this.$resultDropdown.hide();
+				this.$el.find('#search-textfield').animate({'width': 206}, 500);
 			}
 		},
 		changeSearch: function() {

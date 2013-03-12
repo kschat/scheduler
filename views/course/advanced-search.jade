@@ -1,0 +1,72 @@
+extends ../layouts/signedin-layout
+
+block content
+	.container
+		.row
+			.span3
+				h3 Advanced Search
+			.span9
+				div(style="margin-top: 15px;")
+					form.form-inline
+						.input-append
+							input.input-xxlarge(type="text")
+							button.btn(type="submit") Search
+
+		.row
+			.span12
+				h4 Advanced options
+		.row
+			.span3
+				h5 Year
+			.span9	
+				select
+					option 2013
+					option 2012
+					option 2011
+		.row
+			.span3
+				h5 Semester
+			.span9
+				label.radio
+					input(type="radio", name="semester-option") 
+					| Fall
+
+				label.radio
+					input(type="radio", name="semester-option") 
+					| Spring
+
+				label.radio
+					input(type="radio", name="semester-option") 
+					| Summer
+
+				label.radio
+					input(type="radio", name="semester-option") 
+					| Summer minimester
+		br
+		.row
+			.span3
+				h5 Seat availablilty
+			.span9
+				label.radio
+					input(type="radio", name="seat-option") 
+					| Classes with open seats
+
+				label.radio
+					input(type="radio", name="seat-option") 
+					| Filled classes
+
+				label.radio
+					input(type="radio", name="seat-option") 
+					| All classes
+		br
+		.row
+			.span3
+				h5 Distance classes
+			.span9
+				label.checkbox
+					input(type="checkbox")
+					| Distance only
+		br
+		.row
+			.span9.offset3
+				button.btn(type="submit") Search

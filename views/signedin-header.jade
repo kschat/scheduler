@@ -19,7 +19,7 @@
 							li
 								a(tabindex="-1", href="/user/profile") Profile
 								a(tabindex="-1", href="/logout") Logout
-			form#course-search.navbar-search.pull-right
-				input#search-textfield(type="text", placeholder="Search for classes...")
-				ul#search-results.dropdown-menu.typeahead(style="display:none;position:absolute;width:220px;top:28px;padding-left: 5px;")
-					li.header Start typing...
+				form#course-search.navbar-search.pull-right
+					input#search-textfield(type="text", placeholder="Search for classes...", autocomplete="off")
+					ul#search-results.dropdown-menu.typeahead(style="display:none;position:absolute;width:360px;top:28px;padding-left: 5px;")
+						li.header Start typing...
