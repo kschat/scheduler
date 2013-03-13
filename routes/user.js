@@ -6,6 +6,7 @@ exports.init = function init(app) {
 			title: 'Scheduler',
 			isPage: true,
 			loggedIn: false,
+			searchOn: true,
 			links: {
 				styles: [
 					'/css/bootstrap.css',

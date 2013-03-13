@@ -1,72 +1,86 @@
 extends ../layouts/signedin-layout
 
 block content
-	.container
-		.row
-			.span3
-				h3 Advanced Search
-			.span9
-				div(style="margin-top: 15px;")
-					form.form-inline
-						.input-append
-							input.input-xxlarge(type="text")
-							button.btn(type="submit") Search
+	#advanced-search
+		.container
+			.row
+				.span3
+					h3 Advanced Search
+				.span9
+					div(style="margin-top: 15px;")
+						form#advanced-course-search.form-inline(method="GET", action="/api/course")
+							.input-append
+								input#advanced-course-text.input-xxlarge(type="text")
+								button#advanced-course-submit.btn.btn-danger(type="submit") Search
+			.row
+				.span12
+					a#toggle-options(href="#") Hide advanced options
+		hr
+		#advanced-options.container
+			.row
+				.span12
+					h4 Advanced options
+			.row
+				.span3
+					h5 Year
+				.span9	
+					select
+						option 2013
+						option 2012
+						option 2011
+			br
+			.row
+				.span3
+					h5 Semester
+				.span9
+					label.radio
+						input(type="radio", name="semester-option") 
+						| Fall
 
-		.row
-			.span12
-				h4 Advanced options
-		.row
-			.span3
-				h5 Year
-			.span9	
-				select
-					option 2013
-					option 2012
-					option 2011
-		.row
-			.span3
-				h5 Semester
-			.span9
-				label.radio
-					input(type="radio", name="semester-option") 
-					| Fall
+					label.radio
+						input(type="radio", name="semester-option") 
+						| Spring
 
-				label.radio
-					input(type="radio", name="semester-option") 
-					| Spring
+					label.radio
+						input(type="radio", name="semester-option") 
+						| Summer
 
-				label.radio
-					input(type="radio", name="semester-option") 
-					| Summer
+					label.radio
+						input(type="radio", name="semester-option") 
+						| Summer minimester
+			br
+			.row
+				.span3
+					h5 Seat availablilty
+				.span9
+					label.radio
+						input(type="radio", name="seat-option") 
+						| Classes with open seats
 
-				label.radio
-					input(type="radio", name="semester-option") 
-					| Summer minimester
-		br
-		.row
-			.span3
-				h5 Seat availablilty
-			.span9
-				label.radio
-					input(type="radio", name="seat-option") 
-					| Classes with open seats
+					label.radio
+						input(type="radio", name="seat-option") 
+						| Filled classes
 
-				label.radio
-					input(type="radio", name="seat-option") 
-					| Filled classes
+					label.radio
+						input(type="radio", name="seat-option") 
+						| All classes
+			br
+			.row
+				.span3
+					h5 Distance classes
+				.span9
+					label.checkbox
+						input(type="checkbox")
+						| Distance only
+			br
+			.row
+				.span9.offset3
+					button.btn.btn-danger(type="submit") Search
+			hr
 
-				label.radio
-					input(type="radio", name="seat-option") 
-					| All classes
-		br
-		.row
-			.span3
-				h5 Distance classes
-			.span9
-				label.checkbox
-					input(type="checkbox")
-					| Distance only
-		br
-		.row
-			.span9.offset3
-				button.btn(type="submit") Search
+		#results.container(style="display:none;")
+			.row
+				.span12
+					#courses
+						#courses-error.alert.alert-danger(style="display:none; text-align: center;")
+						table#course-table.table.table-bordered.table-striped.table-hover

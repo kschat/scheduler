@@ -2,4 +2,16 @@ extends ../layouts/signedin-layout
 
 block content
 	.container
-		table#course-table.table.table-bordered.table-striped.table-hover
+		.row
+			.span3
+				h3 Filter
+			.span9
+				div(style="margin-top: 15px;")
+					form.form-inline
+						.input-append
+							input.input-xxlarge(type="text")
+							button.btn.btn-danger(type="submit") Search
+	hr
+	.container
+		#courses
+			table#course-table.table.table-bordered.table-striped.table-hover(style="display:none;")
