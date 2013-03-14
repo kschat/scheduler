@@ -4,12 +4,13 @@ define([
 	'backbone',
 	'views/user/signUp',
 	'views/user/signIn',
+	'views/user/profile',
 	'views/course/search',
 	'views/course/courseList',
 	'views/course/advancedCourseSearch',
 	'models/user',
 	'collections/courseCollection'
-], function($, _, Backbone, SignupView, SigninView, SearchView, CourseListView, 
+], function($, _, Backbone, SignupView, SigninView, ProfileView, SearchView, CourseListView, 
 		AdvancedSearchView, User, CourseCollection) {
 	var AppRouter = Backbone.Router.extend({
 		routes: {
@@ -43,7 +44,9 @@ define([
 		});
 
 		appRouter.on('route:profile', function() {
-			var searchView = new SearchView();
+			var user = new User(),
+				searchView = new SearchView(),
+				profileView = new ProfileView({ model: user });
 		});
 
 		appRouter.on('route:courses', function() {

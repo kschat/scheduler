@@ -9,6 +9,10 @@
 			"email": {
 				"type": "string",
 				"required": false
+			},
+			"userName": {
+				"type": "string",
+				"required": false
 			}
 		},
 		"PUT": {
@@ -17,6 +21,10 @@
 				"required": true
 			},
 			"lastName": {
+				"type": "string",
+				"required": true
+			},
+			"userName": {
 				"type": "string",
 				"required": true
 			},
@@ -39,6 +47,10 @@
 					"type": "string",
 					"required": true
 				},
+				"userName": {
+					"type": "string",
+					"required": true
+				},
 				"email": {
 					"type": "string",
 					"required": true
@@ -54,6 +66,10 @@
 					"required": false
 				},
 				"lastName": {
+					"type": "string",
+					"required": false
+				},
+				"userName": {
 					"type": "string",
 					"required": false
 				},

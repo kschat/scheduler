@@ -50,6 +50,13 @@ var userSchema = mongoose.Schema({
 			validateName, 'Error with last name',
 		],
 	},
+	userName: {
+		type: String, 
+		required: true,
+		index: {
+			unique: true,
+		},
+	},
 	email: {
 		type: String, 
 		required: true, 

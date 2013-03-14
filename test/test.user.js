@@ -16,6 +16,7 @@ describe('User', function() {
 		user = new User({ 
 			firstName: 'test first name',
 			lastName: 'test last name',
+			userName: 'testUserName',
 			email: 'test@test.com',
 			password: 'testpassword',
 		});

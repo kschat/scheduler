@@ -138,6 +138,14 @@ ul.dropdown-menu > li > a > i {
    color: #ffffff;
 }
 
+.btn-flat-inv {
+  background-color: #ddd;
+}
+
+.btn-flat-inv:hover {
+  background-color: #ddd;
+}
+
 .dropdown-menu.schedule-dropdown {
   min-width: 300px;
   margin-top: 6px;

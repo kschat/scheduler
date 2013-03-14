@@ -1,4 +1,5 @@
-
+var mongoose = require('mongoose'),
+	User = require('../models/user');
 
 exports.init = function init(app) {
 	//Default options to pass to the layout template
@@ -17,12 +18,21 @@ exports.init = function init(app) {
 			},
 		};
 
-	app.get(/^\/user\/profile\/?$/, function(req, res) {
+	app.get(/^\/user\/([0-9a-zA-Z]+)\/?$/, function(req, res) {
 		//if(!req.session.loggedIn) {
 		//	res.redirect('back');
 		//}
-		options.loggedIn = req.session.loggedIn;
-		res.render(app.get('views') + '/user/profile', options);
+		User.findOne({ userName: req.params[0] }, function(err, user) {
+			if(user) {
+				options.loggedIn = req.session.loggedIn;
+				options.userName = req.params[0];
+				res.render(app.get('views') + '/user/profile', options);
+			}
+			else {
+				options.error = 'User not found';
+				res.render(app.get('views') + '/error', options);
+			}
+		});
 	});
 
 	app.get(/^\/user\/schedules\/?$/, function(req, res) {
