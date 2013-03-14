@@ -34,7 +34,7 @@ block content
 					h5 Semester
 				.span9
 					label.radio
-						input(type="radio", name="semester-option") 
+						input(type="radio", name="semester-option", checked="checked") 
 						| Fall
 
 					label.radio
@@ -54,7 +54,7 @@ block content
 					h5 Seat availablilty
 				.span9
 					label.radio
-						input(type="radio", name="seat-option") 
+						input(type="radio", name="seat-option", checked="checked") 
 						| Classes with open seats
 
 					label.radio
@@ -73,9 +73,6 @@ block content
 						input(type="checkbox")
 						| Distance only
 			br
-			.row
-				.span9.offset3
-					button.btn.btn-danger(type="submit") Search
 			hr
 
 		#results.container(style="display:none;")

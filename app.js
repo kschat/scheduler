@@ -60,6 +60,7 @@ app.use(function(req, res) {
 				'/css/bootstrap.css',
 				'/css/bootstrap-responsive.css',
 				'/css/mainStyle.css',
+				'/css/font-awesome.min.css',
 			],
 		},
  	});

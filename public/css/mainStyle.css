@@ -3,10 +3,6 @@
   margin: 0 auto;
 }
 
-.modal-form {
-  
-}
-
 .marketing {
 text-align: center;
 color: #5a5a5a;
@@ -38,7 +34,7 @@ color: #5a5a5a;
 }
 
 .scheduling-container {
-  margin-top: 60px;
+  margin-top: 65px;
 }
 
 .scheduling-header > .navbar-inner {
@@ -53,4 +49,133 @@ color: #5a5a5a;
 
 .pagehead h2 {
   margin: 0;
+}
+
+.icon-chevron-right {
+  padding-top: 3px;
+}
+
+.input-btn {
+  position:absolute;
+  display: block;
+  top:5px;
+  right:9px;
+}
+
+a.input-btn {
+  text-decoration: none;
+}
+
+.input-btn > i {
+  color: #999;
+}
+
+.input-btn > i:hover {
+  color: #BF5343;
+}
+
+.navbar .nav > li.nav-btn > a {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 4px 6px;
+  margin-top: 6px;
+
+  transition: color .8s, border-color .8s;
+  -webkit-transition: color .8s, border-color .8s;
+}
+
+.navbar .nav > li.nav-btn > a:hover {
+  border: 1px solid #aaa;
+  color: #333;
+
+  transition: color .8s, border-color .8s;
+  -webkit-transition: color .8s, border-color .8s;
+}
+
+ul.dropdown-menu > li > a > i {
+  margin-right: 6px;
+}
+
+.navbar .divider-vertical {
+  border-right: 1px solid #eeeeee;
+  border-left: 1px solid #dddddd;
+}
+
+.navbar .btn-navbar {
+  background-color: #BF5343;
+  background-image: none;
+  padding: 4px 12px;
+}
+
+.navbar .btn-navbar:hover {
+  background-color: white;
+  border: 1px solid #bbb;
+}
+
+.navbar .btn-navbar:hover,
+.navbar .btn-navbar span.icon-bar {
+  color: #BF5343;
+  background-image: none;
+}
+
+.btn-flat {
+  background-image: none;
+  box-shadow: none;
+}
+
+.btn.btn-disabled {
+  background-color: #E8ACA3;
+}
+
+.btn-red {
+  background-color: #BF5343;
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.btn-red:hover {
+   background-color: #AF5042;
+   color: #ffffff;
+}
+
+.dropdown-menu.schedule-dropdown {
+  min-width: 300px;
+  margin-top: 6px;
+}
+
+.dropdown-menu.schedule-dropdown h6 {
+  margin: 0;
+  margin-bottom: 5px;
+  padding: 5px 15px;
+  padding-top: 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.profile {
+}
+
+.profile-header {
+  padding: 15px 10px;
+  margin-right: -20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 1px 5px #ddd;
+}
+
+.profile-header > .span3 > img {
+  border: 1px solid #ccc;
+  padding: 6px;
+}
+
+.no-stretch {
+  -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+     -o-box-sizing: border-box;
+        box-sizing: border-box;
+}
+
+.side-nav-fixed {
+  position: fixed;
+  width: inherit;
 }

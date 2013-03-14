@@ -12,6 +12,7 @@ exports.init = function init(app) {
 					'/css/bootstrap.css',
 					'/css/bootstrap-responsive.css',
 					'/css/mainStyle.css',
+					'/css/font-awesome.min.css',
 				],
 			},
 		};
@@ -20,14 +21,16 @@ exports.init = function init(app) {
 		//if(!req.session.loggedIn) {
 		//	res.redirect('back');
 		//}
+		options.searchOn = true;
 		options.loggedIn = req.session.loggedIn;
 		res.render(app.get('views') + '/course/courses', options);
 	});
 
-	app.get(/^\/courses\/search?$/, function(req, res) {
+	app.get(/^\/courses\/search\/?$/, function(req, res) {
 		//if(!req.session.loggedIn) {
 		//	res.redirect('back');
 		//}
+		options.searchOn = false;
 		options.loggedIn = req.session.loggedIn;
 		res.render(app.get('views') + '/course/advanced-search', options);
 	});

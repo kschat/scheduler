@@ -2,28 +2,31 @@ extends ../layouts/signedin-layout
 
 block content
 	.container
-		.row
-			.span3
-				ul.nav.nav-list
-					li.nav-header Profile
-					li.active 
-						a.active(href="#") User information
-							i.icon-chevron-right.pull-right
-					li
-						a(href="/user/schedules") Schedules
-							i.icon-chevron-right.pull-right
+		.row-fluid
+			.span12
+				.span3
+					ul.nav.nav-list
+						li.nav-header Kyle
+						li.active
+							a.active(href="#") 
+								i.icon-home
+								| Profile
+								i.icon-chevron-right.pull-right
+						li
+							a(href="/user/schedules") 
+								i.icon-calendar
+								| Schedules
+								i.icon-chevron-right.pull-right
 
-			.span9
-				h3 User information
-				.row
-					.span3
-						img(src="/img/defaultProfile.jpg")
-					.span3
-						h4 Name
-						p Kyle Schattler
-
-						h4 Email
-						p kyleschattler@gmail.com
-
-						h4 SIS account
-						p kps6
+				.span9
+					.profile
+						.row-fluid.profile-header.no-stretch
+							.span3
+								img.no-stretch(src="/img/defaultProfile.jpg", style="border-radius: 5px;")
+							.span6
+								h2 Kyle Schattler
+								h5 Web & Application Development
+								p Description
+								a.btn.btn-red.btn-flat(href="#") Add friend
+							.span3
+								a.btn.btn-flat.pull-right(href="#") Edit profile

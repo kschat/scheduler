@@ -15,6 +15,7 @@ define([
 		},
 		render: function() {
 			this.$resultDropdown.hide();
+			$('#adv-btn').tooltip();
 			return this;
 		},
 		resetDropdown: function() {

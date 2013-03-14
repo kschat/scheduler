@@ -3,24 +3,52 @@
 	.navbar-inner
 		.container
 			a(href='/home', class='brand') Scheduler
+			ul.nav
+				li.nav-btn.dropdown
+					a.dropdown-toggle(href='/schedule', data-toggle="dropdown", data-placement="bottom", title="Schedule classes")
+						i.icon-edit
+					ul.dropdown-menu.schedule-dropdown(role="menu", aria-labelledby="dropdownMenu")
+						h6 Scheduling
+						li
+							a(tabindex="-1", href="/schedule/create") 
+								i.icon-pencil
+								| Create schedule
+						li
+							a(tabindex="-1", href="/user/schedules") 
+								i.icon-list
+								| View schedules
+						li
+							a(tabindex="-1", href="/courses/search") 
+								i.icon-search
+								| Search classes
+
+			- if(searchOn === true)
+				.divider-vertical.pull-left
+				form#course-search.navbar-search.pull-left
+					input#search-textfield(type="text", placeholder="Search for classes...", autocomplete="off")
+					ul#search-results.dropdown-menu.typeahead(style="display:none;position:absolute;width:358px;top:28px;padding-left: 5px;")
+						li.header Start typing...
+					a#adv-btn.input-btn(href="/courses/search", data-toggle="tooltip", data-placement="bottom", title="Advanced search")
+						i.icon-cog
+
 			.btn.btn-navbar(data-toggle='collapse', data-target='.nav-collapse')
-				span.icon-bar
-				span.icon-bar
-				span.icon-bar
+				i.icon-reorder
 
 			.nav-collapse.collapse
 				ul.nav.pull-right
-					li: a(href="/schedule") Schedule
-					li: a(href='/about') About
+					li: a(href="/courses") Classes
+					li: a(href="/about") About
 					li.dropdown
 						a.dropdown-toggle(data-toggle="dropdown", href="#") Account 
 							b.caret
 						ul.dropdown-menu(role="menu", aria-labelledby="dropdownMenu")
 							li
-								a(tabindex="-1", href="/user/profile") Profile
-								a(tabindex="-1", href="/logout") Logout
-			- if(searchOn === true)
-				form#course-search.navbar-search.pull-right
-					input#search-textfield(type="text", placeholder="Search for classes...", autocomplete="off")
-					ul#search-results.dropdown-menu.typeahead(style="display:none;position:absolute;width:360px;top:28px;padding-left: 5px;")
-						li.header Start typing...
+								a(tabindex="-1", href="/user/profile") 
+									i.icon-home
+									| Profile
+								a(tabindex="-1", href="/user/schedules") 
+									i.icon-cog
+									| Settings
+								a(tabindex="-1", href="/logout") 
+									i.icon-signout
+									| Logout
