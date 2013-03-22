@@ -3,7 +3,7 @@ var should = require('should'),
 	Course = require('../models/course');
 
 describe('Course model', function() {
-	mongoose.connect('mongodb://localhost/scheduler');
+	//mongoose.connect('mongodb://localhost/scheduler');
 	var course,
 	db = mongoose.connection;
 
@@ -30,6 +30,11 @@ describe('Course model', function() {
 			if(err) throw err;
 			done();
 		});
+	});
+
+	after(function(done) {
+		db.close();
+		done();
 	});
 
 	describe('Add a course', function() {

@@ -15,4 +15,9 @@ describe('REST API routes', function() {
 		console.log(response);
 		done();
 	});
+
+	after(function(done) {
+		db.close();
+		done();
+	});
 });

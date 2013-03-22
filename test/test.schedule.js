@@ -22,6 +22,11 @@ describe('Schedule model', function() {
 		});
 	});
 
+	after(function(done) {
+		db.close();
+		done();
+	});
+
 	describe('Add a course', function() {
 		var course = new Course({
 			courseNumber: 	'CIT 480',

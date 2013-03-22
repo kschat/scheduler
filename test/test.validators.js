@@ -172,6 +172,11 @@ function testValidatePasswordStrong(validPassword, testPassword) {
 }
 
 describe('validators', function() {
+	after(function(done) {
+		db.close();
+		done();
+	});
+	
 	describe('#validateName(val)', testValidateName);
 
 	describe('#validateEmail(val)', testValidateEmail);
