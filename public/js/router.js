@@ -20,6 +20,7 @@ define([
 			'user/:profile': 	'profile',
 			'courses': 			'courses',
 			'courses/search': 	'courseSearch',
+			'schedule/create': 	'scheduleCreate',
 			'': 				'default'
 		}
 	});
@@ -58,7 +59,18 @@ define([
 
 		appRouter.on('route:courseSearch', function() {
 			var courseCollection = new CourseCollection(),
-				advancedSearchView = new AdvancedSearchView({ collection: courseCollection });
+				advancedSearchView = new AdvancedSearchView({ 
+					collection: courseCollection,
+					addable: false 
+				 });
+		});
+
+		appRouter.on('route:scheduleCreate', function() {
+			var courseCollection = new CourseCollection(),
+				advancedSearchView = new AdvancedSearchView({ 
+					collection: courseCollection,
+					addable: true 
+				 });
 		});
 
 		Backbone.history.start({pushState: true});

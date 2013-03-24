@@ -9,7 +9,11 @@ define([
 	var AdvancedSearchView = Backbone.View.extend({
 		initialize: function(options) {
 			this.$searchButton = this.$el.find('#advanced-course-text');
-			this.courseList = new CourseListView({ collection: this.collection });
+			this.courseList = new CourseListView({ 
+				collection: this.collection, 
+				addable: options.addable
+			});
+
 			_.bindAll(this, 'render', 'ajaxDone');
 			this.render();
 		},
@@ -21,7 +25,7 @@ define([
 			'click #toggle-options': 'toggleOptions'
 		},
 		el: '#advanced-search',
-		search: function() {
+		search: function(e) {
 			$.ajax({
 				url: '/api/course?courseNumber=' + this.$searchButton.val(),
 				type: 'GET'
@@ -33,8 +37,8 @@ define([
 			var self = this;
 			this.$el.find('#advanced-options').slideUp(function() {
 				self.$el.find('#toggle-options').text('Show advanced options');
-				self.$el.find('#results').fadeIn(800);
 			});
+			self.$el.find('#results').fadeIn(800);
 		},
 		toggleOptions: function() {
 			var self = this;

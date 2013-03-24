@@ -14,7 +14,7 @@
 								i.icon-pencil
 								| Create schedule
 						li
-							a(tabindex="-1", href="/user/schedules") 
+							a(tabindex="-1", href="/user/#{userName}/schedules") 
 								i.icon-list
 								| View schedules
 						li
@@ -43,10 +43,10 @@
 							b.caret
 						ul.dropdown-menu(role="menu", aria-labelledby="dropdownMenu")
 							li
-								a(tabindex="-1", href="/user/profile") 
+								a(tabindex="-1", href="/user/#{userName}") 
 									i.icon-home
 									| Profile
-								a(tabindex="-1", href="/user/schedules") 
+								a(tabindex="-1", href="/user/#{userName}/schedules") 
 									i.icon-cog
 									| Settings
 								a(tabindex="-1", href="/logout") 

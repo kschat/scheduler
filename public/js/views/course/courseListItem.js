@@ -3,9 +3,11 @@ define([
 	'underscore',
 	'backbone',
 	'text!templates/course/courseListItem.html',
-], function($, _, Backbone, Template) {
+	'text!templates/course/courseAddListItem.html',
+], function($, _, Backbone, Template, AddTemplate) {
 	var CourseListItemView = Backbone.View.extend({
 		initialize: function(options) {
+			this.template = options.addable ? _.template(AddTemplate) : _.template(Template);
 			this.model.on('change', this.render, this);
 			_.bindAll(this, 'render');
 		},
@@ -15,9 +17,6 @@ define([
 
 			return this;
 		},
-		events: {
-		},
-		template: _.template(Template),
 	});
 
 	return CourseListItemView;

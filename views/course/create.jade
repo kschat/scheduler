@@ -1,0 +1,17 @@
+extends ../layouts/signedin-layout
+
+block content
+	.container
+		.row
+			.span3
+				h3 Search class
+			.span9
+					div(style="margin-top: 15px;")
+						form#advanced-course-search.form-inline(method="GET", action="/api/course")
+							.input-append
+								input#advanced-course-text.input-xxlarge(type="text")
+								button#advanced-course-submit.btn.btn-flat.btn-red(type="submit") Search
+		.row
+			.span12.offset3
+				form
+					button.btn.btn-flat.btn-red(type="submit") Create schedule

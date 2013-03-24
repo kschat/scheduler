@@ -9,7 +9,7 @@ define([
 		initialize: function(options) {
 			this.model = new User({ userName: this.$el.attr('id') });
 			this.profileHeader = new ProfileHeaderView({ model: this.model });
-			
+			this.template = _.template($('.profile').html());
 			this.model.on('change', this.render, this);
 
 			_.bindAll(this, 'render', 'fetchSuccess');
@@ -24,7 +24,6 @@ define([
 		events: {
 		},
 		el: '.profile',
-		template: _.template($('.profile').html()),
 		fetchUser: function() {
 			this.model.fetch({
 				success: this.fetchSuccess,

@@ -18,6 +18,15 @@ exports.init = function init(app) {
 			},
 		};
 
+	app.get(/^\/user\/([0-9a-zA-Z]+)\/schedules\/?$/, function(req, res) {
+		//if(!req.session.loggedIn) {
+		//	res.redirect('back');
+		//}
+		options.loggedIn = req.session.loggedIn;
+		options.userName = req.params[0];
+		res.render(app.get('views') + '/user/schedules', options);
+	});
+
 	app.get(/^\/user\/([0-9a-zA-Z]+)\/?$/, function(req, res) {
 		//if(!req.session.loggedIn) {
 		//	res.redirect('back');
@@ -33,13 +42,5 @@ exports.init = function init(app) {
 				res.render(app.get('views') + '/error', options);
 			}
 		});
-	});
-
-	app.get(/^\/user\/schedules\/?$/, function(req, res) {
-		//if(!req.session.loggedIn) {
-		//	res.redirect('back');
-		//}
-		options.loggedIn = req.session.loggedIn;
-		res.render(app.get('views') + '/user/schedules', options);
 	});
 };

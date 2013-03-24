@@ -6,14 +6,14 @@ block content
 			.span12
 				.span3
 					ul.nav.nav-list
-						li.nav-header Kyle
+						li.nav-header #{userName}
 						li.active
-							a.active(href="#") 
+							a.active(href="/user/#{userName}") 
 								i.icon-home
 								| Profile
 								i.icon-chevron-right.pull-right
 						li
-							a(href="/user/schedules") 
+							a(href="/user/#{userName}/schedules") 
 								i.icon-calendar
 								| Schedules
 								i.icon-chevron-right.pull-right
