@@ -57,6 +57,11 @@ var userSchema = mongoose.Schema({
 			unique: true,
 		},
 	},
+	description: {
+		type: String,
+		required: false,
+		default: 'No description',
+	},
 	email: {
 		type: String, 
 		required: true, 

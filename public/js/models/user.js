@@ -12,6 +12,7 @@ define([
 			firstName: '',
 			lastName: '',
 			email: '',
+			description: '',
 		},
 		idAttribute: '_id',
 		sync: function(method, model, options) {
