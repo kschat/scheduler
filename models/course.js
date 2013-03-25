@@ -1,5 +1,4 @@
 var mongoose = require('mongoose'),
-	bcrypt = require('bcrypt'),
 	Schema = mongoose.Schema;
 
 var courseSchema = new Schema({
@@ -25,6 +24,10 @@ var courseSchema = new Schema({
 	},
 	credits: {
 		type: String,
+		required: true,
+	},
+	seats: {
+		type: Number,
 		required: true,
 	},
 });
