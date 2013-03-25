@@ -18,20 +18,24 @@ exports.init = function init(app) {
 		};
 
 	app.get(/^\/courses\/?$/, function(req, res) {
-		//if(!req.session.loggedIn) {
-		//	res.redirect('back');
-		//}
+		if(!req.session.loggedIn) {
+			res.redirect('login');
+			return;
+		}
 		options.searchOn = true;
 		options.loggedIn = req.session.loggedIn;
+		options.userName = req.session.user.userName;
 		res.render(app.get('views') + '/course/courses', options);
 	});
 
 	app.get(/^\/courses\/search\/?$/, function(req, res) {
-		//if(!req.session.loggedIn) {
-		//	res.redirect('back');
-		//}
+		if(!req.session.loggedIn) {
+			res.redirect('login');
+			return;
+		}
 		options.searchOn = false;
 		options.loggedIn = req.session.loggedIn;
+		options.userName = req.session.user.userName;
 		res.render(app.get('views') + '/course/advanced-search', options);
 	});
 };

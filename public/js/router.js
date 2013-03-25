@@ -18,7 +18,9 @@ define([
 			'signup': 			'signup',
 			'home': 			'default',
 			'user/:profile': 	'profile',
+			'courses/': 		'courses',
 			'courses': 			'courses',
+			'courses/search/': 	'courseSearch',
 			'courses/search': 	'courseSearch',
 			'schedule/create': 	'scheduleCreate',
 			'': 				'default'

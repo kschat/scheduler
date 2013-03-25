@@ -10,6 +10,7 @@
 
 			.nav-collapse.collapse
 				ul.nav.pull-right
+					li: a(href="/courses") Classes
 					li: a(href='/about') About
 					- if(loggedIn == true)
 						li.dropdown
@@ -17,8 +18,15 @@
 								b.caret
 							ul.dropdown-menu(role="menu", aria-labelledby="dropdownMenu")
 								li
-									a(tabindex="-1", href="/user/profile") Profile
-									a(tabindex="-1", href="/logout") Logout
+									a(tabindex="-1", href="/user/#{userName}") 
+										i.icon-home
+										| Profile
+									a(tabindex="-1", href="/user/#{userName}/schedules") 
+										i.icon-cog
+										| Settings
+									a(tabindex="-1", href="/logout") 
+										i.icon-signout
+										| Logout
 					- else
 						li: a(data-toggle='modal', href='#logIn') Log in
 - if(loggedIn === false)
@@ -40,6 +48,9 @@
 
 						label Email
 						input.span5(type='text', name='email', placeholder='Email')
+
+						label Username
+						input.span5(type='text', name='userName', placeholder='Username')
 
 						label Password
 						input.span5(type='password', name='password', placeholder='Password')

@@ -25,7 +25,7 @@ exports.init = function init(app) {
 	//Index page route
 	app.get('/(home)?', function(req, res){
 		options.loggedIn = req.session.loggedIn || false;
-		console.log(options.loggedIn);
+		options.userName = req.session.user ? req.session.user.userName : '';
 		res.render('home', options);
 	});
 
@@ -36,7 +36,9 @@ exports.init = function init(app) {
 					if(err) { res.send(405); }
 					if(isMatch) {
 						req.session.loggedIn = true;
-						res.render('../views/user/profile.jade', options);
+						req.session.user = user;
+						
+						res.send({ error: false, user: user });
 						return;
 					}
 					req.session.loggedIn = false;
@@ -57,12 +59,13 @@ exports.init = function init(app) {
 
 	app.get('/about', function(req, res) {
 		options.loggedIn = req.session.loggedIn || false;
+		options.userName = req.session.user ? req.session.user.userName : '';
 		res.render(app.get('views') + '/about', options);
 	});
 
 	app.get(/\/(login|signup)/, function(req, res, next) {
 		if(req.session.loggedIn) {
-			res.redirect('back');
+			res.redirect('/user/' + req.session.user.userName);
 		}
 		else {
 			options.loggedIn = req.session.loggedIn || false;
@@ -70,5 +73,9 @@ exports.init = function init(app) {
 				res.render(app.get('views') + '/' + req.params, options);
 			}
 		}
+	});
+
+	app.get(/\/signup\/confirmation\/?/, function(req, res){
+		//Email user
 	});
 }
