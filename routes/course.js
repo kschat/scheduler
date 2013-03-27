@@ -23,6 +23,7 @@ exports.init = function init(app) {
 		//}
 		options.searchOn = true;
 		options.loggedIn = req.session.loggedIn;
+		options.userName = 'kschat';
 		res.render(app.get('views') + '/course/courses', options);
 	});
 

@@ -6,6 +6,14 @@
 				"type": "number",
 				"required": false
 			},
+			"skip": {
+				"type": "number",
+				"required": false
+			},
+			"count": {
+				"type": "number",
+				"required": false
+			},
 			"courseNumber": {
 				"type": "string",
 				"required": false

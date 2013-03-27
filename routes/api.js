@@ -67,7 +67,12 @@ function filterOptions(options, model) {
 		for(property in option) {
 			if(!option.hasOwnProperty(property)) { continue; }
 
-			if(property === 'limit') { query[property](option[property]); }
+			if(property === 'limit' || property === 'skip') { 
+				query[property](option[property]); 
+			}
+			else if(property === 'count') {
+				query.count();
+			}
 			else {
 				var re = new RegExp(option[property], 'i');
 				query.where(property).regex(re);
@@ -202,7 +207,12 @@ function RESTGet(req, res) {
 			}
 			else {
 				query.exec(function(err, results) {
-					res.send(results);
+					if(typeof results === 'number') {
+						res.send({count: results});
+					}
+					else {
+						res.send(results);
+					}
 				});
 			}
 		});
