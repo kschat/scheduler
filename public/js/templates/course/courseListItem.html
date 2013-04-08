@@ -2,6 +2,21 @@
 <td><%= courseTitle %></td>
 <td><%= instructor %></td>
 <td><%= credits %></td>
-<td><%= days %></td>
-<td><%= times %></td>
-<td><%= location %></td>
+
+<td>
+	<% days.forEach(function(day) { %>
+		<%= day.days %><br />
+	<% }) %>
+</td>
+
+<td style="width: 150px;">
+	<% days.forEach(function(day) { %>
+		<%= day.times %><br />
+	<% }) %>
+</td>
+
+<td>
+	<% days.forEach(function(day) { %>
+		<%= day.location %><br />
+	<% }) %>
+</td>

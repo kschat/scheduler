@@ -37,11 +37,9 @@ exports.init = function init(app) {
 			if(user) {
 				options.loggedIn = req.session.loggedIn;
 				options.userName = req.params[0];
-				console.log('user route: ' + options.userName);
 				res.render(app.get('views') + '/user/profile', options);
 			}
 			else {
-				console.log('user route: error');
 				options.error = 'User not found';
 				res.render(app.get('views') + '/error', options);
 			}
