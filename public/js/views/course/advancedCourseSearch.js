@@ -14,7 +14,7 @@ define([
 				addable: options.addable
 			});
 
-			_.bindAll(this, 'render', 'ajaxDone');
+			_.bindAll(this, 'render', 'showResults', 'search');
 			this.render();
 		},
 		render: function() {
@@ -26,14 +26,14 @@ define([
 		},
 		el: '#advanced-search',
 		search: function(e) {
-			$.ajax({
-				url: '/api/course?courseNumber=' + this.$searchButton.val(),
-				type: 'GET'
-			}).done(this.ajaxDone);
+			this.collection.fetch({
+				courseNumber: this.$searchButton.val(),
+				success: this.showResults
+			});
+
 			return false;
 		},
-		ajaxDone: function(data) {
-			this.collection.reset(data);
+		showResults: function(data) {
 			var self = this;
 			this.$el.find('#advanced-options').slideUp(function() {
 				self.$el.find('#toggle-options').text('Show advanced options');
