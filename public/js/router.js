@@ -63,7 +63,11 @@ define([
 
 		appRouter.on('route:courseSearch', function() {
 			var courseCollection = new CourseCollection(),
-				pagination = new PaginationView({dispatcher: dispatcher}),
+				pagination = new PaginationView({
+					dispatcher: dispatcher, 
+					contentModel: 'course',
+					modelBaseUrl: '/course/search'
+				}),
 				advancedSearchView = new AdvancedSearchView({ 
 					collection: courseCollection,
 					pagination: pagination,

@@ -23,9 +23,9 @@ define([
 			if(this.model.get('active')) { this.$el.addClass('active'); }
 
 			//Gets the path of the current url to append to the anchors href attribute.
-			this.model.attributes.location = window.location.pathname;
+			//this.model.attributes.location = window.location.pathname;
 			this.$el.html(this.template(this.model.attributes));
-			
+
 			return this;
 		}
 	});

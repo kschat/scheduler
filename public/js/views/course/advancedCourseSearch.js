@@ -4,10 +4,12 @@ define([
 	'backbone',
 	'models/course',
 	'views/course/courseList',
-	'collections/courseCollection',
-], function($, _, Backbone, Course, CourseListView, CourseCollection) {
+	'views/pagination/pagination',
+	'collections/courseCollection'
+], function($, _, Backbone, Course, CourseListView, PaginationView, CourseCollection) {
 	var AdvancedSearchView = Backbone.View.extend({
 		initialize: function(options) {
+			this.pagination = options.pagination || new PaginationView();
 			this.$searchButton = this.$el.find('#advanced-course-text');
 			this.courseList = new CourseListView({ 
 				collection: this.collection, 
@@ -18,6 +20,7 @@ define([
 			this.render();
 		},
 		render: function() {
+			this.$el.append(this.pagination.render().el);
 			return this;
 		},
 		events: {

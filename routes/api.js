@@ -77,7 +77,7 @@ function filterOptions(options, model) {
 		}
 	}
 
-	return {query: query, count: count};
+	return { query: query, count: count };
 }
 
 function loadModel(model) {
