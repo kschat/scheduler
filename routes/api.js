@@ -60,7 +60,8 @@ function runOptions(model, sParams, query, callBack) {
 }
 
 function filterOptions(options, model) {
-	var query = model.find() || {};
+	var query = model.find() || {},
+		count = false;
 
 	for(var i=0; i<options.length; i++) {
 		var option = options[i];
@@ -68,6 +69,7 @@ function filterOptions(options, model) {
 			if(!option.hasOwnProperty(property)) { continue; }
 
 			if(property === 'limit') { query[property](option[property]); }
+			else if(property === 'count') { count = model.find().count(); }
 			else {
 				var re = new RegExp(option[property], 'i');
 				query.where(property).regex(re);
@@ -75,7 +77,7 @@ function filterOptions(options, model) {
 		}
 	}
 
-	return query;
+	return {query: query, count: count};
 }
 
 function loadModel(model) {
@@ -196,13 +198,25 @@ function RESTGet(req, res) {
 	}
 	else {
 		runOptions(Model, modelSettings.params.GET, req.query, function(err, options) {
-			var query = filterOptions(options, Model);
+			var queries = filterOptions(options, Model),
+				count = queries.count,
+				results = {};
+
 			if(err) {
 				res.send(err.code, err.message);
 			}
 			else {
-				query.exec(function(err, results) {
-					res.send(results);
+				queries.query.exec(function(err, result) {
+					if(count) {
+						count.exec(function(err, count) {
+							results.count = count;
+							results[req.params[0]] = result;
+							res.send(results);
+						});
+					}
+					else {
+						res.send(result);
+					}
 				});
 			}
 		});

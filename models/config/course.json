@@ -9,6 +9,10 @@
 			"courseNumber": {
 				"type": "string",
 				"required": false
+			},
+			"count": {
+				"type": "boolean",
+				"required": false
 			}
 		},
 		"PUT": {
