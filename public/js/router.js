@@ -8,10 +8,11 @@ define([
 	'views/course/search',
 	'views/course/courseList',
 	'views/course/advancedCourseSearch',
+	'views/pagination/pagination',
 	'models/user',
 	'collections/courseCollection'
 ], function($, _, Backbone, SignupView, SigninView, ProfileView, SearchView, CourseListView, 
-		AdvancedSearchView, User, CourseCollection) {
+		AdvancedSearchView, PaginationView, User, CourseCollection) {
 	var AppRouter = Backbone.Router.extend({
 		routes: {
 			'login': 			'loginView',
@@ -28,7 +29,8 @@ define([
 	});
 
 	var initialize = function() {
-		var appRouter = new AppRouter;
+		var appRouter = new AppRouter,
+			dispatcher = _.clone(Backbone.Events);
 
 		appRouter.on('route:default', function() {
 			var user = new User(),
@@ -61,9 +63,11 @@ define([
 
 		appRouter.on('route:courseSearch', function() {
 			var courseCollection = new CourseCollection(),
+				pagination = new PaginationView({dispatcher: dispatcher}),
 				advancedSearchView = new AdvancedSearchView({ 
 					collection: courseCollection,
-					addable: false 
+					pagination: pagination,
+					addable: false
 				 });
 		});
 
@@ -76,6 +80,19 @@ define([
 		});
 
 		Backbone.history.start({pushState: true});
+
+		//Enables pushState for all links that don't contain the "data-bypass" attribute
+		$(document).on('click', 'a:not([data-bypass])', function (evt) {
+
+			var href = $(this).attr('href');
+			var protocol = this.protocol + '//';
+
+			if (href.slice(protocol.length) !== protocol) {
+				evt.preventDefault();
+				appRouter.navigate(href, true);
+				dispatcher.trigger('urlUpdate', href);
+			}
+		});
 	}
 
 	return {
