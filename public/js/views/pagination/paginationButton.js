@@ -16,8 +16,16 @@ define([
 		},
 		tagName: 'li',
 		model: PaginationButtonModel,
+		events: {
+		},
 		render: function() {
+			//If the active attribute is true then add the active class to the button
+			if(this.model.get('active')) { this.$el.addClass('active'); }
+
+			//Gets the path of the current url to append to the anchors href attribute.
+			this.model.attributes.location = window.location.pathname;
 			this.$el.html(this.template(this.model.attributes));
+			
 			return this;
 		}
 	});
