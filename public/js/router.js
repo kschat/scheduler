@@ -114,8 +114,8 @@ define([
 			appRouter.navigate(url, true);
 		});
 
-		//Enables pushState for all links that don't contain the "data-bypass" attribute
-		$(document).on('click', 'a:not([data-bypass])', function (evt) {
+		//Enables pushState for all links that contain the "data-bypass" attribute
+		$(document).on('click', 'a[data-bypass]', function (evt) {
 
 			var href = $(this).attr('href');
 			var protocol = this.protocol + '//';
