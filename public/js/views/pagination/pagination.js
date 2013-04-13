@@ -13,13 +13,11 @@ define([
 			options = options || {};
 			this.template = _.template(PaginationTemplate);
 			this.collection = options.collection;
+			this.contentModel = options.contentModel;
 			this.model = options.model || new PaginationModel();
 			this.model.set('modelBaseUrl', options.modelBaseUrl);
-			this.contentModel = options.contentModel;
 
-			//Event dispatcher used to detect if the browser uri has changed
 			this.dispatcher = options.dispatcher;
-			//this.dispatcher.on('urlUpdate', this.updateCurrentPage(this));
 			_.bindAll(this, 'render', 'build', 'updateBaseUrl', 'updateCurrPage');
 			this.model.bind('change:count', this.render);
 			this.model.bind('change:currPage', this.render);
@@ -50,6 +48,7 @@ define([
 			var page = e.target ? e.target.text : e;
 			this.model.set('currPage', page);
 
+			//Sends a global event stating that the page has been updated.
 			this.dispatcher.trigger('pagination:page', 
 					parseInt((this.model.get('currPage') - 1) * this.model.get('perPage'), 10), 
 					this.model.get('perPage'));
