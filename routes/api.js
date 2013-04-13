@@ -61,20 +61,38 @@ function runOptions(model, sParams, query, callBack) {
 
 function filterOptions(options, model) {
 	var query = model.find() || {},
-		count = false;
+		count = false,
+		cachedFilters = {};
 
 	for(var i=0; i<options.length; i++) {
 		var option = options[i];
 		for(property in option) {
 			if(!option.hasOwnProperty(property)) { continue; }
 
-			if(property === 'limit') { query[property](option[property]); }
-			else if(property === 'count') { count = model.find().count(); }
+			if(property === 'limit' || property === 'skip') { 
+				query[property](option[property]); 
+			}
+			else if(property === 'count') { 
+				count = true;
+			}
 			else {
 				var re = new RegExp(option[property], 'i');
 				query.where(property).regex(re);
+				cachedFilters[property] = re;	//Caches all filters used on the query incase we need to count the result set.
 			}
 		}
+	}
+
+	//If count was set to true then we need to reconstruct the query and count its result set.
+	//Not the best way to do it, but it works until refactoring time.
+	if(count) {
+		count = model.find();
+		for(filter in cachedFilters) {
+			if(!option.hasOwnProperty(property)) { continue; }
+			
+			count.where(filter).regex(cachedFilters[filter]);
+		}
+		count.count();
 	}
 
 	return { query: query, count: count };

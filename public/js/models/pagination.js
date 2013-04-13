@@ -6,6 +6,9 @@ define([
 		initialize: function(attributes) {
 			_.bindAll(this, 'updatePageAmt');
 			this.bind('change:count', this.updatePageAmt);
+
+			var pathname = window.location.pathname.split('/');
+			this.set('currPage', pathname[pathname.length-2] === 'page' ? parseInt(pathname[pathname.length-1], 10) : 1);
 		},
 		defaults: {
 			buttonAmount: 9,
@@ -35,7 +38,8 @@ define([
 		//Override the sync function to allow for dynamic models
 		sync: function(method, model, options) {
 			if(method === 'read') {
-				options.url = '/api/' + options.modelToCount + '/?count=true&limit=1';
+				var filter = options.filter ? '&' + options.filter : '';
+				options.url = '/api/' + options.modelToCount + '/?count=true' + filter;
 			}
 
 			return Backbone.sync(method, model, options);
@@ -43,6 +47,11 @@ define([
 		updatePageAmt: function() {
 			//Calculate the amount of pages, rounding all decimals up
 			this.set('pageAmt', Math.ceil(this.get('count') / this.get('perPage')));
+
+			//Makes sure the current page stays within the page amount range.
+			if(this.get('currPage') > this.get('pageAmt')) {
+				this.set('currPage', this.get('pageAmt'));
+			}
 		}
 	});
 

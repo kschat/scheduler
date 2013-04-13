@@ -6,7 +6,6 @@ define([
 	var CourseCollection = Backbone.Collection.extend({
 		model: Course,
 		sync: function(method, model, options) {
-			console.log(options);
 
 			if(method === 'read') {
 				var limit = options.limit || 20, 

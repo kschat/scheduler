@@ -12,28 +12,51 @@ define([
 			//Determine if options is undefined
 			options = options || {};
 			this.template = _.template(PaginationTemplate);
+			this.collection = options.collection;
 			this.model = options.model || new PaginationModel();
 			this.model.set('modelBaseUrl', options.modelBaseUrl);
 			this.contentModel = options.contentModel;
-			
-			//Fetch the amount of models for the modelToCount and cache it in the pagination model
-			this.model.fetch({
-				modelToCount: this.contentModel,
-				success: this.fetchCount
-			});
 
 			//Event dispatcher used to detect if the browser uri has changed
-			this.dispatcher = options.dispatcher || _.clone(Backbone.Events);
-			this.dispatcher.on('urlUpdate', this.updateCurrentPage(this.model));
-			//this.collection.on('add', this.render, this);
-			//this.collection.on('reset', this.render, this);
-			_.bindAll(this, 'render', 'updateCurrentPage', 'fetchCount');
+			this.dispatcher = options.dispatcher;
+			//this.dispatcher.on('urlUpdate', this.updateCurrentPage(this));
+			_.bindAll(this, 'render', 'updateCurrentPage', 'build', 'updateBaseUrl', 'updateCurrPage');
 			this.model.bind('change:count', this.render);
 			this.model.bind('change:currPage', this.render);
+
+			this.dispatcher.on('course:search:submit', this.build);
+			this.dispatcher.on('pagination:baseurl', this.updateBaseUrl);
+			this.dispatcher.on('pagination:pageupdate', this.updateCurrPage);
 		},
-		tagName: 'div',
-		className: 'pagination pagination-centered',
+		el: '.pagination',
 		model: PaginationModel,
+		//Function used to grab all the metadata required to construct the UI properly
+		build: function(model, filter) {
+			//Fetch the amount of models for the modelToCount and cache it in the pagination model
+			this.model.fetch({
+				modelToCount: model,
+				filter: filter,
+				success: this.render
+			});
+
+			this.dispatcher.trigger('pagination:page', 
+					parseInt((this.model.get('currPage') - 1) * this.model.get('perPage'), 10), 
+					this.model.get('perPage'));
+		},
+		updateBaseUrl: function(url) {
+			this.model.set('modelBaseUrl', url);
+		},
+		updateCurrPage: function(e) {
+			var page = e.target ? e.target.text : e;
+			this.model.set('currPage', page);
+
+			this.dispatcher.trigger('pagination:page', 
+					parseInt((this.model.get('currPage') - 1) * this.model.get('perPage'), 10), 
+					this.model.get('perPage'));
+		},
+		events: {
+			'click a': 'updateCurrPage'
+		},
 		render: function() {
 			//Render the template inside of the pagination div
 			this.$el.html(this.template());
@@ -41,23 +64,24 @@ define([
 			//Cache the ul element in the template since it will be used in the for loop
 			var $list = this.$el.children('ul'),
 				//Cache the pagination models currPage attribute.
-				currPage = parseInt(this.model.get('currPage')),
-				pageAmt = parseInt(this.model.get('pageAmt')),
-				begIndex = 1,
-				endIndex = 9,
+				currPage = parseInt(this.model.get('currPage'), 10),
+				pageAmt = parseInt(this.model.get('pageAmt'), 10),
+				begIndex = currPage - 4,
+				endIndex = currPage + 4,
 				active = false;
 
-			if(currPage > 5 && currPage < pageAmt - 5) {
-				begIndex = currPage - 4;
-				endIndex = currPage + 4;
+			if(currPage - 5 < 0) {
+				begIndex = 1;
+				endIndex = 9;
 			}
 			else if(currPage > pageAmt - 5) {
 				begIndex = pageAmt - 9;
 				endIndex = pageAmt;
 			}
 
+			endIndex = endIndex > pageAmt ? pageAmt : endIndex;
+
 			//Create a new button based on the button amount from the pagination model.
-			console.log('begIndex: ' + begIndex + ' endIndex: ' + endIndex);
 			for(var i=begIndex; i<endIndex+1; i++) {
 				active = i === currPage, 10 ? true : false;
 
@@ -74,22 +98,23 @@ define([
 			//Return the view to allow for chainability
 			return this;
 		},
-		updateCurrentPage: function(model) {
+		updateCurrentPage: function(self) {
 			return function(uri){
+				console.log('d');
 				//Makes sure the update was a page route and updates the current page accordingly
 				var page = uri.split('/');
 
 				if(page[page.length-2] === 'page') {
-					model.set('currPage', page[page.length-1]);
+					self.model.set('currPage', page[page.length-1]);
+
+					//Trigger a global event to let views know that the pagination data is updated.
+					self.dispatcher.trigger('updatePage', {
+						skip: parseInt((self.model.get('currPage') - 1) * self.model.get('perPage'), 10), 
+						limit: self.model.get('perPage')
+					});
+
 				}
 			};
-		},
-		fetchCount: function(that) {
-			/*return function(data) {
-				//Calculate the amount of pages, rounding all decimals up
-				var count = data.get('count');
-				that.model.set('pageAmt', Math.ceil(count / data.get('perPage')));
-			};*/
 		}
 	});
 
