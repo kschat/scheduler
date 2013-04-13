@@ -36,8 +36,9 @@ define([
 		el: '#advanced-search',
 		search: function(e) {
 			e.preventDefault();
-			this.dispatcher.trigger('url:update', 'courses/search/' + this.$searchButton.val() + '/page/1');
-			this.dispatcher.trigger('course:search:submit', 'course', 'courseNumber=' + this.$searchButton.val());
+			var filter = this.$searchButton.val() ? this.$searchButton.val() : 'all';
+			this.dispatcher.trigger('url:update', 'courses/search/' + filter + '/page/1');
+			this.dispatcher.trigger('course:search:submit', 'course', 'courseNumber=' + filter);
 		},
 		showResults: function() {
 			var self = this;
@@ -66,11 +67,12 @@ define([
 
 			return false;
 		},
-		updateList: function(skip, limit) {
+		updateList: function(skip, limit, filter) {
+			filter = filter ? filter : this.$searchButton.val();
 			this.collection.fetch({
 				skip: skip, 
 				limit: limit,
-				courseNumber: this.$searchButton.val(),
+				courseNumber: filter,
 				success: this.showResults
 			});
 		}

@@ -30,6 +30,11 @@ define([
 		model: PaginationModel,
 		//Function used to grab all the metadata required to construct the UI properly
 		build: function(model, filter) {
+			var param = filter.split('=')[1],
+				filter = filter.split('=')[0];
+			
+			filter = param === 'all' ? filter + '=' : filter + '=' + param;
+
 			//Fetch the amount of models for the modelToCount and cache it in the pagination model
 			this.model.fetch({
 				modelToCount: model,
@@ -44,14 +49,18 @@ define([
 		updateBaseUrl: function(url) {
 			this.model.set('modelBaseUrl', url);
 		},
-		updateCurrPage: function(e) {
+		updateCurrPage: function(e, filter) {
+			//Checks if filter was passed to the function and if it was, if it's equal to all
+			filter = !filter ? null : filter === 'all' ? '' : filter;
+
 			var page = e.target ? e.target.text : e;
 			this.model.set('currPage', page);
 
 			//Sends a global event stating that the page has been updated.
 			this.dispatcher.trigger('pagination:page', 
 					parseInt((this.model.get('currPage') - 1) * this.model.get('perPage'), 10), 
-					this.model.get('perPage'));
+					this.model.get('perPage'),
+					filter);
 		},
 		events: {
 			'click a': 'updateCurrPage'

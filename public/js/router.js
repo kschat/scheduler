@@ -92,9 +92,10 @@ define([
 			page = page ? page : 1;
 			dispatcher.trigger('course:search');
 			dispatcher.trigger('pagination:baseurl', 'courses/search/' + filter);
-			dispatcher.trigger('pagination:pageupdate', page);
+			dispatcher.trigger('pagination:pageupdate', page, filter);
 
 			if(filter) {
+				filter = filter === 'all' ? '' : filter;
 				dispatcher.trigger('course:search:submit', 'course', 'courseNumber=' + filter);
 			}
 		});

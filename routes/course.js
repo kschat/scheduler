@@ -29,7 +29,7 @@ exports.init = function init(app) {
 		res.render(app.get('views') + '/course/courses', options);
 	});
 
-	app.get(/^\/courses\/search(?:\/page\/[\-0-9]+)?\/?$/, function(req, res) {
+	app.get(/^\/courses\/search(?:\/[\-a-zA-Z0-9]+\/page\/[\-0-9]+)?\/?$/, function(req, res) {
 		//if(!req.session.loggedIn) {
 		//	res.redirect('login');
 		//	return;
