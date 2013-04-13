@@ -82,7 +82,7 @@ define([
 		appRouter.on('route:courseSearch', function(filter) {
 			dispatcher.trigger('course:search');
 			dispatcher.trigger('pagination:baseurl', 'courses/search/' + filter);
-			console.log(filter);
+			
 			if(filter) {
 				dispatcher.trigger('course:search:submit', 'course', 'courseNumber=' + filter);
 			}

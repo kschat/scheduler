@@ -20,7 +20,7 @@ define([
 			//Event dispatcher used to detect if the browser uri has changed
 			this.dispatcher = options.dispatcher;
 			//this.dispatcher.on('urlUpdate', this.updateCurrentPage(this));
-			_.bindAll(this, 'render', 'updateCurrentPage', 'build', 'updateBaseUrl', 'updateCurrPage');
+			_.bindAll(this, 'render', 'build', 'updateBaseUrl', 'updateCurrPage');
 			this.model.bind('change:count', this.render);
 			this.model.bind('change:currPage', this.render);
 
@@ -70,16 +70,20 @@ define([
 				endIndex = currPage + 4,
 				active = false;
 
+			//Checks if we want to display the first 9 pages
 			if(currPage - 5 < 0) {
 				begIndex = 1;
 				endIndex = 9;
 			}
+			//Checks if we want to display the last 9 pages
 			else if(currPage > pageAmt - 5) {
 				begIndex = pageAmt - 9;
 				endIndex = pageAmt;
 			}
 
+			//Makes sure the indexes don't exceed the boundries of the pages
 			endIndex = endIndex > pageAmt ? pageAmt : endIndex;
+			begIndex = begIndex < 1 ? 1 : begIndex;
 
 			//Create a new button based on the button amount from the pagination model.
 			for(var i=begIndex; i<endIndex+1; i++) {
@@ -97,24 +101,6 @@ define([
 
 			//Return the view to allow for chainability
 			return this;
-		},
-		updateCurrentPage: function(self) {
-			return function(uri){
-				console.log('d');
-				//Makes sure the update was a page route and updates the current page accordingly
-				var page = uri.split('/');
-
-				if(page[page.length-2] === 'page') {
-					self.model.set('currPage', page[page.length-1]);
-
-					//Trigger a global event to let views know that the pagination data is updated.
-					self.dispatcher.trigger('updatePage', {
-						skip: parseInt((self.model.get('currPage') - 1) * self.model.get('perPage'), 10), 
-						limit: self.model.get('perPage')
-					});
-
-				}
-			};
 		}
 	});
 

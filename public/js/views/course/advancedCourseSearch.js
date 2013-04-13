@@ -19,17 +19,14 @@ define([
 
 			this.dispatcher.on('updatePage', this.updateList);
 			this.dispatcher.on('course:search', this.render);					//Event triggered when the search course page is requested
-			//this.dispatcher.on('course:render:complete', this.showResults);	//Event triggered when the course list is done rendering
 			this.dispatcher.on('pagination:page', this.updateList); 			//Event triggered when a search is submitted
 		},
 		render: function() {
 			if(this.$el.find('#advanced-options').length === 0) {
 				this.$el.prepend(this.template());
 			}
-			else {
-				//this.hideResults();
-			}
-			this.$searchButton = this.$el.find('#advanced-course-text');
+
+			this.$searchButton = this.$el.find('#advanced-course-text'); //TODO: refactor
 			return this;
 		},
 		events: {
@@ -70,7 +67,6 @@ define([
 			return false;
 		},
 		updateList: function(skip, limit) {
-			console.log('update');
 			this.collection.fetch({
 				skip: skip, 
 				limit: limit,
