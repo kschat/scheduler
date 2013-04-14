@@ -12,7 +12,7 @@ define([
 			this.model = options.model;
 			this.editBtn = new EditButtonView();
 
-			_.bindAll(this, 'render', 'editProfile', 'addFriend', 'updateModel');
+			_.bindAll(this, 'render', 'editProfile', 'updateModel');
 		},
 		render: function() {
 			this.$el.html(this.template(this.model.attributes));
@@ -20,7 +20,6 @@ define([
 			return this;
 		},
 		events: {
-			'click #add-friend-btn': 'addFriend',
 			'click #edit-btn': 	'editProfile'
 		},
 		el: '.profile-header',
@@ -45,9 +44,6 @@ define([
 				$('.profile-header').data('edit', true);
 			}
 			this.render();
-		},
-		addFriend: function() {
-
 		},
 		updateModel: function($element) {
 			var obj = "{",
