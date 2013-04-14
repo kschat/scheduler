@@ -8,7 +8,7 @@ exports.init = function init(app) {
 			isPage: true,
 			loggedIn: false,
 			searchOn: true,
-			userName: 'dev', //remove for production
+			//userName: 'dev', //remove for production
 			links: {
 				styles: [
 					'/css/bootstrap.css',
