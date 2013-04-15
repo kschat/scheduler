@@ -1,20 +1,40 @@
-<div class="span3">
-	<img src="/img/defaultProfile.jpg" style="border-radius: 5px;" class="no-stretch" />
-	<span style="position:absolute; display: block; top:240px; margin-left: 40px;">
-		<a href="#upload-modal" id="upload-image" role="button" class="btn btn-red btn-flat" data-toggle="modal">Change photo</a>
-	</span>
+<div class="row-fluid">
+	<div class="span12">
+		<a id="edit-btn" href="#" data-toggle="true" class="btn btn-flat pull-right">Done</a>
+	</div>
 </div>
 
-<div class="span6">
-	<input type="text" name="firstName" value="<%= firstName %>" style="width:100%;" />
-	<input type="text" name="lastName" value="<%= lastName %>" style="width:100%;" />
-
-	<input type="text" value="Web &amp; Application Development" style="width:100%;" />
-	<textarea name="description" cols="30" style="width:100%;"><%= description %></textarea>
+<div class="row-fluid">
+	<div id="message-container" class="span12" style="display:none;">
+		<div id="message" class="alert profile-message fade in">
+			<span id="message-text"></span>
+			<a class="close" href="#">&times;</a>
+		</div>
+	</div>
+	<script>
+		$('#message').bind('click', function() {
+			$('#message-container').fadeOut();
+		});
+	</script>
 </div>
 
-<div class="span3">
-	<a id="edit-btn" href="#" data-toggle="true" class="btn btn-flat pull-right">Done</a>
+<div class="row-fluid">
+	<div class="span3" style="position: relative;">
+		<img src="/img/defaultProfile.jpg" style="border-radius: 5px;" class="no-stretch" />
+		<span style="position:absolute; bottom:7px; margin-left: 40px;">
+			<a href="#upload-modal" id="upload-image" role="button" class="btn btn-red btn-flat" data-toggle="modal">Change photo</a>
+		</span>
+	</div>
+
+	<div class="span6">
+		<form id="update-profile" action="" method="POST">
+			<input type="text" name="firstName" value="<%= firstName %>" style="width:100%;" />
+			<input type="text" name="lastName" value="<%= lastName %>" style="width:100%;" />
+
+			<input type="text" value="Web &amp; Application Development" style="width:100%;" />
+			<textarea name="description" cols="30" style="width:100%;"><%= description %></textarea>
+		</form>
+	</div>
 </div>
 
 <div id="upload-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="upload modal" aria-hidden="true">
@@ -46,4 +66,4 @@
 		<button class="btn btn-flat btn-red">Save changes</button>
 	</div>
 </div>
-<script>$('#upload-modal').modal({show: true});</script>
+<script>$('#upload-modal').modal({show: false});</script>

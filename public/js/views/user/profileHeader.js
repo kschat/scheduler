@@ -11,12 +11,15 @@ define([
 		initialize: function(options) {
 			this.model = options.model;
 			this.editBtn = new EditButtonView();
+			this.$errorMessage = this.$el.find('#message-container');
 
-			_.bindAll(this, 'render', 'editProfile', 'updateModel');
+			_.bindAll(this, 'render', 'editProfile', 'updateModel', 'updateSuccess', 'updateError');
 		},
 		render: function() {
 			this.$el.html(this.template(this.model.attributes));
 			this.editBtn.setElement(this.$el.find('#edit-btn'));
+			this.$errorMessage = this.$el.find('#message-container');
+			
 			return this;
 		},
 		events: {
@@ -27,37 +30,25 @@ define([
 		editProfile: function(e) {
 			e.preventDefault();
 			if($('.profile-header').data('edit')) {
-				this.updateModel($(':input'));
-				this.model.save({
-					success: function(res) {
-						console.log(res);
-					},
-					error: 	function(res) {
-						console.log(res);
-					}
+				this.updateModel($('#update-profile').children(':input'));
+				this.model.save({}, {
+					success: this.updateSuccess,
+					error: this.updateError
 				});
-				this.template = _.template(Template);
-				$('.profile-header').data('edit', false);
 			}
 			else {
 				this.template = _.template(EditTemplate);
 				$('.profile-header').data('edit', true);
+				this.render();
 			}
-			this.render();
 		},
 		updateModel: function($element) {
 			var obj = "{",
 				objInst = {};
 
 			$element.each(function(index) {
-				if($(this).attr('name') === 'fullName') {
-					var cachedName = $('[name="' + $(this).attr('name') + '"]').val(),
-						fName = cachedName.split(' ')[0],
-						lName = cachedName.split(' ')[1];
-
-					obj += "\"firstName\":\"" + fName + "\", \"lastName\":\"" + lName + "\",";	
-				}
-				else {
+				console.log($(this).attr('name'));
+				if(typeof $(this).attr('name') !== 'undefined') {
 					var value = $('[name="' + $(this).attr('name') + '"]').val();
 					obj += "\"" + $(this).attr('name') + "\":\"" + value + "\",";
 				}
@@ -67,6 +58,33 @@ define([
 			objInst = JSON.parse(obj);
 			
 			this.model.set(objInst);
+		},
+		updateSuccess: function() {
+			this.template = _.template(Template);
+			$('.profile-header').data('edit', false);
+			this.render();
+			this.showMessage('Profile updated.');
+		},
+		updateError: function() {
+			this.showErrorMessage('Error saving to the server.');
+		},
+		showMessage: function(message) {
+			this.$errorMessage.children('#message')
+				.removeClass('alert-error')
+				.addClass('alert-success')
+				.children('#message-text')
+				.text(message);
+
+			this.$errorMessage.fadeIn(700);
+		},
+		showErrorMessage: function(message) {
+			this.$errorMessage.children('#message')
+				.removeClass('alert-success')
+				.addClass('alert-error')
+				.children('#message-text')
+				.text(message);
+
+			this.$errorMessage.fadeIn(700);
 		}
 	});
 
