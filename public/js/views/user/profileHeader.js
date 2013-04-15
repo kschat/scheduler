@@ -66,6 +66,7 @@ define([
 			this.showMessage('Profile updated.');
 		},
 		updateError: function() {
+			this.editBtn.editError();
 			this.showErrorMessage('Error saving to the server.');
 		},
 		showMessage: function(message) {
