@@ -50,24 +50,18 @@ define([
 
 		},
 		updateModel: function($element) {
-			var obj = "{}",
+			var obj = "{",
 				objInst = {};
 
 			$element.each(function(index) {
-				if($(this).attr('name') === 'fullName') {
-					var cachedName = $('[name="' + $(this).attr('name') + '"]').val(),
-						fName = cachedName.split(' ')[0],
-						lName = cachedName.split(' ')[1];
-
-					obj = "{\"firstName\":\""+fName+"\", \"lastName\":\""+lName+"\"}";	
-				}
-				//else {
-				//	var value = $('[name="' + $(this).attr('name') + '"]').val();
-				//	obj = "{\""+$(this).attr('name') +"\":\""+value+"\"}";
-				//}
-
-				objInst = JSON.parse(obj);
+				var value = $('[name="' + $(this).attr('name') + '"]').val();
+				obj += "\"" + $(this).attr('name') + "\":\"" + value + "\",";
 			});
+			
+			obj = obj.substring(0, obj.length-1) + "}";
+			console.log(obj);
+			objInst = JSON.parse(obj);
+			
 			this.model.set(objInst);
 		}
 	});
