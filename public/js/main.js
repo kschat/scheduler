@@ -4,7 +4,8 @@ require.config({
 		backbone: 	'libs/backbone/backbone-0.9.10.min',
 		jquery:		'libs/jquery/jquery-1.9.1.min',
 		bootstrap: 	'libs/bootstrap/bootstrap.min',
-		text: 		'libs/require/text/text'
+		text: 		'libs/require/text/text',
+		ajaxForm: 	'libs/jquery/form/ajaxForm'
 	},
 	shim: {
 		underscore: {
@@ -12,10 +13,14 @@ require.config({
 		},
 		backbone: {
 			deps: 		['underscore', 'jquery'],
-			exports: 	'Backbone',
+			exports: 	'Backbone'
 		},
 		bootstrap: {
 			deps: ['jquery']
+		},
+		ajaxForm: {
+			deps: ['jquery'],
+			exports: 'jQuery.fn.ajaxForm'
 		}
 	},
 });

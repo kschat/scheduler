@@ -12,6 +12,7 @@ define([
 			firstName: '',
 			lastName: '',
 			email: '',
+			description: '',
 		},
 		idAttribute: '_id',
 		sync: function(method, model, options) {
@@ -19,7 +20,6 @@ define([
 				options.url = model.url + '/?userName=' + this.get('userName');
 			}
 			else if(method === 'update') {
-				console.log(model);
 				options.url = model.url + '/' + model.id;
 			}
 

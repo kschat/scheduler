@@ -15,13 +15,17 @@ define([
 
 			this.template = options.addable ? _.template(AddTemplate) : _.template(Template);
 			this.addable = options.addable;
+			this.dispatcher = options.dispatcher;
 
 			this.collection.on('add', this.render, this);
 			this.collection.on('reset', this.render, this);
 
-			_.bindAll(this, 'render', 'fetchClasses');
+			_.bindAll(this, 'render');
+
+			this.dispatcher.on('course:search:submit', this.render);
 		},
 		render: function() {
+			this.$table = this.$el.find('#course-table');
 			if(this.collection.length > 0) {
 				this.$table.html(this.template()).show();
 				this.$errorMessage.hide();
@@ -38,10 +42,7 @@ define([
 
 			return this;
 		},
-		el: '#courses',
-		fetchClasses: function() {
-			this.collection.fetch();
-		}
+		el: '#courses'
 	});
 
 	return CourseListView;

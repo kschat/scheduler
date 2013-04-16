@@ -57,6 +57,11 @@ var userSchema = mongoose.Schema({
 			unique: true,
 		},
 	},
+	description: {
+		type: String,
+		required: false,
+		default: 'No description',
+	},
 	email: {
 		type: String, 
 		required: true, 
@@ -74,6 +79,10 @@ var userSchema = mongoose.Schema({
 			{ validator: validatePassword, msg: 'Password too short' },
 		],
 	},
+	avatar: {
+		type: String,
+		default: '/img/defaultProfile.jpg'
+	}
 },
 {
 	collection: 'user'

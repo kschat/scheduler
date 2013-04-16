@@ -32,7 +32,7 @@ define([
 			return false;
 		},
 		signupSuccess: function(model, response, options) {
-			window.location.href = '/about';
+			window.location.href = '/';
 		},
 		signup: function() {
 			this.render();

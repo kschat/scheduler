@@ -163,14 +163,14 @@ ul.dropdown-menu > li > a > i {
 }
 
 .profile-header {
-  padding: 15px 10px;
+  padding: 15px 15px;
   margin-right: -20px;
   border: 1px solid #ddd;
   border-radius: 5px;
   box-shadow: 0 1px 5px #ddd;
 }
 
-.profile-header > .span3 > img {
+.profile-header > .row-fluid > .span3 > img {
   border: 1px solid #ccc;
   padding: 6px;
 }
@@ -186,4 +186,10 @@ ul.dropdown-menu > li > a > i {
 .side-nav-fixed {
   position: fixed;
   width: inherit;
+}
+
+.profile-message { 
+  text-align: center;
+  font-size: 17px;
+  margin-top: 14px;
 }

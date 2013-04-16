@@ -60,7 +60,9 @@ function runOptions(model, sParams, query, callBack) {
 }
 
 function filterOptions(options, model) {
-	var query = model.find() || {};
+	var query = model.find() || {},
+		count = false,
+		cachedFilters = {};
 
 	for(var i=0; i<options.length; i++) {
 		var option = options[i];
@@ -70,17 +72,30 @@ function filterOptions(options, model) {
 			if(property === 'limit' || property === 'skip') { 
 				query[property](option[property]); 
 			}
-			else if(property === 'count') {
-				query.count();
+			else if(property === 'count') { 
+				count = true;
 			}
 			else {
 				var re = new RegExp(option[property], 'i');
 				query.where(property).regex(re);
+				cachedFilters[property] = re;	//Caches all filters used on the query incase we need to count the result set.
 			}
 		}
 	}
 
-	return query;
+	//If count was set to true then we need to reconstruct the query and count its result set.
+	//Not the best way to do it, but it works until refactoring time.
+	if(count) {
+		count = model.find();
+		for(filter in cachedFilters) {
+			if(!option.hasOwnProperty(property)) { continue; }
+			
+			count.where(filter).regex(cachedFilters[filter]);
+		}
+		count.count();
+	}
+
+	return { query: query, count: count };
 }
 
 function loadModel(model) {
@@ -201,17 +216,24 @@ function RESTGet(req, res) {
 	}
 	else {
 		runOptions(Model, modelSettings.params.GET, req.query, function(err, options) {
-			var query = filterOptions(options, Model);
+			var queries = filterOptions(options, Model),
+				count = queries.count,
+				results = {};
+
 			if(err) {
 				res.send(err.code, err.message);
 			}
 			else {
-				query.exec(function(err, results) {
-					if(typeof results === 'number') {
-						res.send({count: results});
+				queries.query.exec(function(err, result) {
+					if(count) {
+						count.exec(function(err, count) {
+							results.count = count;
+							results[req.params[0]] = result;
+							res.send(results);
+						});
 					}
 					else {
-						res.send(results);
+						res.send(result);
 					}
 				});
 			}

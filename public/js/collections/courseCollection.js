@@ -11,8 +11,10 @@ define([
 		model: Course,
 		sync: function(method, model, options) {
 			if(method === 'read') {
-				console.log(options);
-				options.url = model.url + '/?skip=' + this.skip + '&limit=' + this.limit;
+				var limit = options.limit || 20, 
+					skip = options.skip || 0;
+
+				options.url = model.url + '?courseNumber=' + options.courseNumber + '&limit=' + limit + '&skip=' + skip;
 			}
 
 			return Backbone.sync(method, model, options);

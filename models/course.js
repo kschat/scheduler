@@ -1,32 +1,50 @@
 var mongoose = require('mongoose'),
-	bcrypt = require('bcrypt'),
 	Schema = mongoose.Schema;
+
+var DaySchema = new Schema({
+	days: {
+		type: String,
+		required: true
+	},
+	times: {
+		type: String,
+		required: true
+	},
+	location: {
+		type: String,
+		required: true
+	}
+});
 
 var courseSchema = new Schema({
 	courseNumber: {
 		type: String,
-		required: true,
+		required: true
+	},
+	section: {
+		type: String,
+		required: true
+	},
+	courseTitle: {
+		type: String,
+		required: true
 	},
 	instructor: {
 		type: String,
-		required: true,
+		required: true
 	},
 	days: {
-		type: [],
-		required: true,
-	},
-	times: {
-		type: [],
-		required: true,
-	},
-	location: {
-		type: String,
-		required: true,
+		type: [DaySchema],
+		required: true
 	},
 	credits: {
 		type: String,
-		required: true,
+		required: true
 	},
+	seats: {
+		type: Number,
+		required: true
+	}
 });
 
 var Course = mongoose.model('Course', courseSchema);

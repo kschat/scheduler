@@ -1,0 +1,113 @@
+<div class="container">
+	<div class="row">
+		<div class="span3">
+			<h3>Advanced Search</h3>
+		</div>
+
+		<div class="span9">
+			<div style="margin-top: 15px;">
+				<form id="advanced-course-search" class="form-inline" method="GET" action="/api/course">
+					<div class="input-append">
+						<input type="text" id="advanced-course-text" class="input-xxlarge" />
+						<button type="submit" id="advanced-course-submit" class="btn btn-danger">Search</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="span12">
+			<a id="toggle-options" href="#">Hide advanced options</a>
+		</div>
+	</div>
+
+	<hr />
+
+	<div id="advanced-options" class="container">
+		<div class="row">
+			<div class="span12">
+				<h4>Advanced options</h4>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="span3">
+				<h5>Year</h5>
+			</div>
+
+			<div class="span9">
+				<select>
+					<option>2013</option>
+					<option>2012</option>
+					<option>2011</option>
+				</select>
+			</div>
+		</div>
+
+		<br />
+
+		<div class="row">
+			<div class="span3">
+				<h5>Semester</h5>
+			</div>
+
+			<div class="span9">
+				<label class="radio">
+					<input type="radio" name="semester-option" checked="checked" /> Fall
+				</label>
+
+				<label class="radio">
+					<input type="radio" name="semester-option" /> Spring
+				</label>
+
+				<label class="radio">
+					<input type="radio" name="semester-option" /> Summer
+				</label>
+
+				<label class="radio">
+					<input type="radio" name="semester-option" /> Summer minimester
+				</label>
+			</div>
+		</div>
+
+		<br />
+
+		<div class="row">
+			<div class="span3">
+				<h5>Seat availablilty</h5>
+			</div>
+
+			<div class="span9">
+				<label class="radio">
+					<input type="radio" name="seat-option" checked="checked" /> Classes with open seats
+				</label>
+
+				<label class="radio">
+					<input type="radio" name="seat-option" /> Filled classes
+				</label>
+
+				<label class="radio">
+					<input type="radio" name="seat-option" /> All classes
+				</label>
+			</div>
+		</div>
+
+		<br />
+
+		<div class="row">
+			<div class="span3">
+				<h5>Distance classes</h5>
+			</div>
+
+			<div class="span9">
+				<label class="checkbox">
+					<input type="checkbox" /> Distance only
+				</label>
+			</div>
+		</div>
+			
+		<br />
+		<hr />
+	</div>
+</div>

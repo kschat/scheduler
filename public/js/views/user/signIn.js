@@ -34,8 +34,8 @@ define([
 				this.renderError(data.message);
 				return;
 			}
-			
-			window.location = '/user/profile';
+
+			window.location = '/user/' + data.user.userName;
 		},
 		signin: function() {
 			this.render();

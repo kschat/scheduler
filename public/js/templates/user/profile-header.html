@@ -1,14 +1,31 @@
-<div class="span3">
-	<img src="/img/defaultProfile.jpg" style="border-radius: 5px;" class="no-stretch" />
+<div class="row-fluid">
+	<div class="span12">
+		<a id="edit-btn" href="#" data-toggle="false" class="btn btn-flat pull-right">Edit profile</a>
+	</div>
 </div>
 
-<div class="span6">
-	<h2><%= firstName + ' ' + lastName %></h2>
-	<h5>Web &amp; Application Development</h5>
-	<p>Description</p>
-	<a id="add-friend-btn" href="#" class="btn btn-red btn-flat">Add friend</a>
+<div class="row-fluid">
+	<div id="message-container" class="span12" style="display:none;">
+		<div id="message" class="alert profile-message fade in">
+			<span id="message-text"></span>
+			<a class="close" data-dismiss="alert" href="#">&times;</a>
+		</div>
+	</div>
 </div>
+<script>
+	$('#message').bind('click', function() {
+			$('#message-container').fadeOut();
+		});
+</script>
 
-<div class="span3">
-	<a id="edit-btn" href="#" data-toggle="false" class="btn btn-flat pull-right">Edit profile</a>
+<div class="row-fluid">
+	<div class="span3">
+		<img src="/img/defaultProfile.jpg" style="border-radius: 5px;" class="no-stretch" />
+	</div>
+
+	<div class="span9">
+		<h2><%= firstName + ' ' + lastName %></h2>
+		<h5>Web &amp; Application Development</h5>
+		<p><%= description %></p>
+	</div>
 </div>

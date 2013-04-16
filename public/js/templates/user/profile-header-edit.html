@@ -1,17 +1,69 @@
-<div class="span3">
-	<img src="/img/defaultProfile.jpg" style="border-radius: 5px;" class="no-stretch">
-	<span style="position:absolute; display: block; top:240px; margin-left: 40px;">
-		<a href="#" class="btn btn-red btn-flat">Change photo</a>
-	</span>
+<div class="row-fluid">
+	<div class="span12">
+		<a id="edit-btn" href="#" data-toggle="true" class="btn btn-flat pull-right">Done</a>
+	</div>
 </div>
 
-<div class="span6">
-	<input type="text" placeholder="First name" name="firstName" value="<%= firstName %>" style="width:100%;" />
-	<input type="text" placeholder="Last name" name="lastName" value="<%= lastName %>" style="width:100%;" />
-	<input type="text" placeholder="Major" value="Web &amp; Application Development" style="width:100%;" />
-	<textarea placeholder="Description" cols="30" style="width:100%;">Description</textarea>
+<div class="row-fluid">
+	<div id="message-container" class="span12" style="display:none;">
+		<div id="message" class="alert profile-message fade in">
+			<span id="message-text"></span>
+			<a class="close" href="#">&times;</a>
+		</div>
+	</div>
+	<script>
+		$('#message').bind('click', function() {
+			$('#message-container').fadeOut();
+		});
+	</script>
 </div>
 
-<div class="span3">
-	<a id="edit-btn" href="#" data-toggle="true" class="btn btn-flat pull-right">Done</a>
+<div class="row-fluid">
+	<div class="span3" style="position: relative;">
+		<img src="/img/defaultProfile.jpg" style="border-radius: 5px;" class="no-stretch" />
+		<span style="position:absolute; bottom:7px; margin-left: 40px;">
+			<a href="#upload-modal" id="upload-image" role="button" class="btn btn-red btn-flat" data-toggle="modal">Change photo</a>
+		</span>
+	</div>
+
+	<div class="span6">
+		<form id="update-profile" action="" method="POST">
+			<input type="text" name="firstName" value="<%= firstName %>" style="width:100%;" />
+			<input type="text" name="lastName" value="<%= lastName %>" style="width:100%;" />
+
+			<input type="text" value="Web &amp; Application Development" style="width:100%;" />
+			<textarea name="description" cols="30" style="width:100%;"><%= description %></textarea>
+		</form>
+	</div>
 </div>
+
+<div id="upload-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="upload modal" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 id="modal-title">Change Profile Photo</h3>
+	</div>
+
+	<div class="modal-body">
+		<div class="row-fluid">
+			<div class="span4 offset4">
+				<div id="image-preview" style="text-align: center;">
+					<h3>Preview</h3>
+					<img src="/img/defaultProfile.jpg" style="border-radius: 5px;" class="no-stretch" />
+				</div>
+			</div>
+		</div>
+		<br />
+		<div class="row-fluid">
+			<div class="span8 offset4">
+				<form id="image-upload-form" action="/api/user/<%= _id %>" method="POST" enctype="multipart/form-data" class="form-inline">
+					<input type="file" name="userImage" />
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal-footer">
+		<button id="image-upload-btn" class="btn btn-flat btn-red">Save changes</button>
+	</div>
+</div>
+<script>$('#upload-modal').modal({show: false});</script>

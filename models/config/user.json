@@ -32,6 +32,10 @@
 				"type": "string",
 				"required": true
 			},
+			"description": {
+				"type": "string",
+				"required": false
+			},
 			"email": {
 				"type": "string",
 				"required": true
@@ -55,6 +59,10 @@
 					"type": "string",
 					"required": true
 				},
+				"description": {
+					"type": "string",
+					"required": false
+				},
 				"email": {
 					"type": "string",
 					"required": true
@@ -74,6 +82,10 @@
 					"required": false
 				},
 				"userName": {
+					"type": "string",
+					"required": false
+				},
+				"description": {
 					"type": "string",
 					"required": false
 				},
