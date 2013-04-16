@@ -2,11 +2,12 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
+	'ajaxForm',
 	'models/user',
 	'text!templates/user/profile-header.html',
 	'text!templates/user/profile-header-edit.html',
-	'views/user/editButton',
-], function($, _, Backbone, User, Template, EditTemplate, EditButtonView) {
+	'views/user/editButton'
+], function($, _, Backbone, ajaxForm, User, Template, EditTemplate, EditButtonView) {
 	var ProfileHeaderView = Backbone.View.extend({
 		initialize: function(options) {
 			this.model = options.model;
@@ -19,11 +20,13 @@ define([
 			this.$el.html(this.template(this.model.attributes));
 			this.editBtn.setElement(this.$el.find('#edit-btn'));
 			this.$errorMessage = this.$el.find('#message-container');
+			$('#image-upload-form').ajaxForm();
 			
 			return this;
 		},
 		events: {
-			'click #edit-btn': 	'editProfile'
+			'click #edit-btn': 			'editProfile',
+			'click #image-upload-btn': 	'uploadImage'
 		},
 		el: '.profile-header',
 		template: _.template(Template),
@@ -41,6 +44,9 @@ define([
 				$('.profile-header').data('edit', true);
 				this.render();
 			}
+		},
+		uploadImage: function() {
+			$('#image-upload-form').ajaxSubmit();
 		},
 		updateModel: function($element) {
 			var obj = "{",

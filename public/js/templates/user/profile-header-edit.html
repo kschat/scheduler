@@ -55,7 +55,7 @@
 		<br />
 		<div class="row-fluid">
 			<div class="span8 offset4">
-				<form action="" method="POST" enctype="multipart/form-data" class="form-inline">
+				<form id="image-upload-form" action="/api/user/<%= _id %>" method="POST" enctype="multipart/form-data" class="form-inline">
 					<input type="file" name="userImage" />
 				</form>
 			</div>
@@ -63,7 +63,7 @@
 	</div>
 	
 	<div class="modal-footer">
-		<button class="btn btn-flat btn-red">Save changes</button>
+		<button id="image-upload-btn" class="btn btn-flat btn-red">Save changes</button>
 	</div>
 </div>
 <script>$('#upload-modal').modal({show: false});</script>

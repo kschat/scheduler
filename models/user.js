@@ -79,6 +79,10 @@ var userSchema = mongoose.Schema({
 			{ validator: validatePassword, msg: 'Password too short' },
 		],
 	},
+	avatar: {
+		type: String,
+		default: '/img/defaultProfile.jpg'
+	}
 },
 {
 	collection: 'user'
