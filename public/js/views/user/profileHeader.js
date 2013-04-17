@@ -2,12 +2,11 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-	'ajaxForm',
 	'models/user',
 	'text!templates/user/profile-header.html',
 	'text!templates/user/profile-header-edit.html',
 	'views/user/editButton'
-], function($, _, Backbone, ajaxForm, User, Template, EditTemplate, EditButtonView) {
+], function($, _, Backbone, User, Template, EditTemplate, EditButtonView) {
 	var ProfileHeaderView = Backbone.View.extend({
 		initialize: function(options) {
 			this.model = options.model;
@@ -18,21 +17,16 @@ define([
 			_.bindAll(this, 'render', 'editProfile', 'updateModel', 'updateSuccess', 'updateError');
 		},
 		render: function() {
-			console.log(this.model.attributes);
-			
-			//Temp hack to sync the server and client models since mongoose doesn't allow for a single embedded schema
-			//if(this.model.attributes.avatar[0]) { this.model.set('avatar', this.model.get('avatar')[0]);}
-
 			this.$el.html(this.template(this.model.attributes));
 			this.editBtn.setElement(this.$el.find('#edit-btn'));
 			this.$errorMessage = this.$el.find('#message-container');
-			//$('#image-upload-form').ajaxForm();
+			this.$uploadMessage = this.$el.find('#upload-message');
 			
 			return this;
 		},
 		events: {
 			'click #edit-btn': 			'editProfile',
-			'click #image-upload-btn': 	'uploadImage',
+			'click #image-upload-btn': 	'saveImage',
 			'change #image-file': 		'readFile'
 		},
 		el: '.profile-header',
@@ -53,11 +47,14 @@ define([
 			}
 		},
 		readFile: function(e) {
+			this.$uploadMessage.hide();
+
 			var file = e.target.files[0], 
 				reader = new FileReader();
 
 			if(!file.type.match('image.*')) {
-				console.log('not an image');
+				this.$uploadMessage.text('File not an image.').fadeIn(700);
+				this.$el.find('#image-upload-btn').attr('disabled', 'disabled');
 				return false;
 			}
 
@@ -80,7 +77,7 @@ define([
 
 			return true;
 		},
-		uploadImage: function(e) {
+		saveImage: function(e) {
 			this.model.set(this.previewImage, {silent: true});
 			//Update the current picture on the users profile
 			this.$el.find('#profile-image').attr('src', this.model.attributes.avatar[0].data);
@@ -90,14 +87,13 @@ define([
 				objInst = {};
 
 			$element.each(function(index) {
-				console.log($(this).attr('name'));
 				if(typeof $(this).attr('name') !== 'undefined') {
 					var value = $('[name="' + $(this).attr('name') + '"]').val();
 					obj += "\"" + $(this).attr('name') + "\":\"" + value + "\",";
 				}
 			});
+
 			obj = obj.substring(0, obj.length-1) + "}";
-			console.log(obj);
 			objInst = JSON.parse(obj);
 			
 			this.model.set(objInst);
