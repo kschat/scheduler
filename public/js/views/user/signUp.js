@@ -11,6 +11,11 @@ define([
 			this.$errorMessage = this.$el.find('#signup-error');
 
 			_.bindAll(this, 'render', 'renderError', 'signupError', 'signupSuccess');
+			var self = this;
+			this.model.on('invalid', function(model, error) {
+				self.renderError(error);
+			});
+
 			this.render();
 		},
 		render: function() {

@@ -6,6 +6,10 @@
 				"type": "number",
 				"required": false
 			},
+			"count": {
+				"type": "number",
+				"required": false
+			},
 			"email": {
 				"type": "string",
 				"required": false

@@ -28,6 +28,32 @@ define([
 		url: '/api/user',
 		parse: function(res) {
 			return res[0];
+		},
+		validateName: function(val) {
+			return val.length >= 2 && val.length <= 35;
+		},
+		validateEmail: function(val) {
+			return /^.+@.+\..+$/.test(val);
+		},
+		validatePassword: function(val) {
+			return val.length > 3;
+		},
+		validate: function(attr, options) {
+			if(!this.validateName(attr.firstName)) {
+				return 'First name must be between 3 and 35 characters.';
+			}
+
+			if(!this.validateName(attr.lastName)) {
+				return 'Last name must be between 3 and 35 characters.';
+			}
+
+			if(!this.validateEmail(attr.email)) {
+				return 'Please enter a valid email address.';
+			}
+
+			if(!this.validatePassword(attr.password)) {
+				return 'Password must be at least 4 characters long.';
+			}
 		}
 	});
 
