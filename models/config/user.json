@@ -17,6 +17,10 @@
 			"userName": {
 				"type": "string",
 				"required": false
+			},
+			"avatar": {
+				"type": "object",
+				"required": false
 			}
 		},
 		"PUT": {
@@ -43,6 +47,10 @@
 			"password": {
 				"type": "string",
 				"required": true
+			},
+			"avatar": {
+				"type": "object",
+				"required": false
 			}
 		},
 		"POST": {
@@ -70,6 +78,10 @@
 				"password": {
 					"type": "string",
 					"required": true
+				},
+				"avatar": {
+					"type": "object",
+					"required": false
 				}
 			},
 			"update": {
@@ -95,6 +107,10 @@
 				},
 				"password": {
 					"type": "string",
+					"required": false
+				},
+				"avatar": {
+					"type": "object",
 					"required": false
 				}
 			}
