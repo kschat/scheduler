@@ -20,7 +20,7 @@
 
 <div class="row-fluid">
 	<div class="span3" style="position: relative;">
-		<img src="/img/defaultProfile.jpg" style="border-radius: 5px;" class="no-stretch" />
+		<img src="/img/uploads/<%= userName + '/' +  avatar[0].filename %>" id="profile-image" style="border-radius: 5px;" class="no-stretch" />
 		<span style="position:absolute; bottom:7px; margin-left: 40px;">
 			<a href="#upload-modal" id="upload-image" role="button" class="btn btn-red btn-flat" data-toggle="modal">Change photo</a>
 		</span>
@@ -39,7 +39,7 @@
 
 <div id="upload-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="upload modal" aria-hidden="true">
 	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<a class="close" data-dismiss="modal" aria-hidden="true">×</a>
 		<h3 id="modal-title">Change Profile Photo</h3>
 	</div>
 
@@ -48,7 +48,7 @@
 			<div class="span4 offset4">
 				<div id="image-preview" style="text-align: center;">
 					<h3>Preview</h3>
-					<img src="/img/defaultProfile.jpg" style="border-radius: 5px;" class="no-stretch" />
+					<img id="preview" src="/img/uploads/<%= userName + '/' + avatar[0].filename %>" style="border-radius: 5px;" class="no-stretch" />
 				</div>
 			</div>
 		</div>
@@ -56,14 +56,14 @@
 		<div class="row-fluid">
 			<div class="span8 offset4">
 				<form id="image-upload-form" action="/api/user/<%= _id %>" method="POST" enctype="multipart/form-data" class="form-inline">
-					<input type="file" name="userImage" />
+					<input type="file" id="image-file" name="userImage" />
 				</form>
 			</div>
 		</div>
 	</div>
 	
 	<div class="modal-footer">
-		<button id="image-upload-btn" class="btn btn-flat btn-red">Save changes</button>
+		<button id="image-upload-btn" class="btn btn-flat btn-red" data-dismiss="modal" disabled>Save changes</button>
 	</div>
 </div>
 <script>$('#upload-modal').modal({show: false});</script>
