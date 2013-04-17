@@ -45,8 +45,12 @@ define([
 					obj[fieldName] = field.val();
 				}
 			});
-
-			this.model.set(obj);
+			obj.avatar = [];
+			obj.avatar[0] = { 
+				filename: 'img/defaultProfile.img'
+			};
+			console.log(obj);
+			this.model.set(obj, {silent: true});
 			this.model.save({}, {
 				success: this.signupSuccess,
 				error: 	this.signupError

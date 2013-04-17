@@ -38,11 +38,11 @@ function validatePasswordWeak(val) {
 
 var PictureSchema = mongoose.Schema({
 	data: {
-		type: Buffer,
-		required: true
+		type: Buffer
 	},
 	filename: {
 		type: String,
+		default: 'img/defaultProfile.jpg',
 		required: true
 	}
 });
@@ -126,6 +126,13 @@ userSchema.pre('save', function(next) {
 		dataRegex = /^data:.+\/(.+);(.+),(.*)$/,
 		matches = imageBuffer.toString().match(dataRegex);
 	
+	//Checks if the user already has a file containing their uploads, creates one if they don't.
+	fs.exists(uploadPath, function(exists) {
+		if(!exists) { 
+			fs.mkdirSync(uploadPath);
+		}
+	});
+
 	//If there are no matches then the file isn't a new upload.
 	if(!matches) { return next(); }
 
@@ -142,20 +149,13 @@ userSchema.pre('save', function(next) {
 	//Creates a buffer that only contains the image data
 	data = new Buffer(data, encoding);
 
-	//Checks if the user already has a file containing their uploads, creates one if they don't.
 	//Writes the upload image to their upload directory
-	fs.exists(uploadPath, function(exists) {
-		if(!exists) { 
-			fs.mkdirSync(uploadPath);
-		}
+	fs.writeFile(uploadPath + '/' + imageName + '.' + ext, data, function(err) {
+		if(err) { return next(err); }
 
-		fs.writeFile(uploadPath + '/' + imageName + '.' + ext, data, function(err) {
-			if(err) { return next(err); }
-
-			//Resave the the image name to the unique name
-			user.avatar[0].filename = imageName + '.' + ext;
-			next();
-		});
+		//Resave the the image name to the unique name
+		user.avatar[0].filename = imageName + '.' + ext;
+		next();
 	});
 });
 
