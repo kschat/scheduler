@@ -11,7 +11,7 @@ define([
 		initialize: function(options) {
 			this.model = options.model;
 			this.editBtn = new EditButtonView();
-			this.$errorMessage = this.$el.find('#message-container');
+			//this.$errorMessage = this.$el.find('#message-container');
 			this.previewImage = {};
 
 			_.bindAll(this, 'render', 'editProfile', 'updateModel', 'updateSuccess', 'updateError');
@@ -20,7 +20,8 @@ define([
 			this.$el.html(this.template(this.model.attributes));
 			this.editBtn.setElement(this.$el.find('#edit-btn'));
 			this.$errorMessage = this.$el.find('#message-container');
-			this.$uploadMessage = this.$el.find('#upload-message');
+			this.$uploadModal = this.$el.find('#upload-modal');
+			this.$uploadMessage = this.$uploadModal.find('#upload-message');
 			
 			return this;
 		},
@@ -54,7 +55,7 @@ define([
 
 			if(!file.type.match('image.*')) {
 				this.$uploadMessage.text('File not an image.').fadeIn(700);
-				this.$el.find('#image-upload-btn').attr('disabled', 'disabled');
+				this.$uploadModal.find('#image-upload-btn').attr('disabled', 'disabled');
 				return false;
 			}
 
@@ -68,8 +69,8 @@ define([
 					};
 
 					self.previewImage = imgObj;
-					self.$el.find('#preview').attr('src', e.target.result);
-					self.$el.find('#image-upload-btn').removeAttr('disabled');
+					self.$uploadModal.find('#preview').attr('src', e.target.result);
+					self.$uploadModal.find('#image-upload-btn').removeAttr('disabled');
 				};
 			})(file, this);
 
