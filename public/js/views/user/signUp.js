@@ -13,12 +13,15 @@ define([
 			_.bindAll(this, 'render', 'renderError', 'signupError', 'signupSuccess');
 			var self = this;
 			this.model.on('invalid', function(model, error) {
-				self.renderError(error);
+				self.renderError(error.message);
+				self.$el.find(error.selector).focus();
+				self.$el.find(error.selector).parent().addClass('input-error');
 			});
 
 			this.render();
 		},
 		render: function() {
+			this.$el.find('.input-state').removeClass('input-error');
 			this.$errorMessage.find('p').text('');
 			this.$errorMessage.hide();
 			return this;
@@ -33,6 +36,7 @@ define([
 		},
 		el: '#signup-form',
 		signupError: function(model, xhr, options) {
+			console.log(model);
 			this.renderError(xhr.responseText);
 			return false;
 		},
@@ -54,6 +58,8 @@ define([
 			obj.avatar[0] = { 
 				filename: 'img/defaultProfile.img'
 			};
+			obj.passwordRepeat = this.$el.find('#passwordRepeat').text();
+
 			console.log(obj);
 			this.model.set(obj, {silent: true});
 			this.model.save({}, {

@@ -193,3 +193,16 @@ ul.dropdown-menu > li > a > i {
   font-size: 17px;
   margin-top: 14px;
 }
+
+.input-error > input[type="text"], .input-error > input[type="password"] {
+  border-color: #b94a48;
+  color: #b94a48;
+  -webkit-transition: border-color 1.5s;
+  transition: border-color 1.5s;
+}
+
+.input-error > label {
+  color: #b94a48;
+  -webkit-transition: color 1.5s;
+  transition: color 1.5s;
+}
