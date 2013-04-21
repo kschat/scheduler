@@ -15,6 +15,7 @@ define([
 			this.render();
 		},
 		render: function() {
+			this.$el.find('.input-state').removeClass('input-error');
 			this.$errorMessage.find('p').text('');
 			this.$errorMessage.hide();
 			return this;

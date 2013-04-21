@@ -81,11 +81,13 @@
 					p
 
 				fieldset
-					label Email
-					input(type='text', name="email", placeholder='Email', class='span5')
+					.input-state
+						label Email
+						input(type='text', name="email", placeholder='Email', class='span5')
 
-					label Password
-					input(type='password', name="password", placeholder='Password', class='span5')
+					.input-state
+						label Password
+						input(type='password', name="password", placeholder='Password', class='span5')
 					br 
 
 					button#signin-btn.btn.btn-danger(type='submit') Log in
