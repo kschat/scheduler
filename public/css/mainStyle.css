@@ -55,6 +55,15 @@ color: #5a5a5a;
   padding-top: 3px;
 }
 
+.navbar-search {
+  z-index: 1000;
+}
+
+.container > .search-nav {
+  position: absolute;
+  left: 460px;
+}
+
 .input-btn {
   position:absolute;
   display: block;
@@ -90,6 +99,10 @@ a.input-btn {
 
   transition: color .8s, border-color .8s;
   -webkit-transition: color .8s, border-color .8s;
+}
+
+.navbar .nav > li > a:hover {
+  color: #BF5343;
 }
 
 ul.dropdown-menu > li > a > i {
