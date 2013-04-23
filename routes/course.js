@@ -42,15 +42,15 @@ exports.init = function init(app) {
 	});
 
 	app.get(/^\/courses\/([a-zA-Z]{3}[0-9]{3})\/?$/, function(req, res) {
-		Course.find({ courseNumber: req.params[0] }, function(err, courses) {
+		Course.find({ courseNumber: req.params[0].toUpperCase() }, function(err, courses) {
 			if(err) { res.send(405); }
 
-			if(courses) {
+			if(courses.length) {
 				options.searchOn = true;
 				options.courseTitle = courses[0].courseTitle;
 				options.courseCredits = courses[0].credits;
 				options.courses = courses;
-				console.log(courses);
+				
 				res.render(app.get('views') + '/course/course', options);
 			}
 			else {
