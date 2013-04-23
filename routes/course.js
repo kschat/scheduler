@@ -1,4 +1,4 @@
-
+var Course = require('../models/course');
 
 exports.init = function init(app) {
 	//Default options to pass to the layout template
@@ -7,7 +7,8 @@ exports.init = function init(app) {
 			isPage: true,
 			loggedIn: false,
 			searchOn: false,
-			userName: 'dev', //remove for production
+			userName: 'dev', //remove for production,
+			currUser: 'kschat', //remove for production
 			links: {
 				styles: [
 					'/css/bootstrap.css',
@@ -38,5 +39,24 @@ exports.init = function init(app) {
 		options.loggedIn = req.session.loggedIn;
 		//options.userName = req.session.user.userName;
 		res.render(app.get('views') + '/course/advanced-search', options);
+	});
+
+	app.get(/^\/courses\/([a-zA-Z]{3}[0-9]{3})\/?$/, function(req, res) {
+		Course.find({ courseNumber: req.params[0] }, function(err, courses) {
+			if(err) { res.send(405); }
+
+			if(courses) {
+				options.searchOn = true;
+				options.courseTitle = courses[0].courseTitle;
+				options.courseCredits = courses[0].credits;
+				options.courses = courses;
+				console.log(courses);
+				res.render(app.get('views') + '/course/course', options);
+			}
+			else {
+				options.error = 'course not found';
+				res.render(app.get('views') + '/error', options);
+			}
+		});
 	});
 };
