@@ -25,7 +25,7 @@ exports.init = function init(app) {
 	//Index page route
 	app.get('/(home)?', function(req, res){
 		options.loggedIn = req.session.loggedIn || false;
-		options.userName = req.session.user ? req.session.user.userName : '';
+		options.currUser = req.session.user ? req.session.user.userName : '';
 		res.render('home', options);
 	});
 
@@ -54,12 +54,13 @@ exports.init = function init(app) {
 
 	app.get('/logout', function(req, res) {
 		req.session.loggedIn = false;
+		req.session.user = null;
 		res.redirect('/');
 	});
 
 	app.get('/about', function(req, res) {
 		options.loggedIn = req.session.loggedIn || false;
-		options.userName = req.session.user ? req.session.user.userName : '';
+		options.currUser = req.session.user ? req.session.user.userName : '';
 		res.render(app.get('views') + '/about', options);
 	});
 

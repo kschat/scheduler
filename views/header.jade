@@ -14,14 +14,14 @@
 					li: a(href='/about') About
 					- if(loggedIn == true)
 						li.dropdown
-							a.dropdown-toggle(data-toggle="dropdown", href="#") Account 
+							a.dropdown-toggle(data-toggle="dropdown", href="#") #{currUser} 
 								b.caret
 							ul.dropdown-menu(role="menu", aria-labelledby="dropdownMenu")
 								li
-									a(tabindex="-1", href="/user/#{userName}") 
+									a(tabindex="-1", href="/user/#{currUser}") 
 										i.icon-home
 										| Profile
-									a(tabindex="-1", href="/user/#{userName}/schedules") 
+									a(tabindex="-1", href="/user/#{currUser}/schedules") 
 										i.icon-cog
 										| Settings
 									a(tabindex="-1", href="/logout") 
