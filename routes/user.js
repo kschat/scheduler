@@ -26,6 +26,7 @@ exports.init = function init(app) {
 		//}
 		options.loggedIn = req.session.loggedIn;
 		options.userName = req.params[0];
+		options.currUser = req.session.user.userName;
 		res.render(app.get('views') + '/user/schedules', options);
 	});
 
@@ -38,6 +39,7 @@ exports.init = function init(app) {
 			if(user) {
 				options.loggedIn = req.session.loggedIn;
 				options.userName = req.params[0];
+				options.currUser = req.session.user.userName;
 				res.render(app.get('views') + '/user/profile', options);
 			}
 			else {
