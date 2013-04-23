@@ -4,9 +4,12 @@ define([
 	'models/course'
 ], function( _, Backbone, Course) {
 	var CourseCollection = Backbone.Collection.extend({
+		initialize: function(models, options) {
+			this.skip = options ? options.skip || 0 : 10;
+			this.limit = options ? options.limit || 20 : 20;
+		},
 		model: Course,
 		sync: function(method, model, options) {
-
 			if(method === 'read') {
 				var limit = options.limit || 20, 
 					skip = options.skip || 0;

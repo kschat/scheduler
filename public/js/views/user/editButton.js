@@ -30,6 +30,12 @@ define([
 			
 			this.render();
 		},
+		editError: function() {
+			this.$el.data('toggle', true);
+			this.render();
+
+			return false;
+		}
 	});
 
 	return EditButtonView;
