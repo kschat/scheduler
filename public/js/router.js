@@ -8,11 +8,13 @@ define([
 	'views/course/search',
 	'views/course/courseList',
 	'views/course/advancedCourseSearch',
+	'views/schedule/courseList',
+	'views/schedule/courseSearch',
 	'views/pagination/pagination',
 	'models/user',
 	'collections/courseCollection'
 ], function($, _, Backbone, SignupView, SigninView, ProfileView, SearchView, CourseListView, 
-		AdvancedSearchView, PaginationView, User, CourseCollection) {
+		AdvancedSearchView, ScheduleCourseListView, ScheduleCourseSearchView, PaginationView, User, CourseCollection) {
 	var AppRouter = Backbone.Router.extend({
 		routes: {
 			'login': 							'loginView',
@@ -106,11 +108,18 @@ define([
 		});
 
 		appRouter.on('route:scheduleCreate', function() {
-			var courseCollection = new CourseCollection(),
-				advancedSearchView = new AdvancedSearchView({ 
-					collection: courseCollection,
-					addable: true 
-				 });
+			var courses = new CourseCollection(),
+				scheduleCourseSearchView = new ScheduleCourseSearchView({ 
+					collection: courses,
+					dispatcher: dispatcher
+				}),
+				scheduleCourseListView = new ScheduleCourseListView({ 
+					collection: courses, 
+					dispatcher: dispatcher
+				});
+
+			scheduleCourseListView.render();
+			scheduleCourseSearchView.render();
 		});
 
 		Backbone.history.start({pushState: true});

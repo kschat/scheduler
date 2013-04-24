@@ -3,22 +3,26 @@ extends ../layouts/signedin-layout
 block content
 	#advanced-search
 		.container
-			.row
+			.row-fluid
 				.span3
 					h3 Search class
 				.span9
-						div(style="margin-top: 15px;")
-							form#advanced-course-search.form-inline(method="GET", action="/api/course")
-								.input-append
-									input#advanced-course-text.input-xxlarge(type="text")
-									button#advanced-course-submit.btn.btn-flat.btn-red(type="submit") Search
-			#results.container(style="display:none;")
-				.row
-					.span12
-						#courses
-							#courses-error.alert.alert-danger(style="display:none; text-align: center;")
-							table#course-table.table.table-bordered.table-striped.table-hover
-			.row
-				.span9.offset3
-					form
-						button.btn.btn-flat.btn-red(type="submit") Create schedule
+					div(style="margin-top: 15px;")
+						form#course-search.form-inline(method="GET", action="/api/course")
+							.input-append
+								input#course-search-text.input-xxlarge(type="text")
+								button#course-search-submit.btn.btn-flat.btn-red(type="submit") Search
+
+			.row-fluid
+				.span12
+					#course-container(style="overflow-y: scroll; max-height: 400px; min-height: 400px;")
+						#course-message
+						ul#course-list.nav.nav-list
+							
+			.row-fluid
+				.span12
+					ul.pager
+						li.previous
+							a(href="#") Previous
+						li.next
+							a(href="#") Next

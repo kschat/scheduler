@@ -19,7 +19,7 @@ exports.init = function init(app) {
 	app.get(/^\/schedule\/create\/?$/, function(req, res) {
 		options.searchOn = false;
 		options.loggedIn = req.session.loggedIn;
-		options.userName = 'kschat';
+		options.currUser = 'kschat';
 		res.render(app.get('views') + '/schedule/create', options);
 	});
 };
