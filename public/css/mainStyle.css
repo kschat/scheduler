@@ -159,6 +159,20 @@ ul.dropdown-menu > li > a > i {
   border-bottom: 1px solid #ccc;
 }
 
+.dropdown-menu.search-dropdown {
+  position: absolute;
+  overflow: hidden;
+  display: none;
+  width: 400px;
+  top: 28px;
+  padding: 5px;
+}
+
+.dropdown-menu.search-dropdown > li {
+  overflow: hidden;
+  border-radius: 2px;
+}
+
 .profile {
 }
 

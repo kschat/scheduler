@@ -19,7 +19,7 @@ define([
 			return this;
 		},
 		resetDropdown: function() {
-			this.$resultDropdown.find('.header').text('Start typing...');
+			this.$resultDropdown.find('#quick-search-header > strong').text('Start typing...');
 			this.$resultDropdown.hide();
 			return this;
 		},
@@ -33,7 +33,7 @@ define([
 		},
 		el: '#course-search',
 		appendResults: function(data) {
-			this.$resultDropdown.find('.header').nextAll('li').remove();
+			this.$resultDropdown.find('#quick-search-header').nextAll('li').remove();
 			for(var i=0; i<data.length; i++) {
 				var node = new SearchNode({ model: new Course(data[i]) });
 			}
@@ -41,7 +41,7 @@ define([
 		focusSearch: function() {
 			this.$el.addClass('hover');
 			var that = this;
-			this.$el.find('#search-textfield').animate({'width': 350}, 300, 'swing', function() {
+			this.$el.find('#search-textfield').animate({'width': 400}, 300, 'swing', function() {
 				that.$resultDropdown.show();
 			});
 		},
@@ -65,10 +65,10 @@ define([
 		},
 		changeSearch: function() {
 			var searchText = this.$el.find('#search-textfield'),
-				header = this.$resultDropdown.find('.header');
+				header = this.$resultDropdown.find('#quick-search-header > strong');
 
 			if(searchText.val() === '') {
-				this.$resultDropdown.find('.header').nextAll('li').remove();
+				this.$resultDropdown.find('#quick-search-header').nextAll('li').remove();
 				header.text('Start typing...');
 			}
 			else {
