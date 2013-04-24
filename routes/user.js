@@ -8,7 +8,7 @@ exports.init = function init(app) {
 			isPage: true,
 			loggedIn: false,
 			searchOn: true,
-			userName: 'dev', //remove for production
+			//userName: 'dev', //remove for production
 			links: {
 				styles: [
 					'/css/bootstrap.css',
@@ -20,10 +20,10 @@ exports.init = function init(app) {
 		};
 
 	app.get(/^\/user\/([0-9a-zA-Z]+)\/schedules\/?$/, function(req, res) {
-		//if(!req.session.loggedIn) {
-		//	res.redirect('login');
-		//	return;
-		//}
+		if(!req.session.loggedIn) {
+			res.redirect('login');
+			return;
+		}
 		options.loggedIn = req.session.loggedIn;
 		options.userName = req.params[0];
 		options.currUser = req.session.user.userName;
@@ -31,10 +31,10 @@ exports.init = function init(app) {
 	});
 
 	app.get(/^\/user\/([0-9a-zA-Z]+)\/?$/, function(req, res) {
-		//if(!req.session.loggedIn) {
-		//	res.redirect('login');
-		//	return;
-		//}
+		if(!req.session.loggedIn) {
+			res.redirect('login');
+			return;
+		}
 		User.findOne({ userName: req.params[0] }, function(err, user) {
 			if(user) {
 				options.loggedIn = req.session.loggedIn;
