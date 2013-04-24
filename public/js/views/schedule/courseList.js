@@ -21,7 +21,7 @@ define([
 		el: '#course-container',
 		render: function() {
 			if(this.collection.length > 0) {
-				this.$list.html('');
+				this.$list.html('').show();
 				this.$message.hide();
 				var self = this;
 				this.collection.each(function(course) {
@@ -31,6 +31,7 @@ define([
 				});
 			}
 			else {
+				this.$list.hide();
 				this.$message.html('<strong>No classes found.</strong>').show();
 			}
 
