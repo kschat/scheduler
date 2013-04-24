@@ -29,7 +29,8 @@ define([
 			'focus #search-results': 		'focusDropdown',
 			'mouseover #search-results': 	'focusDropdown',
 			'mouseout #search-results': 	'blurDropdown',
-			'keyup > input[type="text"]': 	'changeSearch'
+			'keyup > input[type="text"]': 	'changeSearch',
+			'keypress > input[type="text"]': 	'stopSubmit'
 		},
 		el: '#course-search',
 		appendResults: function(data) {
@@ -63,7 +64,14 @@ define([
 				this.$el.find('#search-textfield').animate({'width': 206}, 500);
 			}
 		},
-		changeSearch: function() {
+		changeSearch: function(e) {
+			e.preventDefault();
+			//If the escape key is pressed simulate a blur event
+			if(e.which == 27) { 
+				this.$el.find('#search-textfield').blur(); 
+				return;
+			}
+			
 			var searchText = this.$el.find('#search-textfield'),
 				header = this.$resultDropdown.find('#quick-search-header > strong');
 
@@ -75,9 +83,14 @@ define([
 				header.text('Courses');
 
 				$.ajax({
-					url: '/api/course?limit=4&courseNumber=' + searchText.val(),
+					url: '/api/course?limit=6&courseNumber=' + searchText.val(),
 					type: 'GET',
 				}).done(this.appendResults);
+			}
+		},
+		stopSubmit: function(e) {
+			if(e.which == 13) {
+				return false;
 			}
 		}
 	});

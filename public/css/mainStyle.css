@@ -173,6 +173,19 @@ ul.dropdown-menu > li > a > i {
   border-radius: 2px;
 }
 
+.dropdown-menu.search-dropdown > li.focused-item > a {
+  color: #ffffff !important;
+  text-decoration: none;
+  background-color: #BF5343;
+  background-image: -moz-linear-gradient(top, #BF5343, #BF5343);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#BF5343), to(#BF5343));
+  background-image: -webkit-linear-gradient(top, #BF5343, #BF5343);
+  background-image: -o-linear-gradient(top, #BF5343, #BF5343);
+  background-image: linear-gradient(to bottom, #BF5343, #BF5343);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#BF5343', endColorstr='#BF5343', GradientType=0);
+}
+
 .profile {
 }
 
