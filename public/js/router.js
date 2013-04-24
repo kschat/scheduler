@@ -25,6 +25,7 @@ define([
 			'courses/search/': 					'courseSearch',
 			'courses/search/:filter':			'courseSearch',
 			'courses/search/:filter/page/:p': 	'courseSearchPage',
+			'courses/:course': 					'coursePage',
 			'schedule/create': 					'scheduleCreate',
 			'': 								'default'
 		}
@@ -98,6 +99,10 @@ define([
 				filter = filter === 'all' ? '' : filter;
 				dispatcher.trigger('course:search:submit', 'course', 'courseNumber=' + filter);
 			}
+		});
+
+		appRouter.on('route:coursePage', function() {
+			var searchView = new SearchView();
 		});
 
 		appRouter.on('route:scheduleCreate', function() {
