@@ -255,3 +255,41 @@ ul.dropdown-menu > li > a > i {
   filter: alpha(opacity=50);
   opacity: 0.5;
 }
+
+.scrollable {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 800px;
+  height: 700px;
+}
+
+.table-calendar > thead > tr > th, .table-calendar > tbody > tr > td {
+  text-align: center;
+  min-width: 71px;
+  width: 10%;
+}
+
+.table-calendar > tbody > tr > td {
+  text-align: right;
+}
+
+.table-calendar > tbody > tr > td {
+  height: 42px;
+}
+
+td.calendar-time > div {
+  height: 42px;
+}
+
+td.time-split > div {
+  height: 50%;
+}
+
+td.time-split > div:first-child {
+  border-bottom: 1px dotted #dddddd;
+}
+
+.calendar-fixed-header {
+  padding-right: 15px;
+  margin-bottom: -1px;
+}

@@ -132,8 +132,8 @@ define([
 					dispatcher: dispatcher
 				});
 
-			scheduleCourseListView.render();
-			scheduleCourseSearchView.render();
+			//scheduleCourseListView.render();
+			//scheduleCourseSearchView.render();
 			scheduleNav.render();
 			availabilityChooserView.render();
 
