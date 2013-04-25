@@ -1,20 +1,23 @@
 define([
 	'jquery',
 	'underscore',
-	'backbone'
-], function($, _, Backbone) {
+	'backbone',
+	'text!templates/schedule/courseSearch.html'
+], function($, _, Backbone, Template) {
 	var CourseSearchView = Backbone.View.extend({
 		initialize: function(options) {
-			this.$searchText = this.$el.find('#course-search-text');
-			//this.$pagination = new PageinationView();
 			this.dispatcher = options.dispatcher;
 
 			_.bindAll(this, 'render', 'search', 'searchSuccess', 'searchError');
 		},
+		el: '#course-search',
+		template: _.template(Template),
 		events: {
 			'click #course-search-submit': 'search'
 		},
 		render: function() {
+			this.$el.html(this.template());
+			this.$searchText = this.$el.find('#course-search-text');
 
 			return this;
 		},
@@ -34,8 +37,7 @@ define([
 		},
 		searchError: function(data) {
 			this.dispatcher.trigger('search:error', data);
-		},
-		el: '#course-search'
+		}
 	});
 
 	return CourseSearchView;

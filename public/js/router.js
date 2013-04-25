@@ -10,11 +10,12 @@ define([
 	'views/course/advancedCourseSearch',
 	'views/schedule/courseList',
 	'views/schedule/courseSearch',
+	'views/schedule/schedulingNav',
 	'views/pagination/pagination',
 	'models/user',
 	'collections/courseCollection'
 ], function($, _, Backbone, SignupView, SigninView, ProfileView, SearchView, CourseListView, 
-		AdvancedSearchView, ScheduleCourseListView, ScheduleCourseSearchView, PaginationView, User, CourseCollection) {
+		AdvancedSearchView, ScheduleCourseListView, ScheduleCourseSearchView, ScheduleNav, PaginationView, User, CourseCollection) {
 	var AppRouter = Backbone.Router.extend({
 		routes: {
 			'login': 							'loginView',
@@ -116,10 +117,17 @@ define([
 				scheduleCourseListView = new ScheduleCourseListView({ 
 					collection: courses, 
 					dispatcher: dispatcher
+				}),
+				scheduleNav = new ScheduleNav({
+					dispatcher: dispatcher
 				});
 
 			scheduleCourseListView.render();
 			scheduleCourseSearchView.render();
+			scheduleNav.render();
+
+			//Disables the previous button on page load
+			dispatcher.trigger('pager:disableBtn', 'previous');
 		});
 
 		Backbone.history.start({pushState: true});
