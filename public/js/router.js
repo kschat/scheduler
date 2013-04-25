@@ -1,3 +1,8 @@
+/**
+ * Digging my grave by being lazy and not refactoring...
+ * alas, didn't realize this until a week before the due date.
+ */
+
 define([
 	'jquery',
 	'underscore',
@@ -11,11 +16,13 @@ define([
 	'views/schedule/courseList',
 	'views/schedule/courseSearch',
 	'views/schedule/schedulingNav',
+	'views/schedule/availabilityChooser',
 	'views/pagination/pagination',
 	'models/user',
 	'collections/courseCollection'
 ], function($, _, Backbone, SignupView, SigninView, ProfileView, SearchView, CourseListView, 
-		AdvancedSearchView, ScheduleCourseListView, ScheduleCourseSearchView, ScheduleNav, PaginationView, User, CourseCollection) {
+		AdvancedSearchView, ScheduleCourseListView, ScheduleCourseSearchView, ScheduleNav, 
+		AvailabilityChooserView, PaginationView, User, CourseCollection) {
 	var AppRouter = Backbone.Router.extend({
 		routes: {
 			'login': 							'loginView',
@@ -120,11 +127,15 @@ define([
 				}),
 				scheduleNav = new ScheduleNav({
 					dispatcher: dispatcher
+				}),
+				availabilityChooserView = new AvailabilityChooserView({
+					dispatcher: dispatcher
 				});
 
 			scheduleCourseListView.render();
 			scheduleCourseSearchView.render();
 			scheduleNav.render();
+			availabilityChooserView.render();
 
 			//Disables the previous button on page load
 			dispatcher.trigger('pager:disableBtn', 'previous');

@@ -8,7 +8,8 @@ define([
 		initialize: function(options) {
 			this.dispatcher = options.dispatcher;
 
-			_.bindAll(this, 'render', 'search', 'searchSuccess', 'searchError');
+			_.bindAll(this, 'render', 'search', 'searchSuccess', 'searchError', 'handleVisibility');
+			this.dispatcher.on('pager:btnClicked', this.handleVisibility);
 		},
 		el: '#course-search',
 		template: _.template(Template),
@@ -37,6 +38,14 @@ define([
 		},
 		searchError: function(data) {
 			this.dispatcher.trigger('search:error', data);
+		},
+		handleVisibility: function(e) {
+			if(e.target.hash === '#add-classes') {
+				this.$el.fadeIn();
+			}
+			else {
+				this.$el.hide();
+			}
 		}
 	});
 
