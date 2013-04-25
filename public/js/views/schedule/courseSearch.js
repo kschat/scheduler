@@ -9,7 +9,7 @@ define([
 			//this.$pagination = new PageinationView();
 			this.dispatcher = options.dispatcher;
 
-			_.bindAll(this, 'render', 'search', 'searchError');
+			_.bindAll(this, 'render', 'search', 'searchSuccess', 'searchError');
 		},
 		events: {
 			'click #course-search-submit': 'search'
@@ -20,11 +20,17 @@ define([
 		},
 		search: function(e) {
 			e.preventDefault();
+			this.dispatcher.trigger('loading:start');
+
 			this.collection.fetch({ 
 				courseNumber: this.$searchText.val(), 
 				dontPage: true,
+				success: this.searchSuccess,
 				error: this.searchError
 			});
+		},
+		searchSuccess: function(data) {
+			this.dispatcher.trigger('search:success', data);
 		},
 		searchError: function(data) {
 			this.dispatcher.trigger('search:error', data);

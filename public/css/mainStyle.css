@@ -233,3 +233,25 @@ ul.dropdown-menu > li > a > i {
   -webkit-transition: color 1.5s;
   transition: color 1.5s;
 }
+
+.loading-overlay {
+  display: none;
+  position: absolute;
+  background-color: #EEEEEE;
+  zoom: 1;
+  filter: alpha(opacity=60);
+  opacity: 0.6;
+}
+
+.loading-overlay > i.loading-image {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  color: #BF5343;
+}
+
+.transparent {
+  zoom: 1;
+  filter: alpha(opacity=50);
+  opacity: 0.5;
+}
