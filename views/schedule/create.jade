@@ -3,19 +3,9 @@ extends ../layouts/signedin-layout
 block content
 	#advanced-search
 		.container
-			.row-fluid
-				.span3
-					h3 Search class
-				.span9
-					div(style="margin-top: 15px;")
-						form#course-search.form-inline(method="GET", action="/api/course")
+			#course-search.row-fluid
 
-			.row-fluid
-				.span12
-					#course-container(style="overflow-y: scroll; max-height: 400px; min-height: 400px;")
-						.loading-overlay
-						#course-message
-						ul#course-list.nav.nav-list
+			#course-container.row-fluid
 							
 			.row-fluid
 				.span12
