@@ -1,14 +1,10 @@
 <form>
-	<table class="lazy-alignment">
-		<tbody>
-			<tr>
-				<td><strong>Start:</strong></td>
-				<td><input type="text" id="start-time" class="input-small" value="<%= startTime %>"/></td>
-			</tr>
-			<tr>
-				<td><strong>End:</strong></td>
-				<td><input type="text" id="start-time" class="input-small" value="<%= startTime %>"/></td>
-			</tr>
-		</tbody>
-	</table>
+	<strong>Start:</strong>
+	<input type="text" id="start-time" class="input-small" value="<%= startTime %>"/>
+	<strong>End:</strong>
+	
+	<input type="text" id="end-time" class="input-small" value="<%= endTime %>"/>
+	
+	<br /><br />
+	<button id="save-btn" class="btn btn-flat btn-red" type="submit">Save</button>
 </form>

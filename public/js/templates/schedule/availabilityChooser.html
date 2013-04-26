@@ -25,11 +25,11 @@
 							<% } else { %>
 								<% ampm = 'am'; hour = i; %>
 							<% } %>
-							<div><strong><%= hour %>pm</strong></div>
+							<div><strong><%= hour + ampm%></strong></div>
 						</td>
 
 						<% for(var x=0; x<7; x++) { %>
-							<td class="time-split">
+							<td data-day="<%= x %>" class="time-split">
 								<div class="trigger-popover" data-time="<%= hour %>:00<%= ampm %>" data-day="<%= x %>"></div>
 								<div class="trigger-popover" data-time="<%= hour %>:30<%= ampm %>" data-day="<%= x %>"></div>
 							</td>

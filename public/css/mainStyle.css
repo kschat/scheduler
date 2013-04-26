@@ -314,6 +314,13 @@ td.time-split > div.popover {
   background-color: #F8F8F8;
 }
 
+td.time-split > div.selected-time-temp {
+  background-color: #BF5343;
+  zoom: 1;
+  filter: alpha(opacity=60);
+  opacity: 0.6;
+}
+
 td.time-split > div.selected-time {
   background-color: #BF5343;
   zoom: 1;
@@ -323,4 +330,8 @@ td.time-split > div.selected-time {
 
 table.lazy-alignment td {
   border: 0;
+}
+
+.popover {
+  position: absolute !important;
 }
