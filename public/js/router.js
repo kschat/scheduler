@@ -116,7 +116,9 @@ define([
 		});
 
 		appRouter.on('route:scheduleCreate', function() {
-			var courses = new CourseCollection(),
+
+			var searchView = new SearchView(),
+				courses = new CourseCollection(),
 				scheduleCourseSearchView = new ScheduleCourseSearchView({ 
 					collection: courses,
 					dispatcher: dispatcher

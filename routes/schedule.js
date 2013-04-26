@@ -20,6 +20,7 @@ exports.init = function init(app) {
 		options.searchOn = false;
 		options.loggedIn = req.session.loggedIn;
 		options.currUser = 'kschat';
+		options.searchOn = true;
 		res.render(app.get('views') + '/schedule/create', options);
 	});
 };
