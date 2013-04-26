@@ -285,16 +285,42 @@ td.calendar-time > div {
   height: 42px;
 }
 
+td.time-split {
+  padding: 0;
+}
+
 td.time-split > div {
   height: 50%;
+  padding: 0 8px;
 }
 
 td.time-split > div:first-child {
   border-bottom: 1px dotted #dddddd;
+  padding-top: 8px;
+}
+
+td.time-split > div:first-child {
+  padding-bottom: 8px;
+}
+
+td.time-split > div.popover {
+  height: 150px;
+  width: 400px;
 }
 
 .calendar-fixed-header {
   padding-right: 15px;
   margin-bottom: -1px;
   background-color: #F8F8F8;
+}
+
+td.time-split > div.selected-time {
+  background-color: #BF5343;
+  zoom: 1;
+  filter: alpha(opacity=80);
+  opacity: 0.8;
+}
+
+table.lazy-alignment td {
+  border: 0;
 }

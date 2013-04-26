@@ -14,22 +14,24 @@
 			</thead>
 	</table>
 	<div class="scrollable">
-		<table class="table table-bordered table-calendar">
+		<table id="calendar" class="table table-bordered table-calendar">
 			<tbody>
 				<% for(var i=6; i<23; i++) { %>
 					<tr>
+						<% var hour = 0, ampm = 'am'; %>
 						<td class="calendar-time">
 							<% if(i>12) { %>
-								<div><strong><%= i - 12 %>pm</strong></div>
+								<% ampm = 'pm'; hour = i - 12; %>
 							<% } else { %>
-								<div><strong><%= i %>am</strong></div>
+								<% ampm = 'am'; hour = i; %>
 							<% } %>
+							<div><strong><%= hour %>pm</strong></div>
 						</td>
 
 						<% for(var x=0; x<7; x++) { %>
 							<td class="time-split">
-								<div></div>
-								<div></div>
+								<div class="trigger-popover" data-time="<%= hour %>:00<%= ampm %>" data-day="<%= x %>"></div>
+								<div class="trigger-popover" data-time="<%= hour %>:30<%= ampm %>" data-day="<%= x %>"></div>
 							</td>
 						<% } %>
 					</tr>
