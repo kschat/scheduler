@@ -277,6 +277,10 @@ ul.dropdown-menu > li > a > i {
   height: 42px;
 }
 
+td.calendar-time {
+  background-color: #F8F8F8;
+}
+
 td.calendar-time > div {
   height: 42px;
 }
@@ -292,4 +296,5 @@ td.time-split > div:first-child {
 .calendar-fixed-header {
   padding-right: 15px;
   margin-bottom: -1px;
+  background-color: #F8F8F8;
 }
