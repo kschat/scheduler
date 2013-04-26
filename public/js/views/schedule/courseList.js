@@ -55,11 +55,13 @@ define([
 			this.dispatcher.trigger('loading:stop');
 			this.$message.html('<strong>There was an error contacting the server.</strong>').show();
 		},
-		handleVisibility: function(e) {
-			if(e.target.hash === '#add-classes') {
+		handleVisibility: function(e, page) {
+			if(page === 'add-classes') {
 				this.$el.fadeIn();
 				this.dispatcher.trigger('pager:disableBtn', 'previous');
-
+				this.dispatcher.trigger('pager:enableBtn', 'next');
+				this.dispatcher.trigger('pager:setHref', 'previous', '#add-classes');
+				this.dispatcher.trigger('pager:setHref', 'next', '#availability');
 			}
 			else {
 				this.$el.hide();

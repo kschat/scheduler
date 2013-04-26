@@ -2,13 +2,15 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
+	'collections/timeRangeCollection',
 	'text!templates/schedule/availabilityChooser.html',
 	'text!templates/schedule/calendarPopup.html'
-], function($, _, Backbone, Template, PopupTemplate) {
+], function($, _, Backbone, TimeRangeCollection, Template, PopupTemplate) {
 	var AvailabilityChooserView = Backbone.View.extend({
 		initialize: function(options) {
 			this.$selectedTime = null;
 			this.dispatcher = options.dispatcher;
+			this.collection = new TimeRangeCollection();
 
 			this.timeValidation = /^(?:1[0-2]|[1-9]):[0-5][0-9](?:am|pm)$/;
 			this.days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -107,10 +109,13 @@ define([
 				minutes: time.split(':')[1].match(/[0-9]+/)[0]
 			};
 		},
-		handleVisibility: function(e) {
-			if(e.target.hash === '#availability') {
+		handleVisibility: function(e, page) {
+			if(page === 'availability') {
 				this.$el.fadeIn();
 				this.dispatcher.trigger('pager:enableBtn', 'previous');
+				this.dispatcher.trigger('pager:enableBtn', 'next');
+				this.dispatcher.trigger('pager:setHref', 'previous', '#add-classes');
+				this.dispatcher.trigger('pager:setHref', 'next', '#generate-schedule');
 			}
 			else {
 				this.$el.hide();
@@ -193,6 +198,7 @@ define([
 				sday = this.$selectedTime.data('day'),
 				times = this.getRange(sTime, eTime);
 
+			times.pop();
 			this.clearTemps();
 			this.setRangeState(times, sday, 'selected-time-temp');
 			this.enableSave();
@@ -206,8 +212,12 @@ define([
 				sday = this.$selectedTime.data('day'),
 				times = this.getRange(sTime, eTime);
 
+			this.collection.add({startTime: times[0], endTime: times.pop()});
+
 			this.setRangeState(times, sday, 'selected-time');
 			this.$selectedTime.removeClass('selected-time-temp').popover('hide');
+
+			console.log(this.collection);
 		},
 		setRangeState: function(range, day, state) {
 			for(var i=0; i<range.length; i++) {
@@ -234,7 +244,7 @@ define([
 				range.push(temp);
 				curr = temp;
 			}
-			range.pop();
+
 			return range;
 		},
 		clearTemps: function() {
