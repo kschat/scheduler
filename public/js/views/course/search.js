@@ -34,6 +34,7 @@ define([
 		},
 		el: '#course-search',
 		appendResults: function(data) {
+			 data = _.uniq(data, true, function(i) { return i.courseNumber; });
 			this.$resultDropdown.find('#quick-search-header').nextAll('li').remove();
 			for(var i=0; i<data.length; i++) {
 				var node = new SearchNode({ model: new Course(data[i]) });

@@ -11,7 +11,7 @@ define([
 			_.bindAll(this, 'render', 'search', 'searchSuccess', 'searchError', 'handleVisibility');
 			this.dispatcher.on('pager:btnClicked', this.handleVisibility);
 		},
-		el: '#course-search',
+		el: '#schedule-course-search',
 		template: _.template(Template),
 		events: {
 			'click #course-search-submit': 'search'

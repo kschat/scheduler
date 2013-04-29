@@ -1,8 +1,27 @@
 <div class="row-fluid">
 	<div class="span12">
+		<h3>Scheudules will consist of the following courses:</h3>
+	</div>
+</div>
+<div class="row-fluid">
+	<div class="span12">
+		<ul id="picked-course-list" class="nav nav-pills nav-stacked"></ul>
+	</div>
+</div>
+<div class="row-fluid">
+	<div class="span12" style="text-align: center;">
+		<a id="generate-btn" class="btn btn-flat btn-red" href="/schedule/generate">Generate Schedules</a>
+	</div>
+</div>
+<br />
+<div class="row-fluid">
+	<div class="span12">
+		<div id="schedule-message"></div>
 		<div id="schedule-container" class="scrollable">
-			<div class="loading-overlay"></div>
-			<div id="schedule-message"></div>
+			<div id="schedule-loading" class="loading-overlay" style="height: 500px;"></div>
+			<div class="row-fluid">
+				<div id="schedules" class="span10 offset1"></div>
+			</div>
 		</div>
 	</div>
 </div>

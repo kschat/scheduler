@@ -1,0 +1,46 @@
+
+<table class="table table-bordered table-striped table-hover">
+	<caption>
+		<h4>
+			<a href=""><%= title %></a>
+		</h4>
+	</caption>
+	<thead>
+		<tr>
+			<th>Class</th>
+			<th>Section</th>
+			<th>Instructor</th>
+			<th>Days</th>
+			<th>Times</th>
+			<td>Location</td>
+		</tr>
+	</thead>
+
+	<tbody>
+		<% for(var i=0; i<courses.length; i++) { %>
+			<tr>
+				<td><%= courses[i].courseNumber %></td>
+				<td><%= courses[i].section %></td>
+				<td><%= courses[i].instructor %></td>
+
+				<td>
+					<% courses[i].days.forEach(function(day) { %>
+						<%= day.days %><br />
+					<% }) %>
+				</td>
+
+				<td style="width: 150px;">
+					<% courses[i].days.forEach(function(day) { %>
+						<%= day.times %><br />
+					<% }) %>
+				</td>
+
+				<td>
+					<% courses[i].days.forEach(function(day) { %>
+						<%= day.location %><br />
+					<% }) %>
+				</td>
+			</tr>
+		<% } %>
+	</tbody>
+</table>

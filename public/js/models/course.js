@@ -3,7 +3,8 @@ define([
 	'backbone',
 ], function( _, Backbone) {
 	var CourseModel = Backbone.Model.extend({
-		url: '/api/course'
+		url: '/api/course',
+		idAttribute: '_id'
 	});
 
 	return CourseModel;

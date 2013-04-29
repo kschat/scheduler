@@ -24,6 +24,7 @@ define([
 		render: function() {
 			this.$el.html(this.template);
 			var parent = this.$el.parent();
+
 			this.$el.css({
 				'height': parent.css('height'),
 				'width': parent.css('width')

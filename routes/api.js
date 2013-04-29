@@ -233,6 +233,12 @@ function RESTGet(req, res) {
 						});
 					}
 					else {
+						_.uniqObjects = function( arr ){
+							return _.uniq( _.collect( arr, function( x ){
+								return JSON.stringify( x );
+							}));
+						};
+
 						res.send(result);
 					}
 				});

@@ -89,7 +89,7 @@ define([
 				endIndex = pageAmt;
 			}
 
-			//Makes sure the indexes don't exceed the boundries of the pages
+			//Makes sure the indices don't exceed the boundries of the pages
 			endIndex = endIndex > pageAmt ? pageAmt : endIndex;
 			begIndex = begIndex < 1 ? 1 : begIndex;
 

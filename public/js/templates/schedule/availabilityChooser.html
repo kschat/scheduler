@@ -1,46 +1,51 @@
 <div class="span12">
-	<h3>Availability</h3>
-</div>
+	<div class="row-fluid">
+		<div class="span12">
+			<h3>Availability</h3>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="span12">
+			<table class="table table-bordered table-calendar calendar-fixed-header">
+					<thead>
+						<tr>
+							<th></th>
+							<th>Sunday</th>
+							<th>Monday</th>
+							<th>Tuesday</th>
+							<th>Wednesday</th>
+							<th>Thursday</th>
+							<th>Friday</th>
+							<th>Saturday</th>
+						</tr>
+					</thead>
+			</table>
+			<div class="scrollable">
+				<table id="calendar" class="table table-bordered table-calendar">
+					<tbody>
+						<% for(var i=6; i<23; i++) { %>
+							<tr>
+								<% var hour = 0, ampm = 'am'; %>
+								<td class="calendar-time">
+									<% if(i>11) { %>
+										<% ampm = 'pm'; hour = i === 12 ? 12 : i - 12; %>
+									<% } else { %>
+										<% ampm = 'am'; hour = i; %>
+									<% } %>
+									<div><strong><%= hour + ampm%></strong></div>
+								</td>
 
-<div class="span12">
-	<table class="table table-bordered table-calendar calendar-fixed-header">
-			<thead>
-				<tr>
-					<th></th>
-					<th>Sunday</th>
-					<th>Monday</th>
-					<th>Tuesday</th>
-					<th>Wednesday</th>
-					<th>Thursday</th>
-					<th>Friday</th>
-					<th>Saturday</th>
-				</tr>
-			</thead>
-	</table>
-	<div class="scrollable">
-		<table id="calendar" class="table table-bordered table-calendar">
-			<tbody>
-				<% for(var i=6; i<23; i++) { %>
-					<tr>
-						<% var hour = 0, ampm = 'am'; %>
-						<td class="calendar-time">
-							<% if(i>11) { %>
-								<% ampm = 'pm'; hour = i === 12 ? 12 : i - 12; %>
-							<% } else { %>
-								<% ampm = 'am'; hour = i; %>
-							<% } %>
-							<div><strong><%= hour + ampm%></strong></div>
-						</td>
-
-						<% for(var x=0; x<7; x++) { %>
-							<td data-day="<%= x %>" class="time-split">
-								<div class="trigger-popover" data-time="<%= hour %>:00<%= ampm %>" data-day="<%= x %>"></div>
-								<div class="trigger-popover" data-time="<%= hour %>:30<%= ampm %>" data-day="<%= x %>"></div>
-							</td>
+								<% for(var x=0; x<7; x++) { %>
+									<td data-day="<%= x %>" class="time-split">
+										<div class="trigger-popover" data-time="<%= hour %>:00<%= ampm %>" data-day="<%= x %>"></div>
+										<div class="trigger-popover" data-time="<%= hour %>:30<%= ampm %>" data-day="<%= x %>"></div>
+									</td>
+								<% } %>
+							</tr>
 						<% } %>
-					</tr>
-				<% } %>
-			</tbody>
-		</table>
+					</tbody>
+				</table>
+			</div>
+		</div>
 	</div>
 </div>

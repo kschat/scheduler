@@ -120,12 +120,14 @@ define([
 
 			var searchView = new SearchView(),
 				courses = new CourseCollection(),
+				selectedCourses = new CourseCollection(),
 				scheduleCourseSearchView = new ScheduleCourseSearchView({ 
 					collection: courses,
 					dispatcher: dispatcher
 				}),
 				scheduleCourseListView = new ScheduleCourseListView({ 
 					collection: courses, 
+					selectedCourses: selectedCourses,
 					dispatcher: dispatcher
 				}),
 				scheduleNav = new ScheduleNav({
@@ -135,7 +137,8 @@ define([
 					dispatcher: dispatcher
 				}),
 				generateScheduleView = new GenerateScheduleView({
-					dispatcher: dispatcher
+					dispatcher: dispatcher,
+					collection: selectedCourses
 				});
 
 			scheduleCourseListView.render();
@@ -146,6 +149,7 @@ define([
 
 			//Disables the previous button on page load
 			dispatcher.trigger('pager:disableBtn', 'previous');
+			dispatcher.trigger('pager:disableBtn', 'next');
 		});
 
 		Backbone.history.start({pushState: true});

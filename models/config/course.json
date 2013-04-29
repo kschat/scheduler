@@ -17,6 +17,10 @@
 			"count": {
 				"type": "boolean",
 				"required": false
+			},
+			"distinct": {
+				"type": "string",
+				"required": false
 			}
 		},
 		"PUT": {

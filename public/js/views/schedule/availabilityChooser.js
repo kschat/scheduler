@@ -111,7 +111,7 @@ define([
 		},
 		handleVisibility: function(e, page) {
 			if(page === 'availability') {
-				this.$el.fadeIn();
+				this.$el.slideDown(800);
 				this.dispatcher.trigger('pager:enableBtn', 'previous');
 				this.dispatcher.trigger('pager:enableBtn', 'next');
 				this.dispatcher.trigger('pager:setHref', 'previous', '#add-classes');

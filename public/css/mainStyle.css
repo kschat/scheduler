@@ -260,7 +260,7 @@ ul.dropdown-menu > li > a > i {
   overflow-y: scroll;
   overflow-x: hidden;
   max-height: 800px;
-  height: 700px;
+  height: 500px;
 }
 
 .table-calendar > thead > tr > th, .table-calendar > tbody > tr > td {
