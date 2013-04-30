@@ -3,6 +3,12 @@ var mongoose = require('mongoose'),
 	Course = require('./course'),
 	Schema = mongoose.Schema;
 
+/**
+* Schedule mongo schema
+*
+* @param {String} title custom label for schedule
+* @param {Array} courses list of references to course models
+*/
 var scheduleSchema = new Schema({
 	title: {
 		type: String,
