@@ -1,3 +1,9 @@
+/**
+* Course Backbone.js model
+*
+* @param {String} url REST url to call
+* @param {String} idAttribute sets the id for the model
+*/
 define([
 	'underscore',
 	'backbone',
