@@ -2,10 +2,23 @@ var mongoose = require('mongoose'),
 	Course = require('../models/course'),
 	_ = require('underscore');
 
+/**
+* Returns individual days in an array
+*
+* @param {String} string of days delimited by commas
+* @return {Array} array containing individual days
+*/
 function parseDays(date) {
 	return date.days.split(',');
 }
 
+/**
+* Determines if there is a overlap conflict between two day objects
+*
+* @param {Object} d1 first day object to compare
+* @param {Object} d2 second day object to compare
+* @return {Boolean} true if there are conflicts; false otherwise
+*/
 function classOverlap(d1, d2) {
 	//Each set of times for date1
 	for(var y=0; y<d1.length; y++) {
@@ -40,12 +53,27 @@ function classOverlap(d1, d2) {
 	return false;
 }
 
+/**
+* Determines if there is a overlap conflict between two ranges of times (in military time)
+*
+* @param {String} timeStart1 starting time of range 1
+* @param {String} timeEnd1 ending time of range 1
+* @param {String} timeStart2 starting time of range 2
+* @param {String} timeEnd2 ending time of range 2
+* @return {Boolean} true if there are conflicts; false otherwise
+*/
 function timeOverlap(timeStart1, timeEnd1, timeStart2, timeEnd2) {
 	if(timeStart1 <= timeEnd2 && timeEnd1 >= timeStart2) { return true; }
 
 	return false;
 }
 
+/**
+* Converts standard time to military time
+*
+* @param {String} time the time to convert
+* @return {String} military equivlent of time
+*/
 function convertToMilitary(time) {
 	time = this.parseTime(time);
 	var hour = time.hours,
@@ -76,6 +104,12 @@ function convertToMilitary(time) {
 	return mHour + minute;
 }
 
+/**
+* Creates an object literal from a string containing the hours, minutes, and ampm
+*
+* @param {String} time the time to convert
+* @return {Object} object literal containing the seperated properties
+*/
 function parseTime(time) {
 	time = time.toUpperCase().trim();
 
@@ -86,6 +120,12 @@ function parseTime(time) {
 	};
 }
 
+/**
+* Generates a matrix of all possible course combinations
+*
+* @param {Array} arguments a 2D array containing all courses and sections
+* @return {Array} a 2D array containing all possible schedules
+*/
 function cartesianProductOf(){
 	return _.reduce(arguments, function(mtrx, vals){
 		return _.reduce(vals, function(array, val){
@@ -99,20 +139,21 @@ function cartesianProductOf(){
 exports.init = function init(app) {
 	//Default options to pass to the layout template
 	var options = {
-			title: 'Scheduler',
-			isPage: true,
-			loggedIn: false,
-			searchOn: false,
-			links: {
-				styles: [
-					'/css/bootstrap.css',
-					'/css/bootstrap-responsive.css',
-					'/css/mainStyle.css',
-					'/css/font-awesome.min.css',
-				],
-			},
-		};
+		title: 'Scheduler',
+		isPage: true,
+		loggedIn: false,
+		searchOn: false,
+		links: {
+			styles: [
+				'/css/bootstrap.css',
+				'/css/bootstrap-responsive.css',
+				'/css/mainStyle.css',
+				'/css/font-awesome.min.css',
+			],
+		},
+	};
 
+	//schedule creation route
 	app.get(/^\/schedule\/create\/?$/, function(req, res) {
 		options.searchOn = true;
 		options.loggedIn = req.session.loggedIn;
@@ -121,6 +162,7 @@ exports.init = function init(app) {
 		res.render(app.get('views') + '/schedule/create', options);
 	});
 
+	//schedule generation route
 	app.post(/^\/schedule\/generate\/?$/, function(req, res) {
 		var allCourses = [],
 			courseNums = [],
@@ -144,7 +186,6 @@ exports.init = function init(app) {
 					allCourses.push(tempArr);
 					tempArr = [];
 					tempArr.push(courses[i]);
-					//console.log(tempArr);
 				}
 				cCourse = courses[i];
 			}
