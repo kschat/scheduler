@@ -8,27 +8,28 @@ var fs = require('fs'),
 exports.init = function init(app) {
 	//Default options to pass to the layout template
 	var options = {
-			title: 'Scheduler',
-			isPage: true,
-			loggedIn: false,
-			searchOn: false,
-			links: {
-				styles: [
-					'css/bootstrap.css',
-					'css/bootstrap-responsive.css',
-					'css/mainStyle.css',
-					'/css/font-awesome.min.css',
-				],
-			},
-		};
+		title: 'Scheduler',
+		isPage: true,
+		loggedIn: false,
+		searchOn: false,
+		links: {
+			styles: [
+				'css/bootstrap.css',
+				'css/bootstrap-responsive.css',
+				'css/mainStyle.css',
+				'/css/font-awesome.min.css',
+			],
+		},
+	};
 
 	//Index page route
-	app.get('/(home)?', function(req, res){
+	app.get('/(home)?', function(req, res) {
 		options.loggedIn = req.session.loggedIn || false;
 		options.currUser = req.session.user ? req.session.user.userName : '';
 		res.render('home', options);
 	});
 
+	//Login route
 	app.post('/login', function(req, res) {
 		User.findOne({ email: req.body.email }, function(err, user) {
 			if(user) {
@@ -52,18 +53,21 @@ exports.init = function init(app) {
 		});
 	});
 
+	//logout route
 	app.get('/logout', function(req, res) {
 		req.session.loggedIn = false;
 		req.session.user = null;
 		res.redirect('/');
 	});
 
+	//about route
 	app.get('/about', function(req, res) {
 		options.loggedIn = req.session.loggedIn || false;
 		options.currUser = req.session.user ? req.session.user.userName : '';
 		res.render(app.get('views') + '/about', options);
 	});
 
+	//login and signup route
 	app.get(/\/(login|signup)/, function(req, res, next) {
 		if(req.session.loggedIn) {
 			res.redirect('/user/' + req.session.user.userName);
@@ -74,9 +78,5 @@ exports.init = function init(app) {
 				res.render(app.get('views') + '/' + req.params, options);
 			}
 		}
-	});
-
-	app.get(/\/signup\/confirmation\/?/, function(req, res){
-		//Email user
 	});
 }
