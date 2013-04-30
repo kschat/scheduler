@@ -1,0 +1,394 @@
+[
+  {
+    "tags": [
+      {
+        "type": "param",
+        "types": [
+          "String"
+        ],
+        "name": "val",
+        "description": "name to validate"
+      },
+      {
+        "type": "return",
+        "types": [
+          "Boolean"
+        ],
+        "description": "true if valide; false otherwise"
+      }
+    ],
+    "description": {
+      "full": "<p>Determines if a name is between 1 and 36 characters</p>",
+      "summary": "<p>Determines if a name is between 1 and 36 characters</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "ignore": false,
+    "code": "function validateName(val) {\n\treturn val.length >= 2 && val.length <= 35;\n}",
+    "ctx": {
+      "type": "function",
+      "name": "validateName",
+      "string": "validateName()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "types": [
+          "String"
+        ],
+        "name": "val",
+        "description": "email to validate"
+      },
+      {
+        "type": "return",
+        "types": [
+          "Boolean"
+        ],
+        "description": "true if valide; false otherwise"
+      }
+    ],
+    "description": {
+      "full": "<p>Determines if an email matches <address>@<provider>.<subDomain></p>",
+      "summary": "<p>Determines if an email matches <address>@<provider>.<subDomain></p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "ignore": false,
+    "code": "function validateEmail(val) {\n\treturn /^.+@.+\\..+$/.test(val);\n}",
+    "ctx": {
+      "type": "function",
+      "name": "validateEmail",
+      "string": "validateEmail()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "types": [
+          "String"
+        ],
+        "name": "val",
+        "description": "password to validate"
+      },
+      {
+        "type": "return",
+        "types": [
+          "Boolean"
+        ],
+        "description": "true if valide; false otherwise"
+      }
+    ],
+    "description": {
+      "full": "<p>Determines if a pasword is at least 4 characters long</p>",
+      "summary": "<p>Determines if a pasword is at least 4 characters long</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "ignore": false,
+    "code": "function validatePassword(val) {\n\treturn val.length > 3;\n}",
+    "ctx": {
+      "type": "function",
+      "name": "validatePassword",
+      "string": "validatePassword()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "types": [
+          "String"
+        ],
+        "name": "val",
+        "description": "password to validate"
+      },
+      {
+        "type": "return",
+        "types": [
+          "Boolean"
+        ],
+        "description": "true if valide; false otherwise"
+      }
+    ],
+    "description": {
+      "full": "<p>Determines if a password contains special characters and is 13 characters long</p>",
+      "summary": "<p>Determines if a password contains special characters and is 13 characters long</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "ignore": false,
+    "code": "function validatePasswordStrong(val) {\n\tvar hasSpecialCharacter = /[^a-z ]/.test(val);\n\n\treturn validatePassword(val) && (\n\t\t\t(val.length > 12 && hasSpecialCharacter) || \n\t\t\t(val.length > 20)\n\t\t);\n}",
+    "ctx": {
+      "type": "function",
+      "name": "validatePasswordStrong",
+      "string": "validatePasswordStrong()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "types": [
+          "String"
+        ],
+        "name": "val",
+        "description": "password to validate"
+      },
+      {
+        "type": "return",
+        "types": [
+          "Boolean"
+        ],
+        "description": "true if valide; false otherwise"
+      }
+    ],
+    "description": {
+      "full": "<p>Determines if a password contains special characters and is at least 8 characters long</p>",
+      "summary": "<p>Determines if a password contains special characters and is at least 8 characters long</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "ignore": false,
+    "code": "function validatePasswordMedium(val) {\n\tvar hasSpecialCharacter = /[^a-z ]/.test(val);\n\n\treturn validatePassword(val) && (\n\t\t\t\t(val.length > 10 && val.length < 21) || \n\t\t\t\t(val.length > 7 && val.length < 13 && hasSpecialCharacter)\n\t\t\t);\n}",
+    "ctx": {
+      "type": "function",
+      "name": "validatePasswordMedium",
+      "string": "validatePasswordMedium()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "types": [
+          "String"
+        ],
+        "name": "val",
+        "description": "password to validate"
+      },
+      {
+        "type": "return",
+        "types": [
+          "Boolean"
+        ],
+        "description": "true if valide; false otherwise"
+      }
+    ],
+    "description": {
+      "full": "<p>Determines if a password is less than 8 characters long</p>",
+      "summary": "<p>Determines if a password is less than 8 characters long</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "ignore": false,
+    "code": "function validatePasswordWeak(val) {\n\treturn validatePassword(val) && val.length < 8;\n}",
+    "ctx": {
+      "type": "function",
+      "name": "validatePasswordWeak",
+      "string": "validatePasswordWeak()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "types": [
+          "Buffer"
+        ],
+        "name": "data",
+        "description": "binary representation of the image"
+      },
+      {
+        "type": "param",
+        "types": [
+          "String"
+        ],
+        "name": "filename",
+        "description": "path of the image"
+      }
+    ],
+    "description": {
+      "full": "<p>Picture mongo schema</p>",
+      "summary": "<p>Picture mongo schema</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "ignore": false,
+    "code": "var PictureSchema = mongoose.Schema({\n\tdata: {\n\t\ttype: Buffer\n\t},\n\tfilename: {\n\t\ttype: String,\n\t\tdefault: 'img/defaultProfile.jpg',\n\t\trequired: true\n\t}\n});",
+    "ctx": {
+      "type": "declaration",
+      "name": "PictureSchema",
+      "value": "mongoose.Schema({",
+      "string": "PictureSchema"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "types": [
+          "String"
+        ],
+        "name": "firstName",
+        "description": "users first name"
+      },
+      {
+        "type": "param",
+        "types": [
+          "String"
+        ],
+        "name": "lastName",
+        "description": "users last name"
+      },
+      {
+        "type": "param",
+        "types": [
+          "String"
+        ],
+        "name": "userName",
+        "description": "users username"
+      },
+      {
+        "type": "param",
+        "types": [
+          "String"
+        ],
+        "name": "description",
+        "description": "personal description on users profile"
+      },
+      {
+        "type": "param",
+        "types": [
+          "String"
+        ],
+        "name": "email",
+        "description": "users email address"
+      },
+      {
+        "type": "param",
+        "types": [
+          "String"
+        ],
+        "name": "password",
+        "description": "encrypted password"
+      },
+      {
+        "type": "param",
+        "types": [
+          "Array"
+        ],
+        "name": "avatar",
+        "description": "list of Picture models"
+      }
+    ],
+    "description": {
+      "full": "<p>User mongo schema</p>",
+      "summary": "<p>User mongo schema</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "ignore": false,
+    "code": "var userSchema = mongoose.Schema({\n\tfirstName: { \n\t\ttype: String, \n\t\trequired: true,\n\t\tvalidate: [\n\t\t\tvalidateName, 'Error with first name'\n\t\t]\n\t},\n\tlastName: {\n\t\ttype: String, \n\t\trequired: true,\n\t\tvalidate: [\n\t\t\tvalidateName, 'Error with last name'\n\t\t]\n\t},\n\tuserName: {\n\t\ttype: String, \n\t\trequired: true,\n\t\tindex: {\n\t\t\tunique: true\n\t\t}\n\t},\n\tdescription: {\n\t\ttype: String,\n\t\trequired: false,\n\t\tdefault: 'No description'\n\t},\n\temail: {\n\t\ttype: String, \n\t\trequired: true, \n\t\tindex: {\n\t\t\tunique: true,\n\t\t},\n\t\tvalidate: [\n\t\t\tvalidateEmail, 'Error with email address'\n\t\t]\n\t},\n\tpassword: {\n\t\ttype: String, \n\t\trequired: true,\n\t\tvalidate: [\n\t\t\t{ validator: validatePassword, msg: 'Password too short' }\n\t\t]\n\t},\n\tavatar: {\n\t\ttype: [PictureSchema]\n\t}\n},\n{\n\tcollection: 'user'\n});",
+    "ctx": {
+      "type": "declaration",
+      "name": "userSchema",
+      "value": "mongoose.Schema({",
+      "string": "userSchema"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "<p>Middleware for saving a model<br />Encrypts the password</p>",
+      "summary": "<p>Middleware for saving a model<br />Encrypts the password</p>",
+      "body": ""
+    },
+    "ignore": false,
+    "code": "userSchema.pre('save', function(next) {\n\tvar user = this;\n\n\t//Password pre-save\n\tif(!user.isModified('password')) { return next(); }\n\n\tbcrypt.genSalt(10, function(err, salt) {\n\t\tbcrypt.hash(user.password, salt, function(err, hash) {\n\t\t\tif(err) { return next(err); }\n\n\t\t\tuser.password = hash;\n\t\t\tnext();\n\t\t});\n\t});\n});"
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "<p>Middleware for saving a model<br />writes the image uploaded to the server</p>",
+      "summary": "<p>Middleware for saving a model<br />writes the image uploaded to the server</p>",
+      "body": ""
+    },
+    "ignore": false,
+    "code": "userSchema.pre('save', function(next) {\n\tvar user = this;\n\n\tif(!user.isModified('avatar')) { return next(); }\n\n\tvar imageName = user.avatar[0].filename,\n\t\timageBuffer = user.avatar[0].data,\n\t\tuploadPath = 'public/img/uploads/' + user.userName,\n\t\tdataRegex = /^data:.+\\/(.+);(.+),(.*)$/,\n\t\tmatches = imageBuffer.toString().match(dataRegex);\n\t\n\t//Checks if the user already has a file containing their uploads, creates one if they don't.\n\tfs.exists(uploadPath, function(exists) {\n\t\tif(!exists) { \n\t\t\tfs.mkdirSync(uploadPath);\n\t\t}\n\t});\n\n\t//If there are no matches then the file isn't a new upload.\n\tif(!matches) { return next(); }\n\n\tvar ext = matches[1],\n\t\tencoding = matches[2],\n\t\tdata = matches[3];\n\n\t//Converts jpeg to jpg for consistancy\n\text = ext === 'jpeg' ? 'jpg' : ext;\n\n\t//Takes off the file extension in favor of the ext sent with the data url\n\timageName = imageName.substring(0, imageName.lastIndexOf('.'));\n\n\t//Creates a buffer that only contains the image data\n\tdata = new Buffer(data, encoding);\n\n\t//Writes the upload image to their upload directory\n\tfs.writeFile(uploadPath + '/' + imageName + '.' + ext, data, function(err) {\n\t\tif(err) { return next(err); }\n\n\t\t//Resave the the image name to the unique name\n\t\tuser.avatar[0].filename = imageName + '.' + ext;\n\t\tnext();\n\t});\n});"
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "types": [
+          "String"
+        ],
+        "name": "candidatePassword",
+        "description": "password to compare against"
+      },
+      {
+        "type": "param",
+        "types": [
+          "Function"
+        ],
+        "name": "callBack",
+        "description": "is passed err and isMatch used"
+      }
+    ],
+    "description": {
+      "full": "<p>Model method used to compare two passwords</p>",
+      "summary": "<p>Model method used to compare two passwords</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "ignore": false,
+    "code": "userSchema.methods.comparePassword = function(candidatePassword, callBack) {\n\tbcrypt.compare(candidatePassword, this.password, function(err, isMatch) {\n        if (err) { return callBack(err) };\n        \n        callBack(null, isMatch);\n    });\n};",
+    "ctx": {
+      "type": "method",
+      "receiver": "userSchema.methods",
+      "name": "comparePassword",
+      "string": "userSchema.methods.comparePassword()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "return",
+        "types": [
+          "String"
+        ],
+        "description": "ID of the user"
+      }
+    ],
+    "description": {
+      "full": "<p>Virtual method that creates an alias for _id as userID</p>",
+      "summary": "<p>Virtual method that creates an alias for _id as userID</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "ignore": false,
+    "code": "userSchema.virtual('userID').get(function() {\n\treturn this._id;\n});"
+  },
+  {
+    "tags": [
+      {
+        "type": "return",
+        "types": [
+          "String"
+        ],
+        "description": "full name of user"
+      }
+    ],
+    "description": {
+      "full": "<p>Virtual method that creates an alias for firstName + lastName as fullName</p>",
+      "summary": "<p>Virtual method that creates an alias for firstName + lastName as fullName</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "ignore": false,
+    "code": "userSchema.virtual('fullName').get(function() {\n\treturn this.firstName + ' ' + this.lastName;\n});\n\nvar User = mongoose.model('User', userSchema);\n\nmodule.exports = User;\nmodule.exports.schema = userSchema;"
+  }
+]

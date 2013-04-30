@@ -1,0 +1,118 @@
+[
+  {
+    "tags": [
+      {
+        "type": "param",
+        "types": [
+          "String"
+        ],
+        "name": "days",
+        "description": "string containing a comma delimited list of days"
+      },
+      {
+        "type": "param",
+        "types": [
+          "String"
+        ],
+        "name": "times",
+        "description": "string containing a comma delimited list of time ranges"
+      },
+      {
+        "type": "param",
+        "types": [
+          "String"
+        ],
+        "name": "location",
+        "description": "string containing a comma delimited list of locations"
+      }
+    ],
+    "description": {
+      "full": "<p>Day mongo schema</p>",
+      "summary": "<p>Day mongo schema</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "ignore": false,
+    "code": "var DaySchema = new Schema({\n\tdays: {\n\t\ttype: String,\n\t\trequired: true\n\t},\n\ttimes: {\n\t\ttype: String,\n\t\trequired: true\n\t},\n\tlocation: {\n\t\ttype: String,\n\t\trequired: true\n\t}\n});",
+    "ctx": {
+      "type": "declaration",
+      "name": "DaySchema",
+      "value": "new Schema({",
+      "string": "DaySchema"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "types": [
+          "String"
+        ],
+        "name": "courseNumber",
+        "description": "6 character code to identify course"
+      },
+      {
+        "type": "param",
+        "types": [
+          "String"
+        ],
+        "name": "section",
+        "description": "identifies a specific section of a course"
+      },
+      {
+        "type": "param",
+        "types": [
+          "String"
+        ],
+        "name": "courseTitle",
+        "description": "actual title of the course"
+      },
+      {
+        "type": "param",
+        "types": [
+          "String"
+        ],
+        "name": "instructor",
+        "description": "professor teaching the specific course"
+      },
+      {
+        "type": "param",
+        "types": [
+          "Array"
+        ],
+        "name": "days",
+        "description": "array of day objects"
+      },
+      {
+        "type": "param",
+        "types": [
+          "String"
+        ],
+        "name": "credits",
+        "description": "amount of credit hours for the course"
+      },
+      {
+        "type": "param",
+        "types": [
+          "Number"
+        ],
+        "name": "seats",
+        "description": "available seats"
+      }
+    ],
+    "description": {
+      "full": "<p>Course mongo schema</p>",
+      "summary": "<p>Course mongo schema</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "ignore": false,
+    "code": "var courseSchema = new Schema({\n\tcourseNumber: {\n\t\ttype: String,\n\t\trequired: true\n\t},\n\tsection: {\n\t\ttype: String,\n\t\trequired: true\n\t},\n\tcourseTitle: {\n\t\ttype: String,\n\t\trequired: true\n\t},\n\tinstructor: {\n\t\ttype: String,\n\t\trequired: true\n\t},\n\tdays: {\n\t\ttype: [DaySchema],\n\t\trequired: true\n\t},\n\tcredits: {\n\t\ttype: String,\n\t\trequired: true\n\t},\n\tseats: {\n\t\ttype: Number,\n\t\trequired: true\n\t}\n});\n\nvar Course = mongoose.model('Course', courseSchema);\n\nmodule.exports = Course;",
+    "ctx": {
+      "type": "declaration",
+      "name": "courseSchema",
+      "value": "new Schema({",
+      "string": "courseSchema"
+    }
+  }
+]

@@ -1,0 +1,38 @@
+extends layouts/default-layout
+
+block content
+	.container
+		.row-fluid
+			.span8.offset4
+				h1 Development Documentation
+		hr
+		.row-fluid
+			.span4
+				ul.nav.nav-tabs.nav-stacked
+					- each doc in docs
+						li: a(href="##{doc.title}") #{doc.title}
+			.span8
+				- each doc in docs
+					.row-fluid
+						.span12
+							h2: a(name="#{doc.title}") #{doc.title}
+					.row-fluid
+						.span12
+							- each d in doc.docs
+								- if(d.ctx)
+									h3 #{d.ctx.name}
+								!=d.description.full
+								h5 params:
+								ul
+								- each tag in d.tags
+									- if(tag.type === 'param')
+										li #{tag.types} #{tag.name} - #{tag.description}
+								h5 return:
+								ul
+								- each tag in d.tags
+									- if(tag.type === 'return')
+										li #{tag.types} #{tag.name} - #{tag.description}
+								br
+								pre
+									code #{d.code}
+								hr

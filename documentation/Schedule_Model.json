@@ -1,0 +1,36 @@
+[
+  {
+    "tags": [
+      {
+        "type": "param",
+        "types": [
+          "String"
+        ],
+        "name": "title",
+        "description": "custom label for schedule"
+      },
+      {
+        "type": "param",
+        "types": [
+          "Array"
+        ],
+        "name": "courses",
+        "description": "list of references to course models"
+      }
+    ],
+    "description": {
+      "full": "<p>Schedule mongo schema</p>",
+      "summary": "<p>Schedule mongo schema</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "ignore": false,
+    "code": "var scheduleSchema = new Schema({\n\ttitle: {\n\t\ttype: String,\n\t\trequired: true,\n\t},\n\tcourses: [{\n\t\ttype: Schema.Types.ObjectId,\n\t\tref: 'Course',\n\t}],\n});\n\nvar Schedule = mongoose.model('Schedule', scheduleSchema);\n\nmodule.exports = Schedule;\nmodule.exports.schema = scheduleSchema;",
+    "ctx": {
+      "type": "declaration",
+      "name": "scheduleSchema",
+      "value": "new Schema({",
+      "string": "scheduleSchema"
+    }
+  }
+]

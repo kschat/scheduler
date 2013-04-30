@@ -10,8 +10,7 @@
  , path = require('path')
  , fs = require('fs')
  , routeDir = 'routes'
- , files = fs.readdirSync(routeDir)
- , config = require('./config').config;
+ , files = fs.readdirSync(routeDir);
 
 //Reads the key and certificate for HTTPS
 var httpsOptions = { 
@@ -26,6 +25,7 @@ var httpsOptions = {
 app.configure(function(){
 	app.set('port', process.env.PORT || 3000);
 	app.set('views', __dirname + '/views');
+	app.set('docs', __dirname + '/documentation');
 	app.set('view engine', 'jade');
 	app.use(express.favicon());
 	app.use(express.logger('dev'));

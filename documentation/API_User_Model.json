@@ -1,0 +1,141 @@
+[
+  {
+    "tags": [
+      {
+        "type": "param",
+        "types": [
+          "String"
+        ],
+        "name": "publicKey",
+        "description": "key used to look up private key of user"
+      },
+      {
+        "type": "param",
+        "types": [
+          "String"
+        ],
+        "name": "privateKey",
+        "description": "key used to authenticate API users"
+      },
+      {
+        "type": "param",
+        "types": [
+          "String"
+        ],
+        "name": "email",
+        "description": "used to determine if user has an account already"
+      }
+    ],
+    "description": {
+      "full": "<p>APIUser mongo schema</p>",
+      "summary": "<p>APIUser mongo schema</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "ignore": false,
+    "code": "var APIUserSchema = mongoose.Schema({\n\tpublicKey: {\n\t\ttype: String,\n\t\trequire: true,\n\t\tindex: {\n\t\t\tunique: true,\n\t\t},\n\t},\n\tprivateKey: {\n\t\ttype: String,\n\t\trequire: true,\n\t\tindex: {\n\t\t\tunique: true,\n\t\t},\n\t},\n\temail: {\n\t\ttype: String,\n\t\trequire: true,\n\t\tindex: {\n\t\t\tunique: true,\n\t\t},\n\t},\n},\n{\n\tcollection: 'APIUsers'\n});",
+    "ctx": {
+      "type": "declaration",
+      "name": "APIUserSchema",
+      "value": "mongoose.Schema({",
+      "string": "APIUserSchema"
+    }
+  },
+  {
+    "tags": [],
+    "description": {
+      "full": "<p>Middleware for saving a model<br />Encrypts the public and private key using bcrypt</p>",
+      "summary": "<p>Middleware for saving a model<br />Encrypts the public and private key using bcrypt</p>",
+      "body": ""
+    },
+    "ignore": false,
+    "code": "APIUserSchema.pre('save', function(next) {\n\tvar user = this;\n\n\tbcrypt.genSalt(10, function(err, salt) {\n\t\tbcrypt.hash(user.publicKey, salt, function(err, hash) {\n\t\t\tif(err) { return next(err); }\n\n\t\t\tuser.publicKey = hash;\n\t\t});\n\t});\n\t\n\tbcrypt.genSalt(10, function(err, salt) {\n\t\tbcrypt.hash(user.privateKey, salt, function(err, hash) {\n\t\t\tif(err) { return next(err); }\n\n\t\t\tuser.privateKey = hash;\n\t\t\tnext();\n\t\t});\n\t});\n});"
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "types": [
+          "String"
+        ],
+        "name": "candidatePassword",
+        "description": "password to compare against"
+      },
+      {
+        "type": "param",
+        "types": [
+          "Function"
+        ],
+        "name": "callBack",
+        "description": "is passed err and isMatch used"
+      }
+    ],
+    "description": {
+      "full": "<p>Model method used to compare two public keys</p>",
+      "summary": "<p>Model method used to compare two public keys</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "ignore": false,
+    "code": "APIUserSchema.methods.comparePublicKey = function(candidatePassword, callBack) {\n\tbcrypt.compare(candidatePassword, this.publicKey, function(err, isMatch) {\n        if (err) { return callBack(err) };\n        \n        callBack(null, isMatch);\n    });\n};",
+    "ctx": {
+      "type": "method",
+      "receiver": "APIUserSchema.methods",
+      "name": "comparePublicKey",
+      "string": "APIUserSchema.methods.comparePublicKey()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "types": [
+          "String"
+        ],
+        "name": "candidatePassword",
+        "description": "password to compare against"
+      },
+      {
+        "type": "param",
+        "types": [
+          "Function"
+        ],
+        "name": "callBack",
+        "description": "is passed err and isMatch used"
+      }
+    ],
+    "description": {
+      "full": "<p>Model method used to compare two private keys</p>",
+      "summary": "<p>Model method used to compare two private keys</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "ignore": false,
+    "code": "APIUserSchema.methods.comparePrivateKey = function(candidatePassword, callBack) {\n\tbcrypt.compare(candidatePassword, this.privateKey, function(err, isMatch) {\n        if (err) { return callBack(err) };\n        \n        callBack(null, isMatch);\n    });\n};",
+    "ctx": {
+      "type": "method",
+      "receiver": "APIUserSchema.methods",
+      "name": "comparePrivateKey",
+      "string": "APIUserSchema.methods.comparePrivateKey()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "return",
+        "types": [
+          "String"
+        ],
+        "description": "ID of the user"
+      }
+    ],
+    "description": {
+      "full": "<p>Virtual method that creates an alias for _id as userID</p>",
+      "summary": "<p>Virtual method that creates an alias for _id as userID</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "ignore": false,
+    "code": "APIUserSchema.virtual('userID').get(function() {\n\treturn this._id;\n});\n\n\nvar APIUser = mongoose.model('APIUser', APIUserSchema);\n\nmodule.exports = APIUser;"
+  }
+]
