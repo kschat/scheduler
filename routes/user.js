@@ -4,21 +4,22 @@ var mongoose = require('mongoose'),
 exports.init = function init(app) {
 	//Default options to pass to the layout template
 	var options = {
-			title: 'Scheduler',
-			isPage: true,
-			loggedIn: false,
-			searchOn: true,
-			userName: 'dev', //remove for production
-			links: {
-				styles: [
-					'/css/bootstrap.css',
-					'/css/bootstrap-responsive.css',
-					'/css/mainStyle.css',
-					'/css/font-awesome.min.css',
-				],
-			},
-		};
+		title: 'Scheduler',
+		isPage: true,
+		loggedIn: false,
+		searchOn: true,
+		userName: 'dev', //remove for production
+		links: {
+			styles: [
+				'/css/bootstrap.css',
+				'/css/bootstrap-responsive.css',
+				'/css/mainStyle.css',
+				'/css/font-awesome.min.css',
+			],
+		},
+	};
 
+	//user schedule route
 	app.get(/^\/user\/([0-9a-zA-Z]+)\/schedules\/?$/, function(req, res) {
 		//if(!req.session.loggedIn) {
 		//	res.redirect('login');
@@ -30,6 +31,7 @@ exports.init = function init(app) {
 		res.render(app.get('views') + '/user/schedules', options);
 	});
 
+	//user profile route
 	app.get(/^\/user\/([0-9a-zA-Z]+)\/?$/, function(req, res) {
 		//if(!req.session.loggedIn) {
 		//	res.redirect('login');
