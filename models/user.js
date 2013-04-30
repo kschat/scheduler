@@ -2,18 +2,42 @@ var mongoose = require('mongoose'),
 	bcrypt = require('bcrypt'),
 	fs = require('fs');
 
+/**
+* Determines if a name is between 1 and 36 characters
+*
+* @param {String} val name to validate
+* @return {Boolean} true if valide; false otherwise
+*/
 function validateName(val) {
 	return val.length >= 2 && val.length <= 35;
 }
 
+/**
+* Determines if an email matches <address>@<provider>.<subDomain>
+*
+* @param {String} val email to validate
+* @return {Boolean} true if valide; false otherwise
+*/
 function validateEmail(val) {
 	return /^.+@.+\..+$/.test(val);
 }
 
+/**
+* Determines if a pasword is at least 4 characters long
+*
+* @param {String} val password to validate
+* @return {Boolean} true if valide; false otherwise
+*/
 function validatePassword(val) {
 	return val.length > 3;
 }
 
+/**
+* Determines if a password contains special characters and is 13 characters long
+*
+* @param {String} val password to validate
+* @return {Boolean} true if valide; false otherwise
+*/
 function validatePasswordStrong(val) {
 	var hasSpecialCharacter = /[^a-z ]/.test(val);
 
@@ -23,19 +47,37 @@ function validatePasswordStrong(val) {
 		);
 }
 
+/**
+* Determines if a password contains special characters and is at least 8 characters long
+*
+* @param {String} val password to validate
+* @return {Boolean} true if valide; false otherwise
+*/
 function validatePasswordMedium(val) {
 	var hasSpecialCharacter = /[^a-z ]/.test(val);
 
-	return  validatePassword(val) && (
+	return validatePassword(val) && (
 				(val.length > 10 && val.length < 21) || 
 				(val.length > 7 && val.length < 13 && hasSpecialCharacter)
 			);
 }
 
+/**
+* Determines if a password is less than 8 characters long
+*
+* @param {String} val password to validate
+* @return {Boolean} true if valide; false otherwise
+*/
 function validatePasswordWeak(val) {
 	return validatePassword(val) && val.length < 8;
 }
 
+/**
+* Picture mongo schema
+*
+* @param {Buffer} data binary representation of the image
+* @param {String} filename path of the image
+*/
 var PictureSchema = mongoose.Schema({
 	data: {
 		type: Buffer
@@ -47,6 +89,17 @@ var PictureSchema = mongoose.Schema({
 	}
 });
 
+/**
+* User mongo schema
+*
+* @param {String} firstName users first name
+* @param {String} lastName users last name
+* @param {String} userName users username
+* @param {String} description personal description on users profile
+* @param {String} email users email address
+* @param {String} password encrypted password
+* @param {Array} avatar list of Picture models
+*/
 var userSchema = mongoose.Schema({
 	firstName: { 
 		type: String, 
@@ -99,6 +152,10 @@ var userSchema = mongoose.Schema({
 	collection: 'user'
 });
 
+/**
+* Middleware for saving a model
+* Encrypts the password
+*/
 userSchema.pre('save', function(next) {
 	var user = this;
 
@@ -115,6 +172,10 @@ userSchema.pre('save', function(next) {
 	});
 });
 
+/**
+* Middleware for saving a model
+* writes the image uploaded to the server
+*/
 userSchema.pre('save', function(next) {
 	var user = this;
 
@@ -159,6 +220,12 @@ userSchema.pre('save', function(next) {
 	});
 });
 
+/**
+* Model method used to compare two passwords
+*
+* @param {String} candidatePassword password to compare against
+* @param {Function} callBack is passed err and isMatch used
+*/
 userSchema.methods.comparePassword = function(candidatePassword, callBack) {
 	bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
         if (err) { return callBack(err) };
@@ -167,10 +234,20 @@ userSchema.methods.comparePassword = function(candidatePassword, callBack) {
     });
 };
 
+/**
+* Virtual method that creates an alias for _id as userID
+*
+* @return {String} ID of the user
+*/
 userSchema.virtual('userID').get(function() {
 	return this._id;
 });
 
+/**
+* Virtual method that creates an alias for firstName + lastName as fullName
+*
+* @return {String} full name of user
+*/
 userSchema.virtual('fullName').get(function() {
 	return this.firstName + ' ' + this.lastName;
 });
