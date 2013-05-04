@@ -8,7 +8,7 @@ define([
 		initialize: function(options) {
 			this.dispatcher = options.dispatcher;
 
-			_.bindAll(this, 'render', 'show', 'hide');
+			_.bindAll(this, 'render', 'resizeLoader', 'show', 'hide');
 
 			this.dispatcher.on('loading:start', this.show);
 			this.dispatcher.on('loading:done', this.hide);
@@ -21,17 +21,25 @@ define([
 		events: {
 			
 		},
-		render: function() {
-			this.$el.html(this.template);
+		resizeLoader: function() {
 			var parent = this.$el.parent();
 
 			this.$el.css({
-				'height': parent.css('height'),
-				'width': parent.css('width')
+				'height': parent.outerHeight() + parseInt(parent.css('padding-top'), 10),
+				'width': parent.outerWidth(),
+				'margin-left': parseInt('-' + parent.css('padding-left'), 10),
+				'margin-top': parseInt('-' + parent.css('padding-top'), 10)
 			});
+		},
+		render: function() {
+			this.$el.html(this.template);
+			this.resizeLoader();
+
 			return this;
 		},
 		show: function() {
+			console.log('show');
+			this.resizeLoader();
 			this.$el.show();
 		},
 		hide: function() {

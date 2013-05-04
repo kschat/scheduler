@@ -7,8 +7,8 @@ exports.init = function init(app) {
 		isPage: true,
 		loggedIn: false,
 		searchOn: false,
-		userName: 'dev', //remove for production,
-		currUser: 'kschat', //remove for production
+		//userName: 'dev', //remove for production,
+		//currUser: 'kschat', //remove for production
 		links: {
 			styles: [
 				'/css/bootstrap.css',
@@ -21,18 +21,24 @@ exports.init = function init(app) {
 
 	//Route for searching courses
 	app.get(/^\/courses\/search(?:\/[\-a-zA-Z0-9]+\/page\/[\-0-9]+)?\/?$/, function(req, res) {
-		//if(!req.session.loggedIn) {
-		//	res.redirect('login');
-		//	return;
-		//}
+		if(!req.session.loggedIn) {
+			res.redirect('login');
+			return;
+		}
 		options.searchOn = false;
-		options.loggedIn = req.session.loggedIn;
-		//options.userName = req.session.user.userName;
+		//options.loggedIn = req.session.loggedIn;
+		options.userName = req.session.user.userName;
 		res.render(app.get('views') + '/course/advanced-search', options);
 	});
 
 	//route for individual course pages
 	app.get(/^\/courses\/([a-zA-Z]{3}[0-9]{3})\/?$/, function(req, res) {
+		if(!req.session.loggedIn) {
+			res.redirect('login');
+			return;
+		}
+		options.currUser = req.session.user.userName;
+
 		Course.find({ courseNumber: req.params[0].toUpperCase() }, function(err, courses) {
 			if(err) { res.send(405); }
 

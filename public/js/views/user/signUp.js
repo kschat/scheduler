@@ -36,12 +36,11 @@ define([
 		},
 		el: '#signup-form',
 		signupError: function(model, xhr, options) {
-			console.log(model);
 			this.renderError(xhr.responseText);
 			return false;
 		},
 		signupSuccess: function(model, response, options) {
-			window.location.href = '/';
+			window.location.href = '/logincheck?email=' + this.model.get('email') + '&password=' + this.model.get('password');
 		},
 		signup: function() {
 			this.render();
@@ -56,16 +55,16 @@ define([
 			});
 			obj.avatar = [];
 			obj.avatar[0] = { 
-				filename: 'img/defaultProfile.img'
+				filename: 'defaultProfile.jpg'
 			};
-			obj.passwordRepeat = this.$el.find('#passwordRepeat').text();
+			obj.passwordRepeat = this.$el.find('#passwordRepeat').val();
 
-			console.log(obj);
 			this.model.set(obj, {silent: true});
 			this.model.save({}, {
 				success: this.signupSuccess,
 				error: 	this.signupError
 			});
+
 			return false;
 		}
 	});

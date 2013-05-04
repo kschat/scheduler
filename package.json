@@ -16,6 +16,7 @@
     "bcrypt": "~0.7.4",
     "underscore": "~1.4.4",
     "zombie": "~1.4.1",
-    "dox-template": "~0.1.1"
+    "dox-template": "~0.1.1",
+    "http-proxy": "~0.10.2"
   }
 }

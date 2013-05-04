@@ -81,7 +81,10 @@ define([
 		appRouter.on('route:profile', function() {
 			var user = new User(),
 				searchView = new SearchView(),
-				profileView = new ProfileView({ model: user });
+				profileView = new ProfileView({ 
+					dispatcher: dispatcher,
+					model: user
+				});
 		});
 
 		appRouter.on('route:courses', function() {

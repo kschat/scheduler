@@ -155,10 +155,15 @@ exports.init = function init(app) {
 
 	//schedule creation route
 	app.get(/^\/schedule\/create\/?$/, function(req, res) {
+		if(!req.session.loggedIn) {
+			res.redirect('login');
+			return;
+		}
 		options.searchOn = true;
 		options.loggedIn = req.session.loggedIn;
-		options.currUser = 'kschat';
-		//options.searchOn = true;
+		options.currUser = req.session.user.userName;
+		//options.currUser = 'kschat';
+		options.searchOn = true;
 		res.render(app.get('views') + '/schedule/create', options);
 	});
 

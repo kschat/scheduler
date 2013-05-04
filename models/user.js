@@ -182,7 +182,7 @@ userSchema.pre('save', function(next) {
 	if(!user.isModified('avatar')) { return next(); }
 
 	var imageName = user.avatar[0].filename,
-		imageBuffer = user.avatar[0].data,
+		imageBuffer = user.avatar[0].data || '',
 		uploadPath = 'public/img/uploads/' + user.userName,
 		dataRegex = /^data:.+\/(.+);(.+),(.*)$/,
 		matches = imageBuffer.toString().match(dataRegex);
@@ -191,6 +191,10 @@ userSchema.pre('save', function(next) {
 	fs.exists(uploadPath, function(exists) {
 		if(!exists) { 
 			fs.mkdirSync(uploadPath);
+			
+			var inStr = fs.createReadStream('public/img/defaultProfile.jpg'),
+				outStr = fs.createWriteStream(uploadPath + '/defaultProfile.jpg');
+			inStr.pipe(outStr);
 		}
 	});
 

@@ -2,5 +2,32 @@ extends layouts/default-layout
 
 block content
 	.container
-		.hero-unit-landing
-			h1 About
+		.row-fluid
+			.span12
+				.hero-unit-landing
+					h1(style="display:none;") About
+					h1(style="text-align:center;") Scheduler was made to make scheduling easier for you
+		.row-fluid
+			.span3
+				h3(style="text-align:center;") About Scheduler
+			.span9
+				p 
+				| Scheduler was developed to provide an easier way for students of Pennsylvania College of 
+				| Technology to create their schedules. The typical way to schedule was too cumbersome and 
+				| involved too much preperation to create the schedule you desired each semester. 
+
+				p 
+				| Scheduler complete removes the headache involved with creating a schedule by doing
+				| the crunching for you. Just select all the courses you wish to take in a given semester and 
+				| scheduler will find all possible combinations of those courses schedules witout time conflicts.
+
+		br
+		.row-fluid
+			.span3
+				h3(style="text-align:center") About The Developer
+			.span9
+				p 
+				| I developed Scheduler for my senior project; the source is available free on 
+				| <a href="https://github.com/kschat/scheduler">GitHub</a>. Furthermore the code used for this site
+				| was annotated and is available on the <a href="/documentation">documentation page</a>. If you have any questions or concerns
+				| about scheduler or any bugs you find please feel free to message me.

@@ -80,11 +80,13 @@ define([
 				};
 			}
 
-			if(!this.validatePasswordSame(attr.password, attr.passwordRepeat)) {
-				return {
-					message: 'The password fields don\'t match',
-					selector: '#passwordRepeat, #password'
-				};
+			if(attr.passwordRepeat) {
+				if(!this.validatePasswordSame(attr.password, attr.passwordRepeat)) {
+					return {
+						message: 'The password fields don\'t match',
+						selector: '#passwordRepeat, #password'
+					};
+				}
 			}
 		}
 	});

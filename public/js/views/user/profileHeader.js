@@ -9,8 +9,9 @@ define([
 ], function($, _, Backbone, User, Template, EditTemplate, EditButtonView) {
 	var ProfileHeaderView = Backbone.View.extend({
 		initialize: function(options) {
-			this.model = options.model;
+			this.model = this.options.model;
 			this.editBtn = new EditButtonView();
+			this.dispatcher = this.options.dispatcher;
 			//this.$errorMessage = this.$el.find('#message-container');
 			this.previewImage = {};
 
@@ -22,7 +23,7 @@ define([
 			this.$errorMessage = this.$el.find('#message-container');
 			this.$uploadModal = this.$el.find('#upload-modal');
 			this.$uploadMessage = this.$uploadModal.find('#upload-message');
-			
+			this.dispatcher.trigger('loading:done');
 			return this;
 		},
 		events: {
@@ -34,6 +35,7 @@ define([
 		template: _.template(Template),
 		editProfile: function(e) {
 			e.preventDefault();
+			this.dispatcher.trigger('loading:start');
 			if($('.profile-header').data('edit')) {
 				this.updateModel($('#update-profile').children(':input'));
 				this.model.save({}, {
@@ -103,12 +105,14 @@ define([
 			return new Date().getTime() + '-' + fileName;
 		},
 		updateSuccess: function() {
+			this.dispatcher.trigger('loading:done');
 			this.template = _.template(Template);
 			$('.profile-header').data('edit', false);
 			this.render();
 			this.showMessage('Profile updated.');
 		},
 		updateError: function() {
+			this.dispatcher.trigger('loading:stop');
 			this.editBtn.editError();
 			this.showErrorMessage('Error saving to the server.');
 		},

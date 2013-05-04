@@ -53,6 +53,29 @@ exports.init = function init(app) {
 		});
 	});
 
+	app.get('/logincheck', function(req, res) {
+		User.findOne({ email: req.query.email }, function(err, user) {
+			if(user) {
+				user.comparePassword(req.query.password, function(err, isMatch) {
+					if(err) { res.send(405); }
+					if(isMatch) {
+						req.session.loggedIn = true;
+						req.session.user = user;
+						
+						res.redirect('/user/' + user.userName);
+						return;
+					}
+					req.session.loggedIn = false;
+					res.send({error: true, message: 'Invalid email or password'});
+				});
+			}
+			else {
+				req.session.loggedIn = false;
+				res.send({error: true, message: 'Invalid email or password'});
+			}
+		});
+	});
+
 	//logout route
 	app.get('/logout', function(req, res) {
 		req.session.loggedIn = false;

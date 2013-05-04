@@ -30,6 +30,9 @@ exports.init = function init(app) {
 
 	//Index page route
 	app.get(/^\/documentation\/?$/, function(req, res) {
+		if(req.session.user) {
+			options.currUser = req.session.user.userName;
+		}
 		res.render(app.get('views') + '/documentation', options);
 	});
 };
