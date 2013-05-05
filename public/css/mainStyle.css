@@ -159,6 +159,33 @@ ul.dropdown-menu > li > a > i {
   border-bottom: 1px solid #ccc;
 }
 
+.dropdown-menu.search-dropdown {
+  position: absolute;
+  overflow: hidden;
+  display: none;
+  width: 400px;
+  top: 28px;
+  padding: 5px;
+}
+
+.dropdown-menu.search-dropdown > li {
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.dropdown-menu.search-dropdown > li.focused-item > a {
+  color: #ffffff !important;
+  text-decoration: none;
+  background-color: #BF5343;
+  background-image: -moz-linear-gradient(top, #BF5343, #BF5343);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#BF5343), to(#BF5343));
+  background-image: -webkit-linear-gradient(top, #BF5343, #BF5343);
+  background-image: -o-linear-gradient(top, #BF5343, #BF5343);
+  background-image: linear-gradient(to bottom, #BF5343, #BF5343);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#BF5343', endColorstr='#BF5343', GradientType=0);
+}
+
 .profile {
 }
 
@@ -192,4 +219,119 @@ ul.dropdown-menu > li > a > i {
   text-align: center;
   font-size: 17px;
   margin-top: 14px;
+}
+
+.input-error > input[type="text"], .input-error > input[type="password"] {
+  border-color: #b94a48;
+  color: #b94a48;
+  -webkit-transition: border-color 1.5s;
+  transition: border-color 1.5s;
+}
+
+.input-error > label {
+  color: #b94a48;
+  -webkit-transition: color 1.5s;
+  transition: color 1.5s;
+}
+
+.loading-overlay {
+  display: none;
+  position: absolute;
+  background-color: #EEEEEE;
+  zoom: 1;
+  filter: alpha(opacity=60);
+  opacity: 0.6;
+}
+
+.loading-overlay > i.loading-image {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  color: #BF5343;
+}
+
+.transparent {
+  zoom: 1;
+  filter: alpha(opacity=50);
+  opacity: 0.5;
+}
+
+.scrollable {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 800px;
+  height: 500px;
+}
+
+.table-calendar > thead > tr > th, .table-calendar > tbody > tr > td {
+  text-align: center;
+  min-width: 71px;
+  width: 10%;
+}
+
+.table-calendar > tbody > tr > td {
+  text-align: right;
+}
+
+.table-calendar > tbody > tr > td {
+  height: 42px;
+}
+
+td.calendar-time {
+  background-color: #F8F8F8;
+}
+
+td.calendar-time > div {
+  height: 42px;
+}
+
+td.time-split {
+  padding: 0;
+}
+
+td.time-split > div {
+  height: 50%;
+  padding: 0 8px;
+}
+
+td.time-split > div:first-child {
+  border-bottom: 1px dotted #dddddd;
+  padding-top: 8px;
+}
+
+td.time-split > div:first-child {
+  padding-bottom: 8px;
+}
+
+td.time-split > div.popover {
+  height: 150px;
+  width: 400px;
+}
+
+.calendar-fixed-header {
+  padding-right: 15px;
+  margin-bottom: -1px;
+  background-color: #F8F8F8;
+}
+
+td.time-split > div.selected-time-temp {
+  background-color: #BF5343;
+  zoom: 1;
+  filter: alpha(opacity=60);
+  opacity: 0.6;
+}
+
+td.time-split > div.selected-time {
+  background-color: #BF5343;
+  zoom: 1;
+  filter: alpha(opacity=80);
+  opacity: 0.8;
+}
+
+table.lazy-alignment td {
+  border: 0;
+}
+
+.popover {
+  position: absolute !important;
 }

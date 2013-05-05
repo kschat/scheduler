@@ -19,7 +19,7 @@ define([
 			return this;
 		},
 		resetDropdown: function() {
-			this.$resultDropdown.find('.header').text('Start typing...');
+			this.$resultDropdown.find('#quick-search-header > strong').text('Start typing...');
 			this.$resultDropdown.hide();
 			return this;
 		},
@@ -29,11 +29,13 @@ define([
 			'focus #search-results': 		'focusDropdown',
 			'mouseover #search-results': 	'focusDropdown',
 			'mouseout #search-results': 	'blurDropdown',
-			'keyup > input[type="text"]': 	'changeSearch'
+			'keyup > input[type="text"]': 	'changeSearch',
+			'keypress > input[type="text"]': 	'stopSubmit'
 		},
 		el: '#course-search',
 		appendResults: function(data) {
-			this.$resultDropdown.find('.header').nextAll('li').remove();
+			 data = _.uniq(data, true, function(i) { return i.courseNumber; });
+			this.$resultDropdown.find('#quick-search-header').nextAll('li').remove();
 			for(var i=0; i<data.length; i++) {
 				var node = new SearchNode({ model: new Course(data[i]) });
 			}
@@ -41,7 +43,7 @@ define([
 		focusSearch: function() {
 			this.$el.addClass('hover');
 			var that = this;
-			this.$el.find('#search-textfield').animate({'width': 350}, 300, 'swing', function() {
+			this.$el.find('#search-textfield').animate({'width': 400}, 300, 'swing', function() {
 				that.$resultDropdown.show();
 			});
 		},
@@ -63,21 +65,33 @@ define([
 				this.$el.find('#search-textfield').animate({'width': 206}, 500);
 			}
 		},
-		changeSearch: function() {
+		changeSearch: function(e) {
+			e.preventDefault();
+			//If the escape key is pressed simulate a blur event
+			if(e.which == 27) { 
+				this.$el.find('#search-textfield').blur(); 
+				return;
+			}
+			
 			var searchText = this.$el.find('#search-textfield'),
-				header = this.$resultDropdown.find('.header');
+				header = this.$resultDropdown.find('#quick-search-header > strong');
 
 			if(searchText.val() === '') {
-				this.$resultDropdown.find('.header').nextAll('li').remove();
+				this.$resultDropdown.find('#quick-search-header').nextAll('li').remove();
 				header.text('Start typing...');
 			}
 			else {
 				header.text('Courses');
 
 				$.ajax({
-					url: '/api/course?limit=4&courseNumber=' + searchText.val(),
+					url: '/api/course?limit=6&courseNumber=' + searchText.val(),
 					type: 'GET',
 				}).done(this.appendResults);
+			}
+		},
+		stopSubmit: function(e) {
+			if(e.which == 13) {
+				return false;
 			}
 		}
 	});

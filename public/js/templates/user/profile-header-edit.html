@@ -1,6 +1,6 @@
 <div class="row-fluid">
 	<div class="span12">
-		<a id="edit-btn" href="#" data-toggle="true" class="btn btn-flat pull-right">Done</a>
+		<a id="edit-btn" href="#" data-toggle="true" class="btn btn-flat pull-right" style="display:none;">Done</a>
 	</div>
 </div>
 
@@ -28,8 +28,8 @@
 
 	<div class="span6">
 		<form id="update-profile" action="" method="POST">
-			<input type="text" name="firstName" value="<%= firstName %>" style="width:100%;" />
-			<input type="text" name="lastName" value="<%= lastName %>" style="width:100%;" />
+			<input type="text" id="firstName" name="firstName" value="<%= firstName %>" style="width:100%;" />
+			<input type="text" id="lastName" name="lastName" value="<%= lastName %>" style="width:100%;" />
 
 			<input type="text" value="Web &amp; Application Development" style="width:100%;" />
 			<textarea name="description" cols="30" style="width:100%;"><%= description %></textarea>

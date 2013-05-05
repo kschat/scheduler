@@ -1,5 +1,6 @@
 var fs = require('fs'),
-	User = require('../models/user');
+	User = require('../models/user'),
+	BetaKey = require('../models/betaKey');
 
 /*
  * Static page route module
@@ -8,27 +9,28 @@ var fs = require('fs'),
 exports.init = function init(app) {
 	//Default options to pass to the layout template
 	var options = {
-			title: 'Scheduler',
-			isPage: true,
-			loggedIn: false,
-			searchOn: false,
-			links: {
-				styles: [
-					'css/bootstrap.css',
-					'css/bootstrap-responsive.css',
-					'css/mainStyle.css',
-					'/css/font-awesome.min.css',
-				],
-			},
-		};
+		title: 'Scheduler',
+		isPage: true,
+		loggedIn: false,
+		searchOn: false,
+		links: {
+			styles: [
+				'css/bootstrap.css',
+				'css/bootstrap-responsive.css',
+				'css/mainStyle.css',
+				'/css/font-awesome.min.css',
+			],
+		},
+	};
 
 	//Index page route
-	app.get('/(home)?', function(req, res){
+	app.get('/(home)?', function(req, res) {
 		options.loggedIn = req.session.loggedIn || false;
-		options.userName = req.session.user ? req.session.user.userName : '';
+		options.currUser = req.session.user ? req.session.user.userName : '';
 		res.render('home', options);
 	});
 
+	//Login route
 	app.post('/login', function(req, res) {
 		User.findOne({ email: req.body.email }, function(err, user) {
 			if(user) {
@@ -52,17 +54,44 @@ exports.init = function init(app) {
 		});
 	});
 
+	app.get('/logincheck', function(req, res) {
+		User.findOne({ email: req.query.email }, function(err, user) {
+			if(user) {
+				user.comparePassword(req.query.password, function(err, isMatch) {
+					if(err) { res.send(405); }
+					if(isMatch) {
+						req.session.loggedIn = true;
+						req.session.user = user;
+						
+						res.redirect('/user/' + user.userName);
+						return;
+					}
+					req.session.loggedIn = false;
+					res.send({error: true, message: 'Invalid email or password'});
+				});
+			}
+			else {
+				req.session.loggedIn = false;
+				res.send({error: true, message: 'Invalid email or password'});
+			}
+		});
+	});
+
+	//logout route
 	app.get('/logout', function(req, res) {
 		req.session.loggedIn = false;
+		req.session.user = null;
 		res.redirect('/');
 	});
 
+	//about route
 	app.get('/about', function(req, res) {
 		options.loggedIn = req.session.loggedIn || false;
-		options.userName = req.session.user ? req.session.user.userName : '';
+		options.currUser = req.session.user ? req.session.user.userName : '';
 		res.render(app.get('views') + '/about', options);
 	});
 
+	//login and signup route
 	app.get(/\/(login|signup)/, function(req, res, next) {
 		if(req.session.loggedIn) {
 			res.redirect('/user/' + req.session.user.userName);
@@ -75,7 +104,21 @@ exports.init = function init(app) {
 		}
 	});
 
-	app.get(/\/signup\/confirmation\/?/, function(req, res){
-		//Email user
+	app.post(/^\/signup\/auth\/?$/, function(req, res) {
+		BetaKey.findOne({ key: req.body.betaKey }, function(err, key) {
+			if(err) { throw err; }
+			if(!key) { 
+				res.send(404, 'Bad key');
+				return;
+			}
+			if(key.used) {
+				res.send(404, 'Key is alreday in use.');
+				return;
+			}
+			else {
+				res.send(key);
+				return;
+			}
+		});
 	});
 }

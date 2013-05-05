@@ -14,20 +14,21 @@
 								i.icon-pencil
 								| Create schedule
 						li
-							a(tabindex="-1", href="/user/#{userName}/schedules") 
+							a(tabindex="-1", href="/user/#{currUser}/schedules") 
 								i.icon-list
 								| View schedules
 						li
 							a(tabindex="-1", href="/courses/search") 
 								i.icon-search
-								| Search classes
+								| Advanced search
 
 			- if(searchOn === true)
 				.divider-vertical.pull-left
 				form#course-search.navbar-search.pull-left
 					input#search-textfield(type="text", placeholder="Search for classes...", autocomplete="off")
-					ul#search-results.dropdown-menu.typeahead(style="overflow:hidden;display:none;position:absolute;width:358px;top:28px;padding-left: 5px;")
-						li.header Start typing...
+					ul#search-results.dropdown-menu.typeahead.search-dropdown
+						li#quick-search-header 
+							strong Start typing...
 					a#adv-btn.input-btn(href="/courses/search", data-toggle="tooltip", data-placement="bottom", title="Advanced search")
 						i.icon-cog
 
@@ -36,17 +37,15 @@
 
 			.nav-collapse.collapse
 				ul.nav.pull-right
-					li: a(href="/courses") Classes
-					li: a(href="/about") About
 					li.dropdown
-						a.dropdown-toggle(data-toggle="dropdown", href="#") Account 
+						a.dropdown-toggle(data-toggle="dropdown", href="#") #{currUser} 
 							b.caret
 						ul.dropdown-menu(role="menu", aria-labelledby="dropdownMenu")
 							li
-								a(tabindex="-1", href="/user/#{userName}") 
+								a(tabindex="-1", href="/user/#{currUser}") 
 									i.icon-home
 									| Profile
-								a(tabindex="-1", href="/user/#{userName}/schedules") 
+								a(tabindex="-1", href="/user/#{currUser}/schedules") 
 									i.icon-cog
 									| Settings
 								a(tabindex="-1", href="/logout") 

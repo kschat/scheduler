@@ -1,0 +1,8 @@
+{ "v" : 1, "key" : { "_id" : 1 }, "ns" : "scheduler.users", "name" : "_id_" }
+{ "v" : 1, "key" : { "_id" : 1 }, "ns" : "scheduler.user", "name" : "_id_" }
+{ "v" : 1, "key" : { "email" : 1 }, "unique" : true, "ns" : "scheduler.user", "name" : "email_1", "background" : true, "safe" : null }
+{ "v" : 1, "key" : { "_id" : 1 }, "ns" : "scheduler.APIUsers", "name" : "_id_" }
+{ "v" : 1, "key" : { "email" : 1 }, "unique" : true, "ns" : "scheduler.APIUsers", "name" : "email_1", "background" : true, "safe" : null }
+{ "v" : 1, "key" : { "privateKey" : 1 }, "unique" : true, "ns" : "scheduler.APIUsers", "name" : "privateKey_1", "background" : true, "safe" : null }
+{ "v" : 1, "key" : { "publicKey" : 1 }, "unique" : true, "ns" : "scheduler.APIUsers", "name" : "publicKey_1", "background" : true, "safe" : null }
+{ "v" : 1, "key" : { "_id" : 1 }, "ns" : "scheduler.courses", "name" : "_id_" }

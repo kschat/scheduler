@@ -20,5 +20,10 @@ block content
 
 				.span9
 					div.profile(id=userName)
-						.row-fluid.profile-header.no-stretch
-						
+						#profile-loader.loading-overlay
+						- if(userName === currUser) {
+							.row-fluid.profile-header.no-stretch(data-editable="true", data-edit="false", style="min-height: 200px;")
+						- }
+						- else {
+							.row-fluid.profile-header.no-stretch(style="min-height: 200px;")
+						- }

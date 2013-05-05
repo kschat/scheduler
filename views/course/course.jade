@@ -1,0 +1,36 @@
+extends ../layouts/signedin-layout
+
+block content
+	.container
+		.row-fluid
+			.span12
+				.profile
+					h2 #{courseTitle}
+					- each course in courses
+						.row-fluid
+							.span12
+								h3 #{course.courseNumber}-#{course.section}
+						.row-fluid
+							.span12
+								p Being taught by 
+									strong #{course.instructor}
+						.row-fluid
+							.span12
+								p Current open seats 
+									strong #{course.seats}
+						.row-fluid
+							.span12
+								p Total credit hours 
+									strong #{course.credits}
+						.row-fluid
+							.span12
+								table.table.table-bordered.table-condensed
+									tr
+										th Days
+										th Location
+										th Times
+									- each day in course.days
+										tr
+											td #{day.days}
+											td #{day.location}
+											td #{day.times}

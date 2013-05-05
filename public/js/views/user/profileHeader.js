@@ -9,20 +9,27 @@ define([
 ], function($, _, Backbone, User, Template, EditTemplate, EditButtonView) {
 	var ProfileHeaderView = Backbone.View.extend({
 		initialize: function(options) {
-			this.model = options.model;
-			this.editBtn = new EditButtonView();
-			//this.$errorMessage = this.$el.find('#message-container');
+			if(this.$el.data('editable')) {
+				this.editBtn = new EditButtonView();
+				console.log('edit');
+			}
+
+			this.model = this.options.model;
+			this.dispatcher = this.options.dispatcher;
 			this.previewImage = {};
 
 			_.bindAll(this, 'render', 'editProfile', 'updateModel', 'updateSuccess', 'updateError');
 		},
 		render: function() {
 			this.$el.html(this.template(this.model.attributes));
-			this.editBtn.setElement(this.$el.find('#edit-btn'));
+			if(this.editBtn) {
+				this.editBtn.setElement(this.$el.find('#edit-btn'));
+				this.$el.find('#edit-btn').show();
+			}
 			this.$errorMessage = this.$el.find('#message-container');
 			this.$uploadModal = this.$el.find('#upload-modal');
 			this.$uploadMessage = this.$uploadModal.find('#upload-message');
-			
+			this.dispatcher.trigger('loading:done');
 			return this;
 		},
 		events: {
@@ -34,6 +41,7 @@ define([
 		template: _.template(Template),
 		editProfile: function(e) {
 			e.preventDefault();
+			this.dispatcher.trigger('loading:start');
 			if($('.profile-header').data('edit')) {
 				this.updateModel($('#update-profile').children(':input'));
 				this.model.save({}, {
@@ -103,12 +111,14 @@ define([
 			return new Date().getTime() + '-' + fileName;
 		},
 		updateSuccess: function() {
+			this.dispatcher.trigger('loading:done');
 			this.template = _.template(Template);
 			$('.profile-header').data('edit', false);
 			this.render();
 			this.showMessage('Profile updated.');
 		},
 		updateError: function() {
+			this.dispatcher.trigger('loading:stop');
 			this.editBtn.editError();
 			this.showErrorMessage('Error saving to the server.');
 		},

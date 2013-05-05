@@ -1,3 +1,8 @@
+/**
+ * Digging my grave by being lazy and not refactoring...
+ * alas, didn't realize this until a week before the due date.
+ */
+
 define([
 	'jquery',
 	'underscore',
@@ -8,23 +13,35 @@ define([
 	'views/course/search',
 	'views/course/courseList',
 	'views/course/advancedCourseSearch',
+	'views/schedule/scheduleList',
+	'views/schedule/courseList',
+	'views/schedule/courseSearch',
+	'views/schedule/schedulingNav',
+	'views/schedule/availabilityChooser',
+	'views/schedule/generateSchedule',
+	'views/schedule/saveSchedules',
 	'views/pagination/pagination',
 	'models/user',
-	'collections/courseCollection'
+	'collections/courseCollection',
+	'collections/scheduleCollection'
 ], function($, _, Backbone, SignupView, SigninView, ProfileView, SearchView, CourseListView, 
-		AdvancedSearchView, PaginationView, User, CourseCollection) {
+		AdvancedSearchView, ScheduleListView, ScheduleCourseListView, ScheduleCourseSearchView, ScheduleNav, 
+		AvailabilityChooserView, GenerateScheduleView, SaveScheduleView, PaginationView, 
+		User, CourseCollection, ScheduleCollection) {
 	var AppRouter = Backbone.Router.extend({
 		routes: {
 			'login': 							'loginView',
 			'signup': 							'signup',
 			'home': 							'default',
 			'user/:profile': 					'profile',
+			'user/:profile/schedules':			'profileSchedules',
 			'courses/': 						'courses',
 			'courses': 							'courses',
 			'courses/search': 					'courseSearch',
 			'courses/search/': 					'courseSearch',
 			'courses/search/:filter':			'courseSearch',
 			'courses/search/:filter/page/:p': 	'courseSearchPage',
+			'courses/:course': 					'coursePage',
 			'schedule/create': 					'scheduleCreate',
 			'': 								'default'
 		}
@@ -69,7 +86,22 @@ define([
 		appRouter.on('route:profile', function() {
 			var user = new User(),
 				searchView = new SearchView(),
-				profileView = new ProfileView({ model: user });
+				profileView = new ProfileView({ 
+					dispatcher: dispatcher,
+					model: user
+				});
+		});
+
+		appRouter.on('route:profileSchedules', function() {
+			var user = new User({ userName: $('#schedule-list-container').data('user') }),
+				searchView = new SearchView(),
+				scheduleView = new ScheduleListView({ 
+					dispatcher: dispatcher,
+					model: user,
+					edit: false
+				});
+
+			scheduleView.render();
 		});
 
 		appRouter.on('route:courses', function() {
@@ -100,12 +132,51 @@ define([
 			}
 		});
 
+		appRouter.on('route:coursePage', function() {
+			var searchView = new SearchView();
+		});
+
 		appRouter.on('route:scheduleCreate', function() {
-			var courseCollection = new CourseCollection(),
-				advancedSearchView = new AdvancedSearchView({ 
-					collection: courseCollection,
-					addable: true 
-				 });
+
+			var searchView = new SearchView(),
+				courses = new CourseCollection(),
+				selectedCourses = new CourseCollection(),
+				schedules = new ScheduleCollection(),
+				scheduleCourseSearchView = new ScheduleCourseSearchView({ 
+					collection: courses,
+					dispatcher: dispatcher
+				}),
+				scheduleCourseListView = new ScheduleCourseListView({ 
+					collection: courses, 
+					selectedCourses: selectedCourses,
+					dispatcher: dispatcher
+				}),
+				scheduleNav = new ScheduleNav({
+					dispatcher: dispatcher
+				}),
+				availabilityChooserView = new AvailabilityChooserView({
+					dispatcher: dispatcher
+				}),
+				generateScheduleView = new GenerateScheduleView({
+					dispatcher: dispatcher,
+					collection: selectedCourses,
+					schedules: schedules
+				}),
+				saveScheduleView = new SaveScheduleView({
+					dispatcher: dispatcher,
+					collection: schedules
+				});
+
+			scheduleCourseListView.render();
+			scheduleCourseSearchView.render();
+			availabilityChooserView.render();
+			generateScheduleView.render();
+			saveScheduleView.render();
+			scheduleNav.render();
+
+			//Disables the previous button on page load
+			dispatcher.trigger('pager:disableBtn', 'previous');
+			dispatcher.trigger('pager:disableBtn', 'next');
 		});
 
 		Backbone.history.start({pushState: true});
