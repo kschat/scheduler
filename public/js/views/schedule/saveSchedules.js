@@ -29,6 +29,7 @@ define([
 
 			//Get the current user from the server
 			this.user = new User({ _id: this.$el.data('user') });
+			console.log(this.user);
 			this.user.fetch({ 
 				success: function(data) { 
 					console.log(data); 

@@ -27,7 +27,7 @@ exports.init = function init(app) {
 		}
 		options.searchOn = false;
 		//options.loggedIn = req.session.loggedIn;
-		options.userName = req.session.user.userName;
+		options.currUser = req.session.user.userName;
 		res.render(app.get('views') + '/course/advanced-search', options);
 	});
 

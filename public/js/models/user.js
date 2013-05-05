@@ -23,9 +23,11 @@ define([
 					options.url += '&populate=' + options.populate;
 				}
 			}
+			else if(method === 'read' && model.id) {
+				options.url = model.url + '/' + model.id;
+			}
 			else if(method === 'update') {
 				options.url = '/user/' + model.id + '/authUpdate';
-				//options.url = model.url + '/' + model.id;
 			}
 
 			return Backbone.sync(method, model, options);
