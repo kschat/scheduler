@@ -1,5 +1,6 @@
 var fs = require('fs'),
-	User = require('../models/user');
+	User = require('../models/user'),
+	BetaKey = require('../models/betaKey');
 
 /*
  * Static page route module
@@ -101,5 +102,23 @@ exports.init = function init(app) {
 				res.render(app.get('views') + '/' + req.params, options);
 			}
 		}
+	});
+
+	app.post(/^\/signup\/auth\/?$/, function(req, res) {
+		BetaKey.findOne({ key: req.body.betaKey }, function(err, key) {
+			if(err) { throw err; }
+			if(!key) { 
+				res.send(404, 'Bad key');
+				return;
+			}
+			if(key.used) {
+				res.send(404, 'Key is alreday in use.');
+				return;
+			}
+			else {
+				res.send(key);
+				return;
+			}
+		});
 	});
 }

@@ -36,7 +36,7 @@ define([
 		},
 		el: '#signup-form',
 		signupError: function(model, xhr, options) {
-			this.renderError(xhr.responseText);
+			this.renderError(model.responseText);
 			return false;
 		},
 		signupSuccess: function(model, response, options) {
@@ -58,12 +58,23 @@ define([
 				filename: 'defaultProfile.jpg'
 			};
 			obj.passwordRepeat = this.$el.find('#passwordRepeat').val();
+			var bKey = this.$el.find('#betaKey').val();
+			var self = this;
 
-			this.model.set(obj, {silent: true});
-			this.model.save({}, {
-				success: this.signupSuccess,
-				error: 	this.signupError
-			});
+			//Beta key check
+			$.ajax({
+				type: 'POST',
+				url: '/signup/auth',
+				data: {
+					betaKey: bKey
+				}
+			}).done(function() {
+				self.model.set(obj, {silent: true});
+				self.model.save({}, {
+					success: self.signupSuccess,
+					error: 	self.signupError
+				});
+			}).error(this.signupError);
 
 			return false;
 		}

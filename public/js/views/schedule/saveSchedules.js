@@ -32,10 +32,8 @@ define([
 			console.log(this.user);
 			this.user.fetch({ 
 				success: function(data) { 
-					console.log(data); 
 				}, 
 				error: function() { 
-					console.log('err');
 				}
 			});
 
@@ -85,7 +83,6 @@ define([
 			});
 		},
 		saveError: function(data) {
-			console.log('err');
 		},		
 		handleVisibility: function(e, page) {
 			if(page === 'save-schedule') {

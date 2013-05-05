@@ -31,7 +31,6 @@ define([
 		el: '#signin-form',
 		ajaxDone: function(data) {
 			if(data.error) {
-				console.log(this);
 				this.renderError(data.message);
 				return;
 			}

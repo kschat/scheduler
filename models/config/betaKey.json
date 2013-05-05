@@ -1,0 +1,55 @@
+{
+	"methods": [ "GET", "PUT", "OPTIONS", "DELETE", "POST" ],
+	"params": {
+		"GET": {
+			"limit": {
+				"type": "number",
+				"required": false
+			},
+			"count": {
+				"type": "number",
+				"required": false
+			},
+			"key": {
+				"type": "string",
+				"required": false
+			},
+			"used": {
+				"type": "boolean",
+				"required": false
+			}
+		},
+		"PUT": {
+			"key": {
+				"type": "string",
+				"required": true
+			},
+			"used": {
+				"type": "boolean",
+				"required": true
+			}
+		},
+		"POST": {
+			"create": {
+				"key": {
+					"type": "string",
+					"required": true
+				},
+				"used": {
+					"type": "boolean",
+					"required": true
+				}
+			},
+			"update": {
+				"key": {
+					"type": "string",
+					"required": false
+				},
+				"used": {
+					"type": "boolean",
+					"required": false
+				}
+			}
+		}
+	}
+}
