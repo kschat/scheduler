@@ -7,6 +7,7 @@ define([
 	var EditButtonView = Backbone.View.extend({
 		initialize: function(options) {
 			this.setElement(this.el);
+
 			_.bindAll(this, 'render', 'editProfile', 'editError');
 		},
 		render: function() {

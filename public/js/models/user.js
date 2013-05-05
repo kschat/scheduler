@@ -24,7 +24,8 @@ define([
 				}
 			}
 			else if(method === 'update') {
-				options.url = model.url + '/' + model.id;
+				options.url = '/user/' + model.id + '/authUpdate';
+				//options.url = model.url + '/' + model.id;
 			}
 
 			return Backbone.sync(method, model, options);

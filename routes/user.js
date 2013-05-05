@@ -50,4 +50,20 @@ exports.init = function init(app) {
 			}
 		});
 	});
+
+	//makes sure users are authorized to edit a profile
+	app.put(/^\/user\/([0-9a-zA-Z]+)\/authUpdate\/?$/, function(req, res) {
+		if(!req.session.loggedIn) {
+			res.redirect('login');
+			return;
+		}
+		else if(req.session.user._id !== req.body._id) {
+			console.log('not auth');
+			res.send(403);
+		}
+		else {
+			console.log('auth');
+			res.redirect('/api/user/' + req.params[0] + '');
+		}
+	});
 };

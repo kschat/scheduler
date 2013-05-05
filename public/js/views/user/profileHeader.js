@@ -9,17 +9,23 @@ define([
 ], function($, _, Backbone, User, Template, EditTemplate, EditButtonView) {
 	var ProfileHeaderView = Backbone.View.extend({
 		initialize: function(options) {
+			if(this.$el.data('editable')) {
+				this.editBtn = new EditButtonView();
+				console.log('edit');
+			}
+
 			this.model = this.options.model;
-			this.editBtn = new EditButtonView();
 			this.dispatcher = this.options.dispatcher;
-			//this.$errorMessage = this.$el.find('#message-container');
 			this.previewImage = {};
 
 			_.bindAll(this, 'render', 'editProfile', 'updateModel', 'updateSuccess', 'updateError');
 		},
 		render: function() {
 			this.$el.html(this.template(this.model.attributes));
-			this.editBtn.setElement(this.$el.find('#edit-btn'));
+			if(this.editBtn) {
+				this.editBtn.setElement(this.$el.find('#edit-btn'));
+				this.$el.find('#edit-btn').show();
+			}
 			this.$errorMessage = this.$el.find('#message-container');
 			this.$uploadModal = this.$el.find('#upload-modal');
 			this.$uploadMessage = this.$uploadModal.find('#upload-message');
