@@ -16,8 +16,12 @@ define([
 		},
 		idAttribute: '_id',
 		sync: function(method, model, options) {
-			if(method === 'read') {
+			if(method === 'read' && this.get('userName')) {
 				options.url = model.url + '/?userName=' + this.get('userName');
+				
+				if(options.populate) {
+					options.url += '&populate=' + options.populate;
+				}
 			}
 			else if(method === 'update') {
 				options.url = model.url + '/' + model.id;

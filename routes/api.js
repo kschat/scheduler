@@ -116,6 +116,16 @@ function filterOptions(options, model) {
 			if(property === 'limit' || property === 'skip') { 
 				query[property](option[property]); 
 			}
+			else if(property === 'populate') {
+				if(typeof option[property] === 'string') {
+					query[property](option[property]);
+				}
+				else {
+					for(var x=0; x<option[property].length; x++) {
+						query[property](option[property][x]);
+					}
+				}
+			}
 			else if(property === 'count') { 
 				count = true;
 			}
@@ -281,14 +291,34 @@ function RESTGet(req, res) {
 	}
 
 	if(typeof req.params[1] != 'undefined') {
-		Model.find({ _id: req.params[1] }, function(err, models) {
-			if(err) { 
-				res.send(503, { error: 'Error contacting database:' });
-				return;
-			}
+		runOptions(Model, modelSettings.params.GET, req.query, function(err, options) {
+			var queries = filterOptions(options, Model),
+				count = queries.count,
+				results = {};
 
-			res.send(models);
-			return;
+			if(err) {
+				res.send(err.code, err.message);
+			}
+			else {
+				queries.query.where('_id', req.params[1]).exec(function(err, result) {
+					if(count) {
+						count.exec(function(err, count) {
+							results.count = count;
+							results[req.params[0]] = result;
+							res.send(results);
+						});
+					}
+					else {
+						_.uniqObjects = function( arr ){
+							return _.uniq( _.collect( arr, function( x ){
+								return JSON.stringify( x );
+							}));
+						};
+
+						res.send(result);
+					}
+				});
+			}
 		});
 	}
 	else {

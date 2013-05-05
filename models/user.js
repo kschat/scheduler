@@ -1,6 +1,8 @@
 var mongoose = require('mongoose'),
+	Schedule = require('./schedule'),
 	bcrypt = require('bcrypt'),
-	fs = require('fs');
+	fs = require('fs'),
+	Schema = mongoose.Schema;
 
 /**
 * Determines if a name is between 1 and 36 characters
@@ -146,7 +148,11 @@ var userSchema = mongoose.Schema({
 	},
 	avatar: {
 		type: [PictureSchema]
-	}
+	},
+	schedules: [{
+		type: Schema.Types.ObjectId,
+		ref: 'Schedule'
+	}]
 },
 {
 	collection: 'user'

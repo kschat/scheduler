@@ -13,23 +13,28 @@ define([
 	'views/course/search',
 	'views/course/courseList',
 	'views/course/advancedCourseSearch',
+	'views/schedule/scheduleList',
 	'views/schedule/courseList',
 	'views/schedule/courseSearch',
 	'views/schedule/schedulingNav',
 	'views/schedule/availabilityChooser',
 	'views/schedule/generateSchedule',
+	'views/schedule/saveSchedules',
 	'views/pagination/pagination',
 	'models/user',
-	'collections/courseCollection'
+	'collections/courseCollection',
+	'collections/scheduleCollection'
 ], function($, _, Backbone, SignupView, SigninView, ProfileView, SearchView, CourseListView, 
-		AdvancedSearchView, ScheduleCourseListView, ScheduleCourseSearchView, ScheduleNav, 
-		AvailabilityChooserView, GenerateScheduleView, PaginationView, User, CourseCollection) {
+		AdvancedSearchView, ScheduleListView, ScheduleCourseListView, ScheduleCourseSearchView, ScheduleNav, 
+		AvailabilityChooserView, GenerateScheduleView, SaveScheduleView, PaginationView, 
+		User, CourseCollection, ScheduleCollection) {
 	var AppRouter = Backbone.Router.extend({
 		routes: {
 			'login': 							'loginView',
 			'signup': 							'signup',
 			'home': 							'default',
 			'user/:profile': 					'profile',
+			'user/:profile/schedules':			'profileSchedules',
 			'courses/': 						'courses',
 			'courses': 							'courses',
 			'courses/search': 					'courseSearch',
@@ -87,6 +92,18 @@ define([
 				});
 		});
 
+		appRouter.on('route:profileSchedules', function() {
+			var user = new User({ userName: $('#schedule-list-container').data('user') }),
+				searchView = new SearchView(),
+				scheduleView = new ScheduleListView({ 
+					dispatcher: dispatcher,
+					model: user,
+					edit: false
+				});
+
+			scheduleView.render();
+		});
+
 		appRouter.on('route:courses', function() {
 			var searchView = new SearchView(),
 				courseListView = new CourseListView({ collection: new CourseCollection() });
@@ -124,6 +141,7 @@ define([
 			var searchView = new SearchView(),
 				courses = new CourseCollection(),
 				selectedCourses = new CourseCollection(),
+				schedules = new ScheduleCollection(),
 				scheduleCourseSearchView = new ScheduleCourseSearchView({ 
 					collection: courses,
 					dispatcher: dispatcher
@@ -141,13 +159,19 @@ define([
 				}),
 				generateScheduleView = new GenerateScheduleView({
 					dispatcher: dispatcher,
-					collection: selectedCourses
+					collection: selectedCourses,
+					schedules: schedules
+				}),
+				saveScheduleView = new SaveScheduleView({
+					dispatcher: dispatcher,
+					collection: schedules
 				});
 
 			scheduleCourseListView.render();
 			scheduleCourseSearchView.render();
 			availabilityChooserView.render();
 			generateScheduleView.render();
+			saveScheduleView.render();
 			scheduleNav.render();
 
 			//Disables the previous button on page load

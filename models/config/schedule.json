@@ -5,6 +5,18 @@
 			"limit": {
 				"type": "number",
 				"required": false
+			},
+			"user": {
+				"type": "string",
+				"required": false
+			},
+			"title": {
+				"type": "string",
+				"required": false
+			},
+			"populate": {
+				"type": "string",
+				"required": false
 			}
 		},
 		"PUT": {
@@ -19,6 +31,10 @@
 		},
 		"POST": {
 			"create": {
+				"user": {
+					"type": "string",
+					"required": true
+				},
 				"title": {
 					"type": "string",
 					"required": true
@@ -29,6 +45,10 @@
 				}
 			},
 			"update": {
+				"user": {
+					"type": "string",
+					"required": false
+				},
 				"title": {
 					"type": "string",
 					"required": false

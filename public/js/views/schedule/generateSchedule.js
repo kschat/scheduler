@@ -10,9 +10,10 @@ define([
 ], function($, _, Backbone, CourseSearchItem, ScheduleView, LoadingOverlay, ScheduleCollection, Template) {
 	var GenerateScheduleView = Backbone.View.extend({
 		initialize: function(options) {
-			_.bindAll(this, 'render', 'handleVisibility', 'resetList', 'resetSchedules', 'generate', 'scheduleSent');
+			_.bindAll(this, 'render', 'handleVisibility', 'resetList', 'resetSchedules', 'setSaved', 'updateTitle', 'simulateCheck', 'generate', 'scheduleSent');
 			this.dispatcher = options.dispatcher;
 			this.schedules = new ScheduleCollection();
+			this.savedSchedules = options.schedules;
 
 
 			//Events called by the search view notifying this view of its state
@@ -26,14 +27,17 @@ define([
 		el: '#generate-schedule',
 		template: _.template(Template),
 		events: {
-			'click #generate-btn': 'generate'
+			'click #generate-btn': 'generate',
+			'change input:checkbox': 'setSaved',
+			'blur input:text': 'updateTitle',
+			'change input:text': 'simulateCheck',
+			'keyup input:text': 'simulateCheck'
 		},
 		render: function() {
 			this.$el.html(this.template());
 			this.$message = this.$el.find('#schedule-message');
 			this.$list = this.$el.find('#picked-course-list');
 			this.$scheduleList = this.$el.find('#schedules');
-			//this.loading = new LoadingOverlay({ dispatcher: this.dispatcher, el: '#schedule-loading' });
 			return this;
 		},
 		resetList: function() {
@@ -57,7 +61,6 @@ define([
 			return this;
 		},
 		resetSchedules: function() {
-			console.log(this.schedules.length);
 			if(this.schedules.length > 0) {
 				this.$scheduleList.html('');
 				var self = this,
@@ -66,12 +69,8 @@ define([
 					endContainer = '';
 
 				this.schedules.each(function(course) {
-					console.log(course);
-					//begContainer = index % 2 === 0 ? '<div class="row-fluid"><div class="span4">' : '<div class="span4">';
-					//endContainer = index % 2 === 0 ? '</div>' : '</div></div>';
-
-					course.attributes.title = 'Schedule ' + (index + 1);
-					var sv = new ScheduleView({ model: course, dispatcher: self.dispatcher });
+					course.set('title', 'Schedule ' + (index + 1));
+					var sv = new ScheduleView({ model: course, dispatcher: self.dispatcher, edit: true });
 					self.$scheduleList.append(sv.render().el);
 					index++;
 				});
@@ -86,11 +85,29 @@ define([
 				this.$el.slideDown(800);
 				this.dispatcher.trigger('pager:enableBtn', 'next');
 				this.dispatcher.trigger('pager:enableBtn', 'previous');
-				this.dispatcher.trigger('pager:setHref', 'previous', '#availability');
+				//this.dispatcher.trigger('pager:setHref', 'previous', '#availability');
+				this.dispatcher.trigger('pager:setHref', 'next', '#save-schedule');
 			}
 			else {
 				this.$el.hide();
 			}
+		},
+		setSaved: function(e) {
+			if(e.target.checked) {
+				this.savedSchedules.add(this.schedules.get(e.target.value));
+			}
+			else {
+				this.savedSchedules.remove(this.schedules.get(e.target.value));
+			}
+		},
+		updateTitle: function(e) {
+			this.schedules.get(e.target.id.split('-')[1]).set('title', e.target.value);
+		},
+		simulateCheck: function(e) {
+			//Gets the checkbox next to the textfield, checks it, and triggers the change event.
+			$(e.target).prev()
+				.prop('checked', true)
+				.trigger('change');
 		},
 		generate: function() {
 			/*this.collection.add([{
@@ -128,7 +145,6 @@ define([
 				}]
 			}]);*/
 
-			//this.dispatcher.trigger('loading:start');
 			$.ajax({
 				url: '/schedule/generate',
 				type: 'POST',
@@ -140,11 +156,10 @@ define([
 			return false;
 		},
 		scheduleSent: function(data) {
-			//this.schedules.reset();
 			for(var i=0; i<data.length; i++) {
 				this.schedules.add({courses: data[i] });
 			}
-			//this.dispatcher.trigger('loading:done');
+
 			return false;
 		}
 	});
